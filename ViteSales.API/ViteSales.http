@@ -1,0 +1,6 @@
+@ViteSales_HostAddress = http://localhost:5285
+
+GET {{ViteSales_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
