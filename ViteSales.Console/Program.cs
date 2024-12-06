@@ -8,6 +8,7 @@ using ViteSales.Data.Entities;
 using ViteSales.ERP.GL.AccountMaintenance;
 
 const bool DO_MIGRATION = false;
+// dotnet ef dbcontext scaffold "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=frf@\!333\!@Fg;" Npgsql.EntityFrameworkCore.PostgreSQL -o Models
 // "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=6543;Username=postgres.bafclcxttfppruzavrgm;Password=supabase123@;Database=postgres;"
 var serviceCollection = new ServiceCollection();
 serviceCollection.AddDbContext<ViteSalesContext>(options =>

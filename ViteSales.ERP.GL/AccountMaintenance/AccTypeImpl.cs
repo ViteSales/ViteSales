@@ -1,39 +1,40 @@
 using System.Data;
 using Microsoft.EntityFrameworkCore;
+using ViteSales.Data.Contracts;
 using ViteSales.Data.Entities;
 using ViteSales.Data.Extensions;
 using ViteSales.Data.Utils;
 
 namespace ViteSales.ERP.GL.AccountMaintenance;
 
-public class AccTypeImpl(ViteSalesContext ctx)
+public class AccTypeImpl(IViteSalesDataContext ctx)
 {
     public DataTable Load()
     {
-        return ctx.AccTypes.ToList().ToDataTable("AccTypeCode");
+        return ctx.Resource.AccTypes.ToList().ToDataTable("AccTypeCode");
     }
 
     public void Save(DataTable dt)
     {
-        using var transaction = ctx.Database.BeginTransaction();
+        using var transaction = ctx.Resource.Database.BeginTransaction();
         try
         {
-            var accGroups = ctx.AccGroups.ToList().ToDataTable("AccType");
+            var accGroups = ctx.Resource.AccGroups.ToList().ToDataTable("AccType");
             
             var rowsToDelete = dt.Rows.Cast<DataRow>()
                 .Where(row => row.RowState == DataRowState.Deleted)
                 .ToList(); 
             
-            var isBsTypeSeq = ctx.AccGroups
-                .Join(ctx.AccTypes,
+            var isBsTypeSeq = ctx.Resource.AccGroups
+                .Join(ctx.Resource.AccTypes,
                     ag => ag.AccType,
                     at => at.AccTypeCode,
                     (ag, at) => new { AccGroup = ag, AccType = at })
                 .Where(x => x.AccType.IsBstype == "T")
                 .Max(x => (int?)x.AccGroup.Seq) ?? 0;
             
-            var isNotBsTypeSeq = ctx.AccGroups
-                .Join(ctx.AccTypes,
+            var isNotBsTypeSeq = ctx.Resource.AccGroups
+                .Join(ctx.Resource.AccTypes,
                     ag => ag.AccType,
                     at => at.AccTypeCode,
                     (ag, at) => new { AccGroup = ag, AccType = at })
@@ -74,7 +75,7 @@ public class AccTypeImpl(ViteSalesContext ctx)
                             nextGroupRow["AccType"] = currentAccType;
                             accGroups.Rows.Add(nextGroupRow);
                         
-                            ctx.AccGroups.Add(nextGroupRow.MapToEntity<AccGroup>());
+                            ctx.Resource.AccGroups.Add(nextGroupRow.MapToEntity<AccGroup>());
                         }
                     }
                 }
@@ -82,21 +83,21 @@ public class AccTypeImpl(ViteSalesContext ctx)
                 {
                     case DataRowState.Added:
                         var newAccType = row.MapToEntity<AccType>();
-                        var trackedEntity = ctx.AccTypes.Local
+                        var trackedEntity = ctx.Resource.AccTypes.Local
                             .FirstOrDefault(x => x.AccTypeCode == newAccType.AccTypeCode);
                         
                         if (trackedEntity != null)
                         {
-                            ctx.Entry(trackedEntity).CurrentValues.SetValues(newAccType);
+                            ctx.Resource.Entry(trackedEntity).CurrentValues.SetValues(newAccType);
                         }
                         else
                         {
-                            ctx.AccTypes.Add(newAccType);
+                            ctx.Resource.AccTypes.Add(newAccType);
                         }
                         break;
 
                     case DataRowState.Modified:
-                        var accType = ctx.AccTypes
+                        var accType = ctx.Resource.AccTypes
                             .FirstOrDefault(x => x.AccTypeCode == row["AccTypeCode"].ToString());
                         if (accType != null)
                         {
@@ -106,14 +107,14 @@ public class AccTypeImpl(ViteSalesContext ctx)
                 }
             }
 
-            foreach (var accTypeToDelete in rowsToDelete.Select(row => row["AccTypeCode", DataRowVersion.Original].ToString()).Select(accTypeKey => ctx.AccTypes
+            foreach (var accTypeToDelete in rowsToDelete.Select(row => row["AccTypeCode", DataRowVersion.Original].ToString()).Select(accTypeKey => ctx.Resource.AccTypes
                          .FirstOrDefault(x => x.AccTypeCode == accTypeKey)).OfType<AccType>())
             {
-                ctx.AccTypes.Remove(accTypeToDelete);
-                ctx.AccGroups.Where(t => t.AccType == accTypeToDelete.AccTypeCode).ToList().ForEach(t => ctx.AccGroups.Remove(t));
+                ctx.Resource.AccTypes.Remove(accTypeToDelete);
+                ctx.Resource.AccGroups.Where(t => t.AccType == accTypeToDelete.AccTypeCode).ToList().ForEach(t => ctx.Resource.AccGroups.Remove(t));
             }
 
-            ctx.SaveChanges();
+            ctx.Resource.SaveChanges();
             transaction.Commit();
         }
         catch (Exception)
