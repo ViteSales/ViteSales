@@ -453,7 +453,7 @@ public partial class ViteSalesContext : DbContext
 
     public virtual DbSet<PackageDtl> PackageDtls { get; set; }
 
-    public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+    public virtual DbSet<PaymentMethods> PaymentMethods { get; set; }
 
     public virtual DbSet<Pbalance> Pbalances { get; set; }
 
@@ -811,7 +811,7 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.ActivityDateTime)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.ComputerName).HasMaxLength(20);
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.DocType)
@@ -866,15 +866,15 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -994,7 +994,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.ConfirmUserId)
                 .HasMaxLength(10)
                 .HasColumnName("ConfirmUserID");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -1012,7 +1012,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliveryTerm).HasMaxLength(40);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Fax1).HasMaxLength(25);
@@ -1057,7 +1057,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -1080,7 +1080,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.RoundAdj).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -1202,7 +1202,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -1302,11 +1302,11 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("AODocNo");
             entity.Property(e => e.AodtlKey).HasColumnName("AODtlKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.EstimatedDeliveryDate).HasMaxLength(20);
@@ -1314,7 +1314,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false);
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -1375,7 +1375,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Cntype)
                 .HasMaxLength(12)
                 .HasColumnName("CNType");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -1383,15 +1383,15 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.DocDate2).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
+            entity.Property(e => e.DocDate2).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
@@ -1405,7 +1405,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Jekey).HasColumnName("JEKey");
             entity.Property(e => e.JournalType).HasMaxLength(10);
             entity.Property(e => e.KnockOffAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -1443,7 +1443,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -1577,7 +1577,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -1627,7 +1627,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -1678,7 +1678,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -1688,7 +1688,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DepositPaymentMethod).HasMaxLength(20);
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
@@ -1696,7 +1696,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -1726,8 +1726,8 @@ public partial class ViteSalesContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_APDeposit_CurrencyCode");
 
-            entity.HasOne(d => d.DepositPaymentMethodNavigation).WithMany(p => p.Apdeposits)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.DepositPaymentMethodsNavigation).WithMany(p => p.Apdeposits)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.DepositPaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_APDeposit_DepositPaymentMethod");
@@ -1754,15 +1754,15 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("APDepositForfeit");
 
             entity.Property(e => e.ForfeitKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(40);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.ForfeitedAccNo).HasMaxLength(12);
             entity.Property(e => e.ForfeitedAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -1808,7 +1808,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -1825,8 +1825,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APDepositPaymentDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.ApdepositPaymentDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.ApdepositPaymentDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_APDepositPaymentDTL_PaymentMethod");
@@ -1842,14 +1842,14 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.RefundKey).ValueGeneratedNever();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(40);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -1893,7 +1893,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -1910,8 +1910,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APDepositRefundPaymentDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.ApdepositRefundPaymentDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.ApdepositRefundPaymentDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_APDepositRefundPaymentDTL_PaymentMethod");
@@ -1930,13 +1930,13 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => new { e.DocStatus, e.ExpiryTimeStamp }, "IX_APDN_DocStatus_ExpiryTimeStamp");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.AgingDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.AgingDate).HasColumnType("date");
             entity.Property(e => e.BranchCode).HasMaxLength(20);
             entity.Property(e => e.Cancelled)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -1948,17 +1948,17 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Dntype)
                 .HasMaxLength(12)
                 .HasColumnName("DNType");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.DocDate2).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
+            entity.Property(e => e.DocDate2).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.DueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DueDate).HasColumnType("date");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ForecastDueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
+            entity.Property(e => e.ForecastDueDate).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
@@ -1971,7 +1971,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Jekey).HasColumnName("JEKey");
             entity.Property(e => e.JournalType).HasMaxLength(10);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -2008,7 +2008,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -2017,7 +2017,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total2).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalRevalueGainLoss).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
@@ -2155,13 +2155,13 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => new { e.DocStatus, e.ExpiryTimeStamp }, "IX_APInvoice_DocStatus_ExpiryTimeStamp");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.AgingDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.AgingDate).HasColumnType("date");
             entity.Property(e => e.BranchCode).HasMaxLength(20);
             entity.Property(e => e.Cancelled)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -2170,17 +2170,17 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.DocDate2).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
+            entity.Property(e => e.DocDate2).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.DueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DueDate).HasColumnType("date");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ForecastDueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
+            entity.Property(e => e.ForecastDueDate).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
@@ -2188,7 +2188,7 @@ public partial class ViteSalesContext : DbContext
                 .HasDefaultValue("F")
                 .IsFixedLength();
             entity.Property(e => e.JournalType).HasMaxLength(10);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -2260,7 +2260,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -2269,7 +2269,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total2).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalRevalueGainLoss).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
@@ -2404,7 +2404,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -2412,18 +2412,18 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocNo2).HasMaxLength(25);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
-            entity.Property(e => e.HandOverDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.HandOverDate).HasColumnType("date");
             entity.Property(e => e.KnockOffAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -2437,7 +2437,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("ReferCAJEDocNo");
             entity.Property(e => e.ReferCndocDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("ReferCNDocDate");
             entity.Property(e => e.ReferCndocKey).HasColumnName("ReferCNDocKey");
             entity.Property(e => e.ReferCndocNo)
@@ -2530,7 +2530,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -2547,8 +2547,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APPaymentDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.AppaymentDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.AppaymentDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_APPaymentDTL_PaymentMethod");
@@ -2567,7 +2567,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.DiscountAmt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -2620,7 +2620,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -2628,18 +2628,18 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocNo2).HasMaxLength(25);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
-            entity.Property(e => e.HandOverDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.HandOverDate).HasColumnType("date");
             entity.Property(e => e.KnockOffAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -2718,7 +2718,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -2735,8 +2735,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APRefundDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.AprefundDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.AprefundDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_APRefundDTL_PaymentMethod");
@@ -2754,7 +2754,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -2800,15 +2800,15 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false);
             entity.Property(e => e.BdcndocDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("BDCNDocDate");
             entity.Property(e => e.BdcndocKey).HasColumnName("BDCNDocKey");
             entity.Property(e => e.BdwithBdrcndocDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("BDWithBDRCNDocDate");
             entity.Property(e => e.BdwithBdrcndocKey).HasColumnName("BDWithBDRCNDocKey");
             entity.Property(e => e.JedocDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("JEDocDate");
             entity.Property(e => e.JedocKey).HasColumnName("JEDocKey");
         });
@@ -2827,7 +2827,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.JecrdtlKey).HasColumnName("JECRDtlKey");
             entity.Property(e => e.JedocDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("JEDocDate");
             entity.Property(e => e.JedocKey).HasColumnName("JEDocKey");
             entity.Property(e => e.JedrdtlKey).HasColumnName("JEDRDtlKey");
@@ -2867,7 +2867,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -2879,17 +2879,17 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DebtorCode).HasMaxLength(12);
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.Jekey).HasColumnName("JEKey");
             entity.Property(e => e.JournalType).HasMaxLength(10);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -2981,7 +2981,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Cntype)
                 .HasMaxLength(12)
                 .HasColumnName("CNType");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -2989,7 +2989,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DebtorCode).HasMaxLength(12);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
@@ -2999,7 +2999,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("EInvoiceSelfBilledDocNo");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.GstjedocKey).HasColumnName("GSTJEDocKey");
             entity.Property(e => e.InclusiveTax)
@@ -3014,7 +3014,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Jekey).HasColumnName("JEKey");
             entity.Property(e => e.JournalType).HasMaxLength(10);
             entity.Property(e => e.KnockOffAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -3046,7 +3046,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -3189,7 +3189,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -3239,7 +3239,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -3290,7 +3290,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -3300,7 +3300,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DepositPaymentMethod).HasMaxLength(20);
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
@@ -3313,7 +3313,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -3344,8 +3344,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.DebtorCode)
                 .HasConstraintName("FK_ARDeposit_DebtorCode");
 
-            entity.HasOne(d => d.DepositPaymentMethodNavigation).WithMany(p => p.Ardeposits)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.DepositPaymentMethodsNavigation).WithMany(p => p.Ardeposits)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.DepositPaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ARDeposit_DepositPaymentMethod");
@@ -3372,15 +3372,15 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("ARDepositForfeit");
 
             entity.Property(e => e.ForfeitKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(40);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.ForfeitedAccNo).HasMaxLength(12);
             entity.Property(e => e.ForfeitedAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -3426,7 +3426,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -3443,8 +3443,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARDepositPaymentDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.ArdepositPaymentDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.ArdepositPaymentDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ARDepositPaymentDTL_PaymentMethod");
@@ -3460,14 +3460,14 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.RefundKey).ValueGeneratedNever();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(40);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -3511,7 +3511,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -3528,8 +3528,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARDepositRefundPaymentDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.ArdepositRefundPaymentDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.ArdepositRefundPaymentDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ARDepositRefundPaymentDTL_PaymentMethod");
@@ -3548,13 +3548,13 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => new { e.DocStatus, e.ExpiryTimeStamp }, "IX_ARDN_DocStatus_ExpiryTimeStamp");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.AgingDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.AgingDate).HasColumnType("date");
             entity.Property(e => e.BranchCode).HasMaxLength(20);
             entity.Property(e => e.Cancelled)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -3566,16 +3566,16 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Dntype)
                 .HasMaxLength(12)
                 .HasColumnName("DNType");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.DueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DueDate).HasColumnType("date");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ForecastDueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
+            entity.Property(e => e.ForecastDueDate).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
@@ -3588,7 +3588,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Jekey).HasColumnName("JEKey");
             entity.Property(e => e.JournalType).HasMaxLength(10);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -3622,7 +3622,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -3631,7 +3631,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total2).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalRevalueGainLoss).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
@@ -3797,13 +3797,13 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => new { e.DocStatus, e.ExpiryTimeStamp }, "IX_ARInvoice_DocStatus_ExpiryTimeStamp");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.AgingDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.AgingDate).HasColumnType("date");
             entity.Property(e => e.BranchCode).HasMaxLength(20);
             entity.Property(e => e.Cancelled)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -3812,16 +3812,16 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DebtorCode).HasMaxLength(12);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.DueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DueDate).HasColumnType("date");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ForecastDueDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
+            entity.Property(e => e.ForecastDueDate).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
@@ -3829,7 +3829,7 @@ public partial class ViteSalesContext : DbContext
                 .HasDefaultValue("F")
                 .IsFixedLength();
             entity.Property(e => e.JournalType).HasMaxLength(10);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -3860,7 +3860,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -3869,7 +3869,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total2).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalRevalueGainLoss).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
@@ -4013,7 +4013,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -4021,19 +4021,19 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DebtorCode).HasMaxLength(12);
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocNo2).HasMaxLength(25);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.GstjedocKey).HasColumnName("GSTJEDocKey");
-            entity.Property(e => e.HandOverDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.HandOverDate).HasColumnType("date");
             entity.Property(e => e.KnockOffAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -4043,7 +4043,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentAmt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.ProjNo).HasMaxLength(10);
             entity.Property(e => e.ReferCndocDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("ReferCNDocDate");
             entity.Property(e => e.ReferCndocKey).HasColumnName("ReferCNDocKey");
             entity.Property(e => e.ReferCndocNo)
@@ -4128,7 +4128,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -4145,8 +4145,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARPaymentDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.ArpaymentDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.ArpaymentDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ARPaymentDTL_PaymentMethod");
@@ -4165,7 +4165,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.DiscountAmt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -4220,7 +4220,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Cbkey).HasColumnName("CBKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -4228,7 +4228,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DebtorCode).HasMaxLength(12);
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocNo2).HasMaxLength(25);
             entity.Property(e => e.DocStatus)
@@ -4236,10 +4236,10 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.EinvoiceAipsubmissionDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceAIPSubmissionDateTime");
             entity.Property(e => e.EinvoiceCancelDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceCancelDateTime");
             entity.Property(e => e.EinvoiceCancelReason)
                 .HasMaxLength(100)
@@ -4249,7 +4249,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceError");
             entity.Property(e => e.EinvoiceIssueDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceIssueDateTime");
             entity.Property(e => e.EinvoiceStatus)
                 .HasMaxLength(100)
@@ -4268,17 +4268,17 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceUuid");
             entity.Property(e => e.EinvoiceValidatedDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceValidatedDateTime");
             entity.Property(e => e.EinvoiceValidationLink)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceValidationLink");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
-            entity.Property(e => e.HandOverDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.HandOverDate).HasColumnType("date");
             entity.Property(e => e.KnockOffAmt).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -4363,7 +4363,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -4380,8 +4380,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARRefundDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.ArrefundDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.ArrefundDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ARRefundDTL_PaymentMethod");
@@ -4399,7 +4399,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.FcrevalueKey).HasColumnName("FCRevalueKey");
-            entity.Property(e => e.GainLossDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.GainLossDate).HasColumnType("date");
             entity.Property(e => e.KnockOffDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -4454,7 +4454,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -4465,7 +4465,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.FromAsmorderDocKey).HasColumnName("FromASMOrderDocKey");
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
@@ -4474,7 +4474,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -4534,14 +4534,14 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("ASMDocNo");
             entity.Property(e => e.BatchNo).HasMaxLength(20);
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -4676,13 +4676,13 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.ExpectedCompletedDate).HasMaxLength(20);
             entity.Property(e => e.FromDocType)
@@ -4695,12 +4695,12 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.LastAopmodified)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("LastAOPModified");
             entity.Property(e => e.LastAopmodifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastAOPModifiedUserID");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -4782,13 +4782,13 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.ItemCost).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.LastAorpmodified)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("LastAORPModified");
             entity.Property(e => e.LastAorpmodifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastAORPModifiedUserID");
             entity.Property(e => e.LastPrmodified)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("LastPRModified");
             entity.Property(e => e.LastPrmodifiedUserId)
                 .HasMaxLength(10)
@@ -4862,7 +4862,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DisposalValue).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.FixedAssetAccNo).HasMaxLength(12);
             entity.Property(e => e.LocalDisposalValue).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.TransDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TransDate).HasColumnType("date");
 
             entity.HasOne(d => d.FixedAssetAccNoNavigation).WithMany(p => p.AssetDisposals)
                 .HasForeignKey(d => d.FixedAssetAccNo)
@@ -4920,7 +4920,7 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.AccNo).HasMaxLength(12);
             entity.Property(e => e.ActualBankStatementBalance).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.BankStatementDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.BankStatementDate).HasColumnType("date");
 
             entity.HasOne(d => d.AccNoNavigation).WithMany(p => p.BankRecons)
                 .HasForeignKey(d => d.AccNo)
@@ -4936,7 +4936,7 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
             entity.Property(e => e.BankAccNo).HasMaxLength(12);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
         });
 
@@ -4953,10 +4953,10 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => new { e.SourceType, e.SourceKey }, "IX_BankTrans_SourceType_SourceKey");
 
             entity.Property(e => e.AccNo).HasMaxLength(12);
-            entity.Property(e => e.BankStatementDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.BankStatementDate).HasColumnType("date");
             entity.Property(e => e.ChequeNo).HasMaxLength(20);
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.PaymentAmt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.SourceType)
@@ -5052,14 +5052,14 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -5125,16 +5125,16 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.DebtorCode).HasMaxLength(12);
             entity.Property(e => e.Description).HasMaxLength(40);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -5182,7 +5182,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.Location).HasMaxLength(8);
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -5399,7 +5399,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("ConsolidatedEInvoice");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -5417,13 +5417,13 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliveryTaxEntityId).HasColumnName("DeliveryTaxEntityID");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.EinvoiceAipsubmissionDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceAIPSubmissionDateTime");
             entity.Property(e => e.EinvoiceCancelDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceCancelDateTime");
             entity.Property(e => e.EinvoiceCancelReason)
                 .HasMaxLength(100)
@@ -5433,7 +5433,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceError");
             entity.Property(e => e.EinvoiceIssueDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceIssueDateTime");
             entity.Property(e => e.EinvoiceStatus)
                 .HasMaxLength(100)
@@ -5452,7 +5452,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceUuid");
             entity.Property(e => e.EinvoiceValidatedDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceValidatedDateTime");
             entity.Property(e => e.EinvoiceValidationLink)
                 .HasMaxLength(255)
@@ -5511,7 +5511,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -5561,7 +5561,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.RoundAdj).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -5578,7 +5578,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -5594,14 +5594,14 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("WithholdingVAT");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -5693,10 +5693,10 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DocKey).ValueGeneratedNever();
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Description).HasMaxLength(50);
-            entity.Property(e => e.EndDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.Frequency).HasMaxLength(12);
             entity.Property(e => e.Section).HasMaxLength(20);
-            entity.Property(e => e.StartDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.StartDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<Cb>(entity =>
@@ -5718,7 +5718,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -5726,7 +5726,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DealWith).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocNo2).HasMaxLength(25);
             entity.Property(e => e.DocStatus)
@@ -5737,10 +5737,10 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false);
             entity.Property(e => e.EinvoiceAipsubmissionDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceAIPSubmissionDateTime");
             entity.Property(e => e.EinvoiceCancelDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceCancelDateTime");
             entity.Property(e => e.EinvoiceCancelReason)
                 .HasMaxLength(100)
@@ -5750,7 +5750,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceError");
             entity.Property(e => e.EinvoiceIssueDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceIssueDateTime");
             entity.Property(e => e.EinvoiceSelfBilledDocNo)
                 .HasMaxLength(30)
@@ -5772,22 +5772,22 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceUuid");
             entity.Property(e => e.EinvoiceValidatedDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceValidatedDateTime");
             entity.Property(e => e.EinvoiceValidationLink)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceValidationLink");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
-            entity.Property(e => e.HandOverDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.HandOverDate).HasColumnType("date");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -5823,7 +5823,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.ToTaxCurrencyRate).HasColumnType("decimal(19, 12)");
@@ -5900,7 +5900,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TariffCode).HasMaxLength(12);
             entity.Property(e => e.Tax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TaxAdjustment).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.TaxBillDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxBillDate).HasColumnType("date");
             entity.Property(e => e.TaxCode).HasMaxLength(14);
             entity.Property(e => e.TaxCurrencyTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TaxCurrencyTaxableAmt).HasColumnType("decimal(19, 2)");
@@ -6010,7 +6010,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentMethod).HasMaxLength(20);
             entity.Property(e => e.Rchqdate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("RCHQDate");
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
@@ -6019,8 +6019,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_CBPaymentDTL_BankChargeTaxCode");
 
-            entity.HasOne(d => d.PaymentMethodNavigation).WithMany(p => p.CbpaymentDtls)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+            entity.HasOne(d => d.PaymentMethodsNavigation).WithMany(p => p.CbpaymentDtls)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PaymentMethod)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_CBPaymentDTL_PaymentMethod");
@@ -6046,7 +6046,7 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => new { e.TransactionId, e.Id, e.Guid }, "IX_ChangeLog_TransactionID_ID_Guid").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.ChangeTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ChangeTime).HasColumnType("date");
             entity.Property(e => e.ChangeType)
                 .HasMaxLength(1)
                 .IsFixedLength();
@@ -6100,7 +6100,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("ConsolidatedEInvoice");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -6118,17 +6118,17 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliveryTaxEntityId).HasColumnName("DeliveryTaxEntityID");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.EinvoiceAipsubmissionDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceAIPSubmissionDateTime");
             entity.Property(e => e.EinvoiceCancelDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceCancelDateTime");
             entity.Property(e => e.EinvoiceCancelReason)
                 .HasMaxLength(100)
@@ -6138,7 +6138,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceError");
             entity.Property(e => e.EinvoiceIssueDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceIssueDateTime");
             entity.Property(e => e.EinvoiceStatus)
                 .HasMaxLength(100)
@@ -6157,14 +6157,14 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceUuid");
             entity.Property(e => e.EinvoiceValidatedDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceValidatedDateTime");
             entity.Property(e => e.EinvoiceValidationLink)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceValidationLink");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FinalTotal).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
@@ -6213,7 +6213,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -6257,7 +6257,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.RoundAdj).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.SubmitEinvoice)
@@ -6272,7 +6272,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -6285,7 +6285,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("WithholdingVAT");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -6439,7 +6439,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.OriginCountryCode)
                 .HasMaxLength(3)
                 .IsUnicode(false);
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -6476,7 +6476,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -6711,7 +6711,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("Comment");
 
             entity.Property(e => e.Comment1).HasColumnName("Comment");
-            entity.Property(e => e.CommentDateTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CommentDateTime).HasColumnType("date");
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -6771,7 +6771,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -6788,14 +6788,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FullTransferOption)
                 .HasMaxLength(1)
@@ -6811,7 +6811,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -6831,7 +6831,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark3).HasMaxLength(40);
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -6848,7 +6848,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalExTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -6924,7 +6924,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -6988,7 +6988,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -7054,7 +7054,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -7071,14 +7071,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
             entity.Property(e => e.InclusiveTax)
@@ -7090,7 +7090,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -7109,7 +7109,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark3).HasMaxLength(40);
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -7126,7 +7126,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalExTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -7202,7 +7202,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -7268,7 +7268,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -7366,7 +7366,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CcapprovalCode)
                 .HasMaxLength(10)
                 .HasColumnName("CCApprovalCode");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -7376,8 +7376,8 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.DocDate2).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
+            entity.Property(e => e.DocDate2).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Fax1).HasMaxLength(25);
@@ -7427,7 +7427,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -7476,7 +7476,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -7491,7 +7491,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
@@ -7586,7 +7586,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Cnamt)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("CNAmt");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -7630,12 +7630,12 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Numbering).HasMaxLength(6);
             entity.Property(e => e.OurPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("OurPODate");
             entity.Property(e => e.OurPono)
                 .HasMaxLength(30)
                 .HasColumnName("OurPONo");
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -7734,10 +7734,10 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CreditLimit).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.CurrentCredit).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.CurrentOverdue).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(50);
             entity.Property(e => e.OverdueLimit).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.RequestDateTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.RequestDateTime).HasColumnType("date");
 
             entity.HasOne(d => d.AccNoNavigation).WithMany(p => p.CreditControlSyncs)
                 .HasForeignKey(d => d.AccNo)
@@ -7783,7 +7783,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(40)
                 .HasColumnName("CPBlockMessage");
             entity.Property(e => e.CpblockStatus).HasColumnName("CPBlockStatus");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -7801,7 +7801,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
             entity.Property(e => e.EmailAddress).HasMaxLength(200);
             entity.Property(e => e.ExemptNo).HasMaxLength(60);
-            entity.Property(e => e.ExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryDate).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Fax2).HasMaxLength(25);
             entity.Property(e => e.GnblockMessage)
@@ -7809,7 +7809,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnName("GNBlockMessage");
             entity.Property(e => e.GnblockStatus).HasColumnName("GNBlockStatus");
             entity.Property(e => e.GststatusVerifiedDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("GSTStatusVerifiedDate");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
@@ -7824,7 +7824,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -7988,7 +7988,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Classification)
                 .HasMaxLength(3)
                 .IsUnicode(false);
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -8040,12 +8040,12 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(3)
                 .IsUnicode(false);
             entity.Property(e => e.OurDodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("OurDODate");
             entity.Property(e => e.OurDono)
                 .HasMaxLength(30)
                 .HasColumnName("OurDONo");
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -8082,7 +8082,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -8203,17 +8203,17 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(40);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.FromBranchCode).HasMaxLength(20);
             entity.Property(e => e.FromDebtorCode).HasMaxLength(12);
             entity.Property(e => e.FromDebtorName).HasMaxLength(100);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -8342,8 +8342,8 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.BankBuyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.BankSellRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
+            entity.Property(e => e.ToDate).HasColumnType("date");
 
             entity.HasOne(d => d.CurrencyCodeNavigation).WithMany(p => p.CurrRates)
                 .HasForeignKey(d => d.CurrencyCode)
@@ -8436,7 +8436,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnName("CGBlockMessage");
             entity.Property(e => e.CgblockStatus).HasColumnName("CGBlockStatus");
             entity.Property(e => e.CompanyName).HasMaxLength(100);
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -8462,11 +8462,11 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DoblockStatus).HasColumnName("DOBlockStatus");
             entity.Property(e => e.EmailAddress).HasMaxLength(200);
             entity.Property(e => e.ExemptNo).HasMaxLength(60);
-            entity.Property(e => e.ExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryDate).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Fax2).HasMaxLength(25);
             entity.Property(e => e.GststatusVerifiedDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("GSTStatusVerifiedDate");
             entity.Property(e => e.HasBonusPoint)
                 .HasMaxLength(1)
@@ -8497,7 +8497,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(40)
                 .HasColumnName("IVBlockMessage");
             entity.Property(e => e.IvblockStatus).HasColumnName("IVBlockStatus");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -8724,7 +8724,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("ConsolidatedEInvoice");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -8745,17 +8745,17 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Dntype)
                 .HasMaxLength(12)
                 .HasColumnName("DNType");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.EinvoiceAipsubmissionDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceAIPSubmissionDateTime");
             entity.Property(e => e.EinvoiceCancelDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceCancelDateTime");
             entity.Property(e => e.EinvoiceCancelReason)
                 .HasMaxLength(100)
@@ -8765,7 +8765,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceError");
             entity.Property(e => e.EinvoiceIssueDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceIssueDateTime");
             entity.Property(e => e.EinvoiceStatus)
                 .HasMaxLength(100)
@@ -8784,14 +8784,14 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceUuid");
             entity.Property(e => e.EinvoiceValidatedDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceValidatedDateTime");
             entity.Property(e => e.EinvoiceValidationLink)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceValidationLink");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -8834,7 +8834,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -8884,7 +8884,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark3).HasMaxLength(40);
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.SubmitEinvoice)
@@ -8899,7 +8899,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -8908,14 +8908,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TotalBonusPoint).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalExTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("WithholdingVAT");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -9061,7 +9061,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.OriginCountryCode)
                 .HasMaxLength(3)
                 .IsUnicode(false);
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -9097,7 +9097,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -9197,7 +9197,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -9214,14 +9214,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -9259,7 +9259,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -9283,7 +9283,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark3).HasMaxLength(40);
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -9304,7 +9304,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -9491,7 +9491,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Action)
                 .HasMaxLength(2)
                 .IsUnicode(false);
-            entity.Property(e => e.ActionTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ActionTimeStamp).HasColumnType("date");
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -9515,7 +9515,7 @@ public partial class ViteSalesContext : DbContext
 
             entity.HasIndex(e => e.TemplateName, "UIX_DocTemplate_TemplateName").IsUnique();
 
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -9580,7 +9580,7 @@ public partial class ViteSalesContext : DbContext
                 .HasNoKey()
                 .ToTable("DocTransferTempAll");
 
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(20);
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
@@ -9643,7 +9643,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DocType)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.LastUpdate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastUpdate).HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -9668,7 +9668,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -9716,7 +9716,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Numbering).HasMaxLength(6);
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -9750,7 +9750,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -9820,7 +9820,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -9837,14 +9837,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -9877,7 +9877,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -9901,7 +9901,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark3).HasMaxLength(40);
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.Tax).HasColumnType("decimal(19, 2)");
@@ -9913,7 +9913,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalExTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -9997,7 +9997,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -10038,7 +10038,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Numbering).HasMaxLength(6);
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -10067,7 +10067,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -10114,12 +10114,12 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("DRProcessing");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.DebtorCode).HasMaxLength(12);
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeliveryQty).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.DeliveryRate).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.DeliveryUom)
@@ -10135,7 +10135,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("IsAllowOPEdit");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -10195,7 +10195,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("DRProcessingDO");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -10216,7 +10216,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("KIV");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -10254,7 +10254,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.EventDateTime)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.ThirdPartyAppName).HasMaxLength(20);
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
@@ -10274,9 +10274,9 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DocKey).ValueGeneratedNever();
             entity.Property(e => e.AccNo).HasMaxLength(12);
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.EndDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.Frequency).HasMaxLength(12);
-            entity.Property(e => e.StartDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.StartDate).HasColumnType("date");
 
             entity.HasOne(d => d.AccNoNavigation).WithMany(p => p.Expenses)
                 .HasForeignKey(d => d.AccNo)
@@ -10293,12 +10293,12 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.FcrevalueKey)
                 .ValueGeneratedNever()
                 .HasColumnName("FCRevalueKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.GainLossJournalType).HasMaxLength(10);
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
@@ -10344,7 +10344,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
@@ -10457,12 +10457,12 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => e.FiscalYearName, "UIX_FiscalYear_FiscalYearName").IsUnique();
 
             entity.Property(e => e.FiscalYearName).HasMaxLength(20);
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.IsActive)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<FontStyle>(entity =>
@@ -10578,7 +10578,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Address2).HasMaxLength(40);
             entity.Property(e => e.Address3).HasMaxLength(40);
             entity.Property(e => e.Address4).HasMaxLength(40);
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -10586,7 +10586,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate)
                 .HasDefaultValue(1m)
                 .HasColumnType("decimal(19, 12)");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.EmailAddress).HasMaxLength(80);
             entity.Property(e => e.GiftDescription).HasMaxLength(100);
@@ -10595,7 +10595,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(25)
                 .HasColumnName("ICNo");
             entity.Property(e => e.JedocKey).HasColumnName("JEDocKey");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -10668,7 +10668,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.TaxCode).HasMaxLength(14);
             entity.Property(e => e.ToHomeRate).HasColumnType("decimal(19, 12)");
-            entity.Property(e => e.TransDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TransDate).HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -10778,12 +10778,12 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("GlobalPriceChange");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.ChangeDateTime).HasColumnType("timestamp(6)");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ChangeDateTime).HasColumnType("date");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -10809,7 +10809,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.CreatedTimeStamp)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -10850,7 +10850,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -10860,14 +10860,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -10909,7 +10909,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -11041,7 +11041,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Cnamt)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("CNAmt");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -11085,12 +11085,12 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Numbering).HasMaxLength(6);
             entity.Property(e => e.OurPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("OurPODate");
             entity.Property(e => e.OurPono)
                 .HasMaxLength(30)
                 .HasColumnName("OurPONo");
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -11168,9 +11168,9 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
             entity.Property(e => e.CapitalCode).HasMaxLength(50);
-            entity.Property(e => e.CommenceDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CommenceDate).HasColumnType("date");
             entity.Property(e => e.Description).HasMaxLength(200);
-            entity.Property(e => e.DisposalDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DisposalDate).HasColumnType("date");
             entity.Property(e => e.IsLost)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -11188,8 +11188,8 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DtlKey).ValueGeneratedNever();
             entity.Property(e => e.Amount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Description).HasMaxLength(200);
-            entity.Property(e => e.DisposalDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.IncurredDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DisposalDate).HasColumnType("date");
+            entity.Property(e => e.IncurredDate).HasColumnType("date");
             entity.Property(e => e.IsLost)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -11209,7 +11209,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("GSTCapitalGoodsSchedule");
 
             entity.Property(e => e.Gstseq).HasColumnName("GSTSeq");
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.Irrate)
                 .HasColumnType("decimal(18, 6)")
                 .HasColumnName("IRRate");
@@ -11221,7 +11221,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.RetaxClaim)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("RETaxClaim");
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
 
             entity.HasOne(d => d.DocKeyNavigation).WithMany(p => p.GstcapitalGoodsSchedules)
                 .HasForeignKey(d => d.DocKey)
@@ -11258,7 +11258,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("GSTFilingReminder");
 
             entity.Property(e => e.GstfilingReminderKey).HasColumnName("GSTFilingReminderKey");
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.IsFirstTimeRemind)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -11267,7 +11267,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<GstpartialExemption>(entity =>
@@ -11276,8 +11276,8 @@ public partial class ViteSalesContext : DbContext
 
             entity.ToTable("GSTPartialExemption");
 
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
+            entity.Property(e => e.ToDate).HasColumnType("date");
             entity.Property(e => e.Gstseq).HasColumnName("GSTSeq");
             entity.Property(e => e.Estax)
                 .HasColumnType("decimal(19, 2)")
@@ -11380,12 +11380,12 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
-            entity.Property(e => e.DeclarationDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeclarationDate).HasColumnType("date");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.Gafversion)
                 .HasMaxLength(100)
                 .HasColumnName("GAFVersion");
@@ -11420,7 +11420,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<Gstsetting>(entity =>
@@ -11463,7 +11463,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -11473,14 +11473,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -11513,7 +11513,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -11624,7 +11624,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -11662,12 +11662,12 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Numbering).HasMaxLength(6);
             entity.Property(e => e.OurPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("OurPODate");
             entity.Property(e => e.OurPono)
                 .HasMaxLength(30)
                 .HasColumnName("OurPONo");
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -11760,7 +11760,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.Discount).HasMaxLength(20);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
@@ -11838,15 +11838,15 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -11970,7 +11970,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("BaseUOM");
             entity.Property(e => e.Classification).HasMaxLength(3);
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -12032,7 +12032,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.ItemGroup).HasMaxLength(8);
             entity.Property(e => e.ItemType).HasMaxLength(12);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -12131,10 +12131,10 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.Description).HasMaxLength(40);
-            entity.Property(e => e.ExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryDate).HasColumnType("date");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastSaleDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ManufacturedDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastSaleDate).HasColumnType("date");
+            entity.Property(e => e.ManufacturedDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<ItemBatchBalQty>(entity =>
@@ -12291,7 +12291,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("ItemCostChangeHistory");
 
             entity.Property(e => e.Hkey).HasColumnName("HKey");
-            entity.Property(e => e.ChangeTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ChangeTime).HasColumnType("date");
             entity.Property(e => e.Cost).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.Uom)
@@ -12317,11 +12317,11 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.Hkey).HasColumnName("HKey");
             entity.Property(e => e.Cost).HasColumnType("decimal(25, 8)");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
@@ -12534,7 +12534,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.DocDate)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.Location).HasMaxLength(8);
@@ -12639,7 +12639,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("ItemPriceChangeHistory");
 
             entity.Property(e => e.Hkey).HasColumnName("HKey");
-            entity.Property(e => e.ChangeTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ChangeTime).HasColumnType("date");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.Price).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.Uom)
@@ -12694,11 +12694,11 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.Csgnqty).HasColumnName("CSGNQty");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
+            entity.Property(e => e.ExpiryDate).HasColumnType("date");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastSalesDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ManufacturedDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastSalesDate).HasColumnType("date");
+            entity.Property(e => e.ManufacturedDate).HasColumnType("date");
             entity.Property(e => e.Remarks).HasMaxLength(20);
             entity.Property(e => e.SerialNumber).HasMaxLength(40);
 
@@ -12909,7 +12909,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("ConsolidatedEInvoice");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -12927,17 +12927,17 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliveryTaxEntityId).HasColumnName("DeliveryTaxEntityID");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.EinvoiceAipsubmissionDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceAIPSubmissionDateTime");
             entity.Property(e => e.EinvoiceCancelDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceCancelDateTime");
             entity.Property(e => e.EinvoiceCancelReason)
                 .HasMaxLength(100)
@@ -12947,7 +12947,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceError");
             entity.Property(e => e.EinvoiceIssueDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceIssueDateTime");
             entity.Property(e => e.EinvoiceStatus)
                 .HasMaxLength(100)
@@ -12966,14 +12966,14 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceUuid");
             entity.Property(e => e.EinvoiceValidatedDateTime)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("EInvoiceValidatedDateTime");
             entity.Property(e => e.EinvoiceValidationLink)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("EInvoiceValidationLink");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FinalTotal).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
@@ -13026,7 +13026,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -13075,7 +13075,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.RoundAdj).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -13092,7 +13092,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -13108,14 +13108,14 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("WithholdingVAT");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -13224,7 +13224,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Classification)
                 .HasMaxLength(3)
                 .IsUnicode(false);
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -13276,12 +13276,12 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(3)
                 .IsUnicode(false);
             entity.Property(e => e.OurDodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("OurDODate");
             entity.Property(e => e.OurDono)
                 .HasMaxLength(30)
                 .HasColumnName("OurDONo");
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -13334,7 +13334,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnName("UserUOM");
             entity.Property(e => e.ValueXferSodocKey).HasColumnName("ValueXferSODocKey");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -13402,14 +13402,14 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocNo2).HasMaxLength(25);
             entity.Property(e => e.DocStatus)
@@ -13422,7 +13422,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.ExTaxDr)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("ExTaxDR");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.GltrxId).HasColumnName("GLTrxID");
             entity.Property(e => e.InclusiveTax)
                 .HasMaxLength(1)
@@ -13430,7 +13430,7 @@ public partial class ViteSalesContext : DbContext
                 .HasDefaultValue("F")
                 .IsFixedLength();
             entity.Property(e => e.JournalType).HasMaxLength(10);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -13498,7 +13498,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyTaxableDr)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyTaxableDR");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDr)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxDR");
@@ -13586,7 +13586,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.LocalTaxableDr)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("LocalTaxableDR");
-            entity.Property(e => e.PostingDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostingDate).HasColumnType("date");
             entity.Property(e => e.ProjNo).HasMaxLength(10);
             entity.Property(e => e.RefNo2).HasMaxLength(30);
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
@@ -13596,7 +13596,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.TariffCode).HasMaxLength(12);
             entity.Property(e => e.TaxAdjustment).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.TaxBillDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxBillDate).HasColumnType("date");
             entity.Property(e => e.TaxCode).HasMaxLength(14);
             entity.Property(e => e.TaxCr)
                 .HasColumnType("decimal(19, 2)")
@@ -13613,7 +13613,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyTaxableDr)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyTaxableDR");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDr)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxDR");
@@ -13775,12 +13775,12 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Location_AreaCode");
 
             entity.HasOne(d => d.CashPaymentMethodNavigation).WithMany(p => p.LocationCashPaymentMethodNavigations)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.CashPaymentMethod)
                 .HasConstraintName("FK_Location_CashPaymentMethod");
 
             entity.HasOne(d => d.ChequePaymentMethodNavigation).WithMany(p => p.LocationChequePaymentMethodNavigations)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.ChequePaymentMethod)
                 .HasConstraintName("FK_Location_ChequePaymentMethod");
 
@@ -13789,7 +13789,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Location_CreditCardChargesAccNo");
 
             entity.HasOne(d => d.DebitCardPaymentMethodNavigation).WithMany(p => p.LocationDebitCardPaymentMethodNavigations)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.DebitCardPaymentMethod)
                 .HasConstraintName("FK_Location_DebitCardPaymentMethod");
 
@@ -13806,7 +13806,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Location_PointPaymentAccNo");
 
             entity.HasOne(d => d.PointPaymentMethodNavigation).WithMany(p => p.LocationPointPaymentMethodNavigations)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.PointPaymentMethod)
                 .HasConstraintName("FK_Location_PointPaymentMethod");
 
@@ -13827,7 +13827,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Location_VoucherForfeitedAccNo");
 
             entity.HasOne(d => d.VoucherPaymentMethodNavigation).WithMany(p => p.LocationVoucherPaymentMethodNavigations)
-                .HasPrincipalKey(p => p.PaymentMethod1)
+                .HasPrincipalKey(p => p.PaymentMethod)
                 .HasForeignKey(d => d.VoucherPaymentMethod)
                 .HasConstraintName("FK_Location_VoucherPaymentMethod");
         });
@@ -13847,7 +13847,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnName("CCEmail");
             entity.Property(e => e.CreatedTime)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.Email)
                 .HasMaxLength(4000)
                 .IsUnicode(false);
@@ -13895,7 +13895,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Address4).HasMaxLength(40);
             entity.Property(e => e.AreaCode).HasMaxLength(12);
             entity.Property(e => e.CompanyName).HasMaxLength(100);
-            entity.Property(e => e.CreatedTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTime).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -13904,10 +13904,10 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DirectFax).HasMaxLength(25);
             entity.Property(e => e.DirectPhone).HasMaxLength(25);
             entity.Property(e => e.Dob)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("DOB");
             entity.Property(e => e.EmailAddress).HasMaxLength(200);
-            entity.Property(e => e.ExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryDate).HasColumnType("date");
             entity.Property(e => e.Gender)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -13926,7 +13926,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -13938,7 +13938,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.OpeningPoints).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.PostCode).HasMaxLength(10);
             entity.Property(e => e.Race).HasMaxLength(10);
-            entity.Property(e => e.RegisterDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.RegisterDate).HasColumnType("date");
             entity.Property(e => e.Title).HasMaxLength(40);
 
             entity.HasOne(d => d.AreaCodeNavigation).WithMany(p => p.Members)
@@ -14026,8 +14026,8 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastCheckDateTime).HasColumnType("timestamp(6)");
-            entity.Property(e => e.LoginTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastCheckDateTime).HasColumnType("date");
+            entity.Property(e => e.LoginTime).HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -14059,7 +14059,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("Notification");
 
             entity.Property(e => e.NotificationKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.UserName).HasMaxLength(40);
         });
 
@@ -14151,7 +14151,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.OccurTime)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -14174,7 +14174,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DocKey).ValueGeneratedNever();
             entity.Property(e => e.BarCode).HasMaxLength(30);
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.ExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryDate).HasColumnType("date");
             entity.Property(e => e.IsActive)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -14241,11 +14241,11 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PackageDTL_ItemUOM");
         });
 
-        modelBuilder.Entity<PaymentMethod>(entity =>
+        modelBuilder.Entity<PaymentMethods>(entity =>
         {
             entity.HasKey(e => e.AutoKey).HasName("PK_PaymentMethod_AutoKey");
 
-            entity.ToTable("PaymentMethod", tb =>
+            entity.ToTable("PaymentMethods", tb =>
                 {
                     tb.HasTrigger("PaymentMethodChangeLog");
                     tb.HasTrigger("UpdatePaymentMethodChangeCount");
@@ -14253,7 +14253,7 @@ public partial class ViteSalesContext : DbContext
 
             entity.HasIndex(e => e.Guid, "UIX_PaymentMethod_Guid").IsUnique();
 
-            entity.HasIndex(e => e.PaymentMethod1, "UIX_PaymentMethod_PaymentMethod").IsUnique();
+            entity.HasIndex(e => e.PaymentMethod, "UIX_PaymentMethod_PaymentMethod").IsUnique();
 
             entity.Property(e => e.AcceptChequeNo)
                 .HasMaxLength(1)
@@ -14282,9 +14282,9 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnName("ODLimit");
             entity.Property(e => e.PaymentBy).HasMaxLength(20);
             entity.Property(e => e.PaymentFormatName).HasMaxLength(20);
-            entity.Property(e => e.PaymentMethod1)
+            entity.Property(e => e.PaymentMethod)
                 .HasMaxLength(20)
-                .HasColumnName("PaymentMethod");
+                .HasColumnName("PaymentMethods");
             entity.Property(e => e.PaymentType).HasMaxLength(12);
             entity.Property(e => e.ReceiptFormatName).HasMaxLength(20);
             entity.Property(e => e.SpecialAccType)
@@ -14407,7 +14407,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.OtherPaymentMade).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.OverRemittance).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.PreviousRemittedAmount).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.RemittanceDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.RemittanceDate).HasColumnType("date");
             entity.Property(e => e.Rorno)
                 .HasMaxLength(30)
                 .HasColumnName("RORNo");
@@ -14421,11 +14421,11 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("PhilippinesVATProcessor");
 
             entity.Property(e => e.Vatkey).HasColumnName("VATKey");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.JedocKey).HasColumnName("JEDocKey");
             entity.Property(e => e.ParentVatkey).HasColumnName("ParentVATKey");
             entity.Property(e => e.Period)
@@ -14441,7 +14441,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.TaxRelief).HasMaxLength(200);
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
             entity.Property(e => e.TotalAmountPayable).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Vatversion).HasColumnName("VATVersion");
         });
@@ -14472,7 +14472,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -14482,8 +14482,8 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.DocDate2).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
+            entity.Property(e => e.DocDate2).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
@@ -14493,7 +14493,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("EInvoiceSelfBilledDocNo");
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FinalTotal).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
@@ -14541,7 +14541,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -14590,7 +14590,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -14605,7 +14605,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.WhtpostingDate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("WHTPostingDate");
             entity.Property(e => e.WithholdingTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.WithholdingVat)
@@ -14700,7 +14700,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Cnamt)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("CNAmt");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -14744,12 +14744,12 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Numbering).HasMaxLength(6);
             entity.Property(e => e.OurPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("OurPODate");
             entity.Property(e => e.OurPono)
                 .HasMaxLength(30)
                 .HasColumnName("OurPONo");
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -14862,7 +14862,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.Dbversion)
                 .HasMaxLength(20)
                 .HasColumnName("DBVersion");
@@ -14896,13 +14896,13 @@ public partial class ViteSalesContext : DbContext
             entity.HasKey(e => new { e.Guid, e.FileName }).HasName("PK_PlugInFiles_Guid_FileName");
 
             entity.Property(e => e.FileName).HasMaxLength(260);
-            entity.Property(e => e.CreationTimeUtc).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreationTimeUtc).HasColumnType("date");
             entity.Property(e => e.ExecuteAfterExtracted)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastAccessTimeUtc).HasColumnType("timestamp(6)");
-            entity.Property(e => e.LastWriteTimeUtc).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastAccessTimeUtc).HasColumnType("date");
+            entity.Property(e => e.LastWriteTimeUtc).HasColumnType("date");
 
             entity.HasOne(d => d.Gu).WithMany(p => p.PlugInFiles)
                 .HasForeignKey(d => d.Guid)
@@ -14940,7 +14940,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -14957,14 +14957,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FinalTotal).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
@@ -15007,7 +15007,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -15133,7 +15133,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -15252,7 +15252,7 @@ public partial class ViteSalesContext : DbContext
             entity.HasIndex(e => e.Guid, "UIX_PointTrans_Guid").IsUnique();
 
             entity.Property(e => e.PointTransKey).ValueGeneratedNever();
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.MemberNo).HasMaxLength(20);
             entity.Property(e => e.PointType)
@@ -15346,19 +15346,19 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(80);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -15430,7 +15430,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.ProjNo).HasMaxLength(10);
             entity.Property(e => e.Qty).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.Rate).HasColumnType("decimal(25, 8)");
-            entity.Property(e => e.RequiredDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.RequiredDate).HasColumnType("date");
             entity.Property(e => e.SmallestQty).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.SubQty).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.Transferable)
@@ -15494,7 +15494,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -15504,15 +15504,15 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.DocDate2).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
+            entity.Property(e => e.DocDate2).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FinalTotal).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
@@ -15551,7 +15551,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -15597,7 +15597,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxCurrencyWithholdingVat)
                 .HasColumnType("decimal(19, 2)")
                 .HasColumnName("TaxCurrencyWithholdingVAT");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxDocNo).HasMaxLength(20);
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -15729,12 +15729,12 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Numbering).HasMaxLength(6);
             entity.Property(e => e.OurPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("OurPODate");
             entity.Property(e => e.OurPono)
                 .HasMaxLength(30)
                 .HasColumnName("OurPONo");
-            entity.Property(e => e.PostToStockDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.PostToStockDate).HasColumnType("date");
             entity.Property(e => e.PrintOut)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -15769,7 +15769,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourDodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourDODate");
             entity.Property(e => e.YourDono)
                 .HasMaxLength(30)
@@ -15829,7 +15829,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.Geqty)
                 .HasColumnType("decimal(25, 8)")
                 .HasColumnName("GEQty");
@@ -15839,7 +15839,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.MatrixName).HasMaxLength(20);
             entity.Property(e => e.Priority).HasDefaultValue((short)0);
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
             entity.Property(e => e.UnitPrice)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -15861,7 +15861,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Discount).HasMaxLength(20);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
             entity.Property(e => e.FromAreaCode).HasMaxLength(12);
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.FromDebtorCode).HasMaxLength(12);
             entity.Property(e => e.FromDebtorType).HasMaxLength(20);
             entity.Property(e => e.FromDeptNo).HasMaxLength(10);
@@ -15884,7 +15884,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.Priority).HasDefaultValue((short)0);
             entity.Property(e => e.ToAreaCode).HasMaxLength(12);
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
             entity.Property(e => e.ToDebtorCode).HasMaxLength(12);
             entity.Property(e => e.ToDebtorType).HasMaxLength(20);
             entity.Property(e => e.ToDeptNo).HasMaxLength(10);
@@ -16080,7 +16080,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.AccApiKey)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.AccExpiryTimestamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.AccExpiryTimestamp).HasColumnType("date");
             entity.Property(e => e.AccKeyId)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -16122,7 +16122,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("POSApiKey");
             entity.Property(e => e.PosexpiryTimestamp)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("POSExpiryTimestamp");
             entity.Property(e => e.PoskeyId)
                 .HasMaxLength(50)
@@ -16178,12 +16178,12 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("PRProcessing");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.CreditorCode).HasMaxLength(12);
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.EstimatedDeliveryDate).HasMaxLength(20);
@@ -16196,7 +16196,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("IsAllowOPEdit");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -16253,7 +16253,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("PRProcessingPO");
 
             entity.Property(e => e.DocKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -16267,7 +16267,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("KIV");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -16351,7 +16351,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -16368,14 +16368,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FullTransferOption)
                 .HasMaxLength(1)
@@ -16391,7 +16391,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -16498,7 +16498,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -16622,7 +16622,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -16639,14 +16639,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
             entity.Property(e => e.InclusiveTax)
@@ -16658,7 +16658,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -16764,7 +16764,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -16898,7 +16898,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Cc)
                 .HasMaxLength(20)
                 .HasColumnName("CC");
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -16916,14 +16916,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliveryTerm).HasMaxLength(40);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FinalTotal).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
@@ -16966,7 +16966,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -16987,7 +16987,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.RoundAdj).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -17096,7 +17096,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -17217,15 +17217,15 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -17318,7 +17318,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -17326,7 +17326,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
-            entity.Property(e => e.EndDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.EndType)
                 .HasMaxLength(1)
                 .IsUnicode(false)
@@ -17339,7 +17339,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -17376,7 +17376,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.RecurrenceName).HasMaxLength(100);
-            entity.Property(e => e.StartDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.StartDate).HasColumnType("date");
 
             entity.HasOne(d => d.AlertUser).WithMany(p => p.RecurrenceAlertUsers)
                 .HasPrincipalKey(p => p.UserId)
@@ -17403,7 +17403,7 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("RecurrenceDtl");
 
             entity.Property(e => e.AccNo).HasMaxLength(12);
-            entity.Property(e => e.RecurrenceDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.RecurrenceDate).HasColumnType("date");
             entity.Property(e => e.SourceDocNo).HasMaxLength(30);
             entity.Property(e => e.Status).HasMaxLength(20);
 
@@ -17548,7 +17548,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -17565,14 +17565,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -17609,7 +17609,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -17720,7 +17720,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -17875,16 +17875,16 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
-            entity.Property(e => e.ExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryDate).HasColumnType("date");
             entity.Property(e => e.FromSerialNo).HasMaxLength(40);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
-            entity.Property(e => e.LastSalesDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.ManufacturedDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastSalesDate).HasColumnType("date");
+            entity.Property(e => e.ManufacturedDate).HasColumnType("date");
             entity.Property(e => e.Remarks).HasMaxLength(20);
             entity.Property(e => e.ToSerialNo).HasMaxLength(40);
             entity.Property(e => e.TransferedSn).HasColumnName("TransferedSN");
@@ -17902,10 +17902,10 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("Session");
 
             entity.Property(e => e.ComputerName).HasMaxLength(20);
-            entity.Property(e => e.TimeEnd).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TimeEnd).HasColumnType("date");
             entity.Property(e => e.TimeStart)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -18050,7 +18050,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -18067,14 +18067,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.FinalTotal).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
@@ -18117,7 +18117,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("F")
                 .IsFixedLength();
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -18137,7 +18137,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.RoundAdj).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.ShipInfo).HasMaxLength(40);
@@ -18166,7 +18166,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("UDF_PostedArea");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -18257,7 +18257,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.BatchNo).HasMaxLength(20);
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -18289,19 +18289,19 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.LastAorpmodified)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("LastAORPModified");
             entity.Property(e => e.LastAorpmodifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastAORPModifiedUserID");
             entity.Property(e => e.LastDrpmodified)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("LastDRPModified");
             entity.Property(e => e.LastDrpmodifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastDRPModifiedUserID");
             entity.Property(e => e.LastOpmodified)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("LastOPModified");
             entity.Property(e => e.LastOpmodifiedUserId)
                 .HasMaxLength(10)
@@ -18386,7 +18386,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -18447,14 +18447,14 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.DeclarantDesignation).HasMaxLength(200);
             entity.Property(e => e.DeclarantName).HasMaxLength(200);
-            entity.Property(e => e.DeclarationDate).HasColumnType("timestamp(6)");
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeclarationDate).HasColumnType("date");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.IcorPassportNo)
                 .HasMaxLength(20)
                 .HasColumnName("ICOrPassportNo");
@@ -18468,7 +18468,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.TelephoneNo).HasMaxLength(20);
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<Sstsetting>(entity =>
@@ -18503,14 +18503,14 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.DisassemblyCost).HasColumnType("decimal(25, 8)");
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DtlTotal).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
@@ -18520,7 +18520,7 @@ public partial class ViteSalesContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.ItemCost).HasColumnType("decimal(25, 8)");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -18662,7 +18662,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnName("CFTotalQty");
             entity.Property(e => e.Cost).HasColumnType("decimal(25, 8)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -18673,7 +18673,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.ItemCode).HasMaxLength(30);
             entity.Property(e => e.LastModified)
                 .HasDefaultValueSql("(date(now()))")
-                .HasColumnType("timestamp(6)");
+                .HasColumnType("date");
             entity.Property(e => e.Location).HasMaxLength(8);
             entity.Property(e => e.ProjNo).HasMaxLength(10);
             entity.Property(e => e.Qty).HasColumnType("decimal(25, 8)");
@@ -18801,19 +18801,19 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
-            entity.Property(e => e.LastPostedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastPostedTimeStamp).HasColumnType("date");
             entity.Property(e => e.Location).HasMaxLength(8);
             entity.Property(e => e.RefDocNo).HasMaxLength(30);
             entity.Property(e => e.Remark1).HasMaxLength(40);
@@ -19040,12 +19040,12 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("TaxDocNo");
 
             entity.Property(e => e.Format).HasMaxLength(30);
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.IsDefault)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TaxDocNoDtl>(entity =>
@@ -19158,7 +19158,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.LocalTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.LocalTaxableAmt).HasColumnType("decimal(19, 2)");
@@ -19181,7 +19181,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Tax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TaxAccNo).HasMaxLength(12);
             entity.Property(e => e.TaxCode).HasMaxLength(14);
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxExportCountry).HasMaxLength(50);
             entity.Property(e => e.TaxPermitNo).HasMaxLength(20);
@@ -19238,7 +19238,7 @@ public partial class ViteSalesContext : DbContext
 
             entity.ToTable("TaxTransAudit");
 
-            entity.Property(e => e.AuditDateTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.AuditDateTime).HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -19268,7 +19268,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.LocalTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.LocalTaxableAmt).HasColumnType("decimal(19, 2)");
@@ -19291,7 +19291,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Tax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TaxAccNo).HasMaxLength(12);
             entity.Property(e => e.TaxCode).HasMaxLength(14);
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxExportCountry).HasMaxLength(50);
             entity.Property(e => e.TaxPermitNo).HasMaxLength(20);
@@ -19362,7 +19362,7 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.LocalTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.LocalTaxableAmt).HasColumnType("decimal(19, 2)");
@@ -19385,7 +19385,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Tax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TaxAccNo).HasMaxLength(12);
             entity.Property(e => e.TaxCode).HasMaxLength(14);
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxExportCountry).HasMaxLength(50);
             entity.Property(e => e.TaxPermitNo).HasMaxLength(20);
@@ -19453,7 +19453,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false);
             entity.Property(e => e.SaveReason).HasMaxLength(20);
-            entity.Property(e => e.SaveTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SaveTime).HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -19469,10 +19469,10 @@ public partial class ViteSalesContext : DbContext
 
             entity.Property(e => e.AccNo).HasMaxLength(12);
             entity.Property(e => e.CreditLimit).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.FromDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.FromDate).HasColumnType("date");
             entity.Property(e => e.OverdueLimit).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Remark).HasMaxLength(40);
-            entity.Property(e => e.ToDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ToDate).HasColumnType("date");
 
             entity.HasOne(d => d.AccNoNavigation).WithMany(p => p.TemporaryCredits)
                 .HasForeignKey(d => d.AccNo)
@@ -19556,7 +19556,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false);
             entity.Property(e => e.NetTotal).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.SaveTime).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SaveTime).HasColumnType("date");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .HasColumnName("UserID");
@@ -19579,12 +19579,12 @@ public partial class ViteSalesContext : DbContext
             entity.ToTable("UnrealizedGainLoss");
 
             entity.Property(e => e.UnrealizedGainLossKey).ValueGeneratedNever();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocNo2).HasMaxLength(30);
             entity.Property(e => e.GainLossJournalType).HasMaxLength(10);
@@ -19652,7 +19652,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocType)
                 .HasMaxLength(2)
@@ -19751,18 +19751,18 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.FromDocNo).HasMaxLength(30);
             entity.Property(e => e.FromDocType)
                 .HasMaxLength(2)
                 .IsUnicode(false);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -19845,14 +19845,14 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -20025,7 +20025,7 @@ public partial class ViteSalesContext : DbContext
                 .HasDefaultValue("F")
                 .IsFixedLength()
                 .HasColumnName("IsExportSOToBranch");
-            entity.Property(e => e.LastPasswordDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastPasswordDate).HasColumnType("date");
             entity.Property(e => e.Location).HasMaxLength(8);
             entity.Property(e => e.PasswordAge).HasDefaultValue(-1);
             entity.Property(e => e.PasswordStrength)
@@ -20344,7 +20344,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyCode).HasMaxLength(5);
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.LocalTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.LocalTaxableAmt).HasColumnType("decimal(19, 2)");
@@ -20360,7 +20360,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(2)
                 .IsUnicode(false);
             entity.Property(e => e.Tax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.TaxDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.TaxDate).HasColumnType("date");
             entity.Property(e => e.TaxEntityId).HasColumnName("TaxEntityID");
             entity.Property(e => e.TaxableAccNo).HasMaxLength(12);
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
@@ -20401,15 +20401,15 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -20512,7 +20512,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -20529,14 +20529,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.DeliverPhone1).HasMaxLength(25);
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -20569,7 +20569,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -20588,7 +20588,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Remark3).HasMaxLength(40);
             entity.Property(e => e.Remark4).HasMaxLength(40);
             entity.Property(e => e.SalesAgent).HasMaxLength(12);
-            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.SalesExemptionExpiryDate).HasColumnType("date");
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.SalesLocation).HasMaxLength(8);
             entity.Property(e => e.Tax).HasColumnType("decimal(19, 2)");
@@ -20600,7 +20600,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Total).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.TotalExTax).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)
@@ -20687,16 +20687,16 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
             entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.FromLocation).HasMaxLength(8);
             entity.Property(e => e.Guid).HasDefaultValueSql("(gen_random_uuid())");
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -20808,7 +20808,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CreatedTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.CreatedTimeStamp).HasColumnType("date");
             entity.Property(e => e.CreatedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("CreatedUserID");
@@ -20818,14 +20818,14 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.CurrencyRate).HasColumnType("decimal(19, 12)");
             entity.Property(e => e.Description).HasMaxLength(80);
             entity.Property(e => e.DisplayTerm).HasMaxLength(30);
-            entity.Property(e => e.DocDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DocDate).HasColumnType("date");
             entity.Property(e => e.DocNo).HasMaxLength(30);
             entity.Property(e => e.DocStatus)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.ExTax).HasColumnType("decimal(19, 2)");
-            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("timestamp(6)");
+            entity.Property(e => e.ExpiryTimeStamp).HasColumnType("date");
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Footer1Amt).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.Footer1LocalAmt).HasColumnType("decimal(19, 2)");
@@ -20858,7 +20858,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.InvAddr2).HasMaxLength(40);
             entity.Property(e => e.InvAddr3).HasMaxLength(40);
             entity.Property(e => e.InvAddr4).HasMaxLength(40);
-            entity.Property(e => e.LastModified).HasColumnType("timestamp(6)");
+            entity.Property(e => e.LastModified).HasColumnType("date");
             entity.Property(e => e.LastModifiedUserId)
                 .HasMaxLength(10)
                 .HasColumnName("LastModifiedUserID");
@@ -20964,7 +20964,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -21071,7 +21071,7 @@ public partial class ViteSalesContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.CalcByPercent).HasColumnType("decimal(18, 6)");
-            entity.Property(e => e.DeliveryDate).HasColumnType("timestamp(6)");
+            entity.Property(e => e.DeliveryDate).HasColumnType("date");
             entity.Property(e => e.DeptNo).HasMaxLength(10);
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
@@ -21135,7 +21135,7 @@ public partial class ViteSalesContext : DbContext
                 .HasMaxLength(8)
                 .HasColumnName("UserUOM");
             entity.Property(e => e.YourPodate)
-                .HasColumnType("timestamp(6)")
+                .HasColumnType("date")
                 .HasColumnName("YourPODate");
             entity.Property(e => e.YourPono)
                 .HasMaxLength(25)

@@ -50,5 +50,5 @@ public partial class ArrefundDtl
 
     public virtual TaxCode? BankChargeTaxCodeNavigation { get; set; }
 
-    public virtual PaymentMethod PaymentMethodNavigation { get; set; } = null!;
+    public virtual PaymentMethods PaymentMethodsNavigation { get; set; } = null!;
 }

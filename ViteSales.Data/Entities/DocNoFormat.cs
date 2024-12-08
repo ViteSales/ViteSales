@@ -24,7 +24,7 @@ public partial class DocNoFormat
 
     public virtual ICollection<DocNoFormatUser> DocNoFormatUsers { get; set; } = new List<DocNoFormatUser>();
 
-    public virtual ICollection<PaymentMethod> PaymentMethodPaymentFormatNameNavigations { get; set; } = new List<PaymentMethod>();
+    public virtual ICollection<PaymentMethods> PaymentMethodPaymentFormatNameNavigations { get; set; } = new List<PaymentMethods>();
 
-    public virtual ICollection<PaymentMethod> PaymentMethodReceiptFormatNameNavigations { get; set; } = new List<PaymentMethod>();
+    public virtual ICollection<PaymentMethods> PaymentMethodReceiptFormatNameNavigations { get; set; } = new List<PaymentMethods>();
 }

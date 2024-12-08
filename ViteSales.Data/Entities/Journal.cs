@@ -34,7 +34,7 @@ public partial class Journal
 
     public virtual ICollection<Je> Jes { get; set; } = new List<Je>();
 
-    public virtual ICollection<PaymentMethod> PaymentMethods { get; set; } = new List<PaymentMethod>();
+    public virtual ICollection<PaymentMethods> PaymentMethods { get; set; } = new List<PaymentMethods>();
 
     public virtual ICollection<UnrealizedGainLoss> UnrealizedGainLosses { get; set; } = new List<UnrealizedGainLoss>();
 }

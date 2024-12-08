@@ -220,9 +220,9 @@ public partial class Glmast
 
     public virtual TaxCode? OutputTaxCodeNavigation { get; set; }
 
-    public virtual ICollection<PaymentMethod> PaymentMethodBankAccountNavigations { get; set; } = new List<PaymentMethod>();
+    public virtual ICollection<PaymentMethods> PaymentMethodBankAccountNavigations { get; set; } = new List<PaymentMethods>();
 
-    public virtual ICollection<PaymentMethod> PaymentMethodBankChargeAccountNavigations { get; set; } = new List<PaymentMethod>();
+    public virtual ICollection<PaymentMethods> PaymentMethodBankChargeAccountNavigations { get; set; } = new List<PaymentMethods>();
 
     public virtual ICollection<Pbalance> Pbalances { get; set; } = new List<Pbalance>();
 

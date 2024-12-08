@@ -9,9 +9,10 @@ namespace ViteSales.ERP.GL.AccountMaintenance;
 
 public class AccTypeImpl(IViteSalesDataContext ctx)
 {
-    public DataTable Load()
+    public List<AccType>? Load()
     {
-        return ctx.Resource.AccTypes.ToList().ToDataTable("AccTypeCode");
+        var dt = ctx.Resource.AccTypes.ToList();
+        return dt.Count == 0 ? null : dt;
     }
 
     public void Save(DataTable dt)
@@ -46,7 +47,7 @@ public class AccTypeImpl(IViteSalesDataContext ctx)
             
             foreach (DataRow row in dt.Rows)
             {
-                if (row.RowState == DataRowState.Added || row.RowState == DataRowState.Modified)
+                if (row.RowState is DataRowState.Added or DataRowState.Modified)
                 {
                     var isBsType = 
                         Converter.TextToBoolean(row.Field<string>("IsBstype")  == null ? 
@@ -99,10 +100,7 @@ public class AccTypeImpl(IViteSalesDataContext ctx)
                     case DataRowState.Modified:
                         var accType = ctx.Resource.AccTypes
                             .FirstOrDefault(x => x.AccTypeCode == row["AccTypeCode"].ToString());
-                        if (accType != null)
-                        {
-                            accType.UpdateFromDataRow(row);
-                        }
+                        accType?.UpdateFromDataRow(row);
                         break;
                 }
             }

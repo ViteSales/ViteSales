@@ -88,9 +88,9 @@ public partial class Location
 
     public virtual ICollection<BonusPointRedemptionDtl> BonusPointRedemptionDtls { get; set; } = new List<BonusPointRedemptionDtl>();
 
-    public virtual PaymentMethod? CashPaymentMethodNavigation { get; set; }
+    public virtual PaymentMethods? CashPaymentMethodNavigation { get; set; }
 
-    public virtual PaymentMethod? ChequePaymentMethodNavigation { get; set; }
+    public virtual PaymentMethods? ChequePaymentMethodNavigation { get; set; }
 
     public virtual ICollection<Cndtl> Cndtls { get; set; } = new List<Cndtl>();
 
@@ -118,7 +118,7 @@ public partial class Location
 
     public virtual ICollection<Csgnxferdtl> Csgnxferdtls { get; set; } = new List<Csgnxferdtl>();
 
-    public virtual PaymentMethod? DebitCardPaymentMethodNavigation { get; set; }
+    public virtual PaymentMethods? DebitCardPaymentMethodNavigation { get; set; }
 
     public virtual Glmast? DepositAccNoNavigation { get; set; }
 
@@ -170,7 +170,7 @@ public partial class Location
 
     public virtual Glmast? PointPaymentAccNoNavigation { get; set; }
 
-    public virtual PaymentMethod? PointPaymentMethodNavigation { get; set; }
+    public virtual PaymentMethods? PointPaymentMethodNavigation { get; set; }
 
     public virtual ICollection<Po> Pos { get; set; } = new List<Po>();
 
@@ -232,7 +232,7 @@ public partial class Location
 
     public virtual Glmast? VoucherForfeitedAccNoNavigation { get; set; }
 
-    public virtual PaymentMethod? VoucherPaymentMethodNavigation { get; set; }
+    public virtual PaymentMethods? VoucherPaymentMethodNavigation { get; set; }
 
     public virtual ICollection<Woffdtl> Woffdtls { get; set; } = new List<Woffdtl>();
 

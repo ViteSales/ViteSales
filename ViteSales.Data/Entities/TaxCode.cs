@@ -178,7 +178,7 @@ public partial class TaxCode
 
     public virtual ICollection<PackageDtl> PackageDtlTaxCodeNavigations { get; set; } = new List<PackageDtl>();
 
-    public virtual ICollection<PaymentMethod> PaymentMethods { get; set; } = new List<PaymentMethod>();
+    public virtual ICollection<PaymentMethods> PaymentMethods { get; set; } = new List<PaymentMethods>();
 
     public virtual ICollection<Pi> PiFooter1TaxCodeNavigations { get; set; } = new List<Pi>();
 

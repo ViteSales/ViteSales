@@ -96,7 +96,7 @@ public partial class TaxEntity
 
     public virtual ICollection<Jedtl> Jedtls { get; set; } = new List<Jedtl>();
 
-    public virtual ICollection<PaymentMethod> PaymentMethods { get; set; } = new List<PaymentMethod>();
+    public virtual ICollection<PaymentMethods> PaymentMethods { get; set; } = new List<PaymentMethods>();
 
     public virtual ICollection<Pi> Pis { get; set; } = new List<Pi>();
 

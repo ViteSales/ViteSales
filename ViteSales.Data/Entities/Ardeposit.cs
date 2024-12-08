@@ -82,7 +82,7 @@ public partial class Ardeposit
 
     public virtual Glmast? DebtorCodeNavigation { get; set; }
 
-    public virtual PaymentMethod DepositPaymentMethodNavigation { get; set; } = null!;
+    public virtual PaymentMethods DepositPaymentMethodsNavigation { get; set; } = null!;
 
     public virtual Dept? DeptNoNavigation { get; set; }
 

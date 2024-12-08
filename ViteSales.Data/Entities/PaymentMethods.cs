@@ -1,10 +1,10 @@
 ﻿namespace ViteSales.Data.Entities;
 
-public partial class PaymentMethod
+public partial class PaymentMethods
 {
     public long AutoKey { get; set; }
 
-    public string PaymentMethod1 { get; set; } = null!;
+    public string PaymentMethod { get; set; } = null!;
 
     public string BankAccount { get; set; } = null!;
 

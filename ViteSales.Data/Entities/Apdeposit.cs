@@ -76,7 +76,7 @@ public partial class Apdeposit
 
     public virtual Currency CurrencyCodeNavigation { get; set; } = null!;
 
-    public virtual PaymentMethod DepositPaymentMethodNavigation { get; set; } = null!;
+    public virtual PaymentMethods DepositPaymentMethodsNavigation { get; set; } = null!;
 
     public virtual Dept? DeptNoNavigation { get; set; }
 

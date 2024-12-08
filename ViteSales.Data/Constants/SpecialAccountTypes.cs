@@ -21,8 +21,9 @@ public static class AccountTypes
         Creditor
     }
     
-    public static SpecialAccountType ToSpecialAccountType(object obj)
+    public static SpecialAccountType ToSpecialAccountType(object? obj)
     {
+        if (obj == null) return SpecialAccountType.Normal;
         return obj.ToString() switch
         {
             "SFA" => SpecialAccountType.FixedAsset,
