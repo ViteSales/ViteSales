@@ -36,7 +36,7 @@ public partial class TaxEntity
 
     public string? BusinessActivityDesc { get; set; }
 
-    public string? Msiccode { get; set; }
+    public string? Siccode { get; set; }
 
     public string? City { get; set; }
 

@@ -74,7 +74,7 @@ public partial class Profile
 
     public string? ItemClassificationInJson { get; set; }
 
-    public string? MsiccodeInJson { get; set; }
+    public string? SiccodeInJson { get; set; }
 
     public string? EinvoiceCountryCodeInJson { get; set; }
 

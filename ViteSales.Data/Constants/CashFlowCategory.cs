@@ -21,14 +21,14 @@ public static class CashFlow
         };
     }
 
-    public static object FromCashFlowCategory(CashFlowCategory cfc)
+    public static string FromCashFlowCategory(CashFlowCategory cfc)
     {
         return cfc switch
         {
             CashFlowCategory.OperatingActivities => "O",
             CashFlowCategory.InvestingActivities => "I",
             CashFlowCategory.FinancingActivities => "F",
-            _ => DBNull.Value,
+            _ => "",
         };
     }
 }

@@ -115,10 +115,10 @@ public class AccTypeImpl(IViteSalesDataContext ctx)
             ctx.Resource.SaveChanges();
             transaction.Commit();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             transaction.Rollback();
-            throw;
+            throw ex;
         }
     }
 }

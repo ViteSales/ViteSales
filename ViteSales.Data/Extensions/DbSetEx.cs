@@ -5,6 +5,23 @@ namespace ViteSales.Data.Extensions;
 
 public static class DbSetEx
 {
+    public static DataTable ToDataTable<T>(this IList<T> data)
+    {
+        var table = new DataTable();
+        var properties =
+            TypeDescriptor.GetProperties(typeof(T));
+        foreach (PropertyDescriptor prop in properties)
+            table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+        foreach (var item in data)
+        {
+            var row = table.NewRow();
+            foreach (PropertyDescriptor prop in properties)
+                row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+            table.Rows.Add(row);
+        }
+
+        return table;
+    }
     /// <summary>
     /// Converts a list of objects of type <typeparamref name="T"/> to a DataTable.
     /// </summary>

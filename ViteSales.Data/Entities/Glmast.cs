@@ -18,7 +18,7 @@ public partial class Glmast
 
     public string? CashFlowCategory { get; set; }
 
-    public string? Msiccode { get; set; }
+    public string? Siccode { get; set; }
 
     public string? InputTaxCode { get; set; }
 

@@ -13,7 +13,7 @@ public class FiscalYearImpl(IViteSalesDataContext ctx)
     public (FiscalYearPeriod, FiscalYearPeriod) GetFiscalYearPeriod()
     {
         var activeFiscalYear = GetActiveFiscalYear();
-        if (activeFiscalYear != null)
+        if (activeFiscalYear == null)
         {
             throw new NoActiveFiscalYearException<string>("No active fiscal year found. Please create a fiscal year.");
         }
@@ -24,7 +24,7 @@ public class FiscalYearImpl(IViteSalesDataContext ctx)
             throw new NullReferenceException("No fiscal year settings found. Please create fiscal year settings.");
         }
 
-        var startPeriod = new FiscalYearPeriod(Converter.ToDateTime(fys.FiscalYearStartPeriod));
+        var startPeriod = new FiscalYearPeriod(fys.FiscalYearStartPeriod);
         var actualPeriod = new FiscalYearPeriod(fys.ActualDataStartPeriod);
         if (actualPeriod.PeriodNo < startPeriod.PeriodNo)
         {
@@ -197,7 +197,7 @@ public class FiscalYearImpl(IViteSalesDataContext ctx)
 public class FiscalYearPeriod(int periodNo)
 {
     private int _periodNo = periodNo;
-
+    
     public int Month => (_periodNo + 11) % 12 + 1;
 
     public int Year => (_periodNo - 1) / 12;

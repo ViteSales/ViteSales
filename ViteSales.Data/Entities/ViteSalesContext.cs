@@ -10730,10 +10730,10 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Desc2).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.InputTaxCode).HasMaxLength(14);
-            entity.Property(e => e.Msiccode)
+            entity.Property(e => e.Siccode)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasColumnName("MSICCode");
+                .HasColumnName("SICCode");
             entity.Property(e => e.OutputTaxCode).HasMaxLength(14);
             entity.Property(e => e.ParentAccNo).HasMaxLength(12);
             entity.Property(e => e.SgeFilingDataId)
@@ -16113,7 +16113,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.Fax1).HasMaxLength(25);
             entity.Property(e => e.Fax2).HasMaxLength(25);
             entity.Property(e => e.LogoClass).HasMaxLength(40);
-            entity.Property(e => e.MsiccodeInJson).HasColumnName("MSICCodeInJson");
+            entity.Property(e => e.SiccodeInJson).HasColumnName("SICCodeInJson");
             entity.Property(e => e.NatureOfBusiness).HasMaxLength(40);
             entity.Property(e => e.Phone1).HasMaxLength(25);
             entity.Property(e => e.Phone2).HasMaxLength(25);
@@ -19090,9 +19090,9 @@ public partial class ViteSalesContext : DbContext
                 .HasColumnName("GSTRegisterNo");
             entity.Property(e => e.IdentityNo).HasMaxLength(30);
             entity.Property(e => e.IdentityType).HasMaxLength(10);
-            entity.Property(e => e.Msiccode)
+            entity.Property(e => e.Siccode)
                 .HasMaxLength(5)
-                .HasColumnName("MSICCode");
+                .HasColumnName("SICCode");
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Phone).HasMaxLength(25);
             entity.Property(e => e.PostCode).HasMaxLength(10);
