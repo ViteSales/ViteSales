@@ -2,8 +2,9 @@ using System.Data;
 using ViteSales.Data.Contracts;
 using ViteSales.Data.Entities;
 using ViteSales.Data.Extensions;
+using ViteSales.Data.Models;
 
-namespace ViteSales.ERP.GL.AccountMaintenance;
+namespace ViteSales.ERP.GL.Settings;
 
 public class CurrencyImpl(IViteSalesDataContext ctx)
 {
@@ -11,6 +12,18 @@ public class CurrencyImpl(IViteSalesDataContext ctx)
     {
         var dt = ctx.Resource.Currencies.ToList();
         return dt.Count == 0 ? null : dt;
+    }
+
+    public void SetDefaultCurrency(SettingsDefaultCurrency currency)
+    {
+        var settings = new SettingsImpl(ctx);
+        settings.Save("DefaultCurrency",currency);
+    }
+
+    public SettingsDefaultCurrency? GetDefaultCurrency()
+    {
+        var settings = new SettingsImpl(ctx);
+        return settings.Get<SettingsDefaultCurrency>("DefaultCurrency");
     }
 
     public void Save(DataTable dt)

@@ -6,6 +6,8 @@ namespace ViteSales.Data.Contracts;
 public interface IViteSalesDataContext
 {
     public string Username { get; set; }
+    public string DefaultProjectNo { get; set; }
+    public string DefaultDepartmentNo { get; set; }
     public ViteSalesContext Resource { get; set; }
     public void OnAdded(DataTable dt);
     public void OnUpdated(DataTable dt);

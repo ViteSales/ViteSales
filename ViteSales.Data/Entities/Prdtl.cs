@@ -150,5 +150,5 @@ public partial class Prdtl
 
     public virtual Tariff? TariffCodeNavigation { get; set; }
 
-    public virtual TaxCode? TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? TaxCodeNavigation { get; set; }
 }

@@ -8,7 +8,10 @@ namespace ViteSales.Console;
 public class ConnectionProvider(ViteSalesContext ctx): IViteSalesDataContext
 {
     public string Username { get; set; } = "SYSTEM::TESTING";
+    public string DefaultProjectNo { get; set; } = "";
+    public string DefaultDepartmentNo { get; set; } = "";
     public ViteSalesContext Resource { get; set; } = ctx;
+    
     public void OnAdded(DataTable dt)
     {
         System.Console.WriteLine("OnAdded");

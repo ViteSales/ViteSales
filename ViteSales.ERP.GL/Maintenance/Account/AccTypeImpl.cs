@@ -5,14 +5,13 @@ using ViteSales.Data.Entities;
 using ViteSales.Data.Extensions;
 using ViteSales.Data.Utils;
 
-namespace ViteSales.ERP.GL.AccountMaintenance;
+namespace ViteSales.ERP.GL.Maintenance.Account;
 
 public class AccTypeImpl(IViteSalesDataContext ctx)
 {
-    public List<AccType>? Load()
+    public List<AccType> Load()
     {
-        var dt = ctx.Resource.AccTypes.ToList();
-        return dt.Count == 0 ? null : dt;
+        return ctx.Resource.AccTypes.ToList();
     }
 
     public void Save(DataTable dt)

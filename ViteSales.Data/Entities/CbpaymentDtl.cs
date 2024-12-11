@@ -40,7 +40,7 @@ public partial class CbpaymentDtl
 
     public string? BankChargeTaxRefNo { get; set; }
 
-    public virtual TaxCode? BankChargeTaxCodeNavigation { get; set; }
+    public virtual TaxCodes? BankChargeTaxCodeNavigation { get; set; }
 
     public virtual PaymentMethods PaymentMethodsNavigation { get; set; } = null!;
 }

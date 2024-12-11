@@ -154,5 +154,5 @@ public partial class Dodtl
 
     public virtual Project? ProjNoNavigation { get; set; }
 
-    public virtual TaxCode? TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? TaxCodeNavigation { get; set; }
 }

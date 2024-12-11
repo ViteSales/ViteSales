@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ViteSales.Console;
 using ViteSales.Data.Entities;
-using ViteSales.ERP.GL.AccountMaintenance;
+using ViteSales.ERP.GL.Settings;
 
 var dbProvider = new DatabaseProvider(false).Get();
 using var ctx = dbProvider.GetRequiredService<ViteSalesContext>();

@@ -38,7 +38,7 @@ public partial class PackageDtl
 
     public virtual ItemUom? ItemUom { get; set; }
 
-    public virtual TaxCode? PurchaseTaxCodeNavigation { get; set; }
+    public virtual TaxCodes? PurchaseTaxCodeNavigation { get; set; }
 
-    public virtual TaxCode? TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? TaxCodeNavigation { get; set; }
 }

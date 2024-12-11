@@ -164,7 +164,7 @@ public partial class Item
 
     public virtual ICollection<PriceBookRule> PriceBookRuleToItemCodeNavigations { get; set; } = new List<PriceBookRule>();
 
-    public virtual TaxCode? PurchaseTaxCodeNavigation { get; set; }
+    public virtual TaxCodes? PurchaseTaxCodeNavigation { get; set; }
 
     public virtual ICollection<SerialNoTran> SerialNoTrans { get; set; } = new List<SerialNoTran>();
 
@@ -174,5 +174,5 @@ public partial class Item
 
     public virtual Tariff? TariffCodeNavigation { get; set; }
 
-    public virtual TaxCode? TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? TaxCodeNavigation { get; set; }
 }

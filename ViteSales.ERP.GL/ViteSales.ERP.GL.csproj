@@ -10,4 +10,8 @@
       <ProjectReference Include="..\ViteSales.Data\ViteSales.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="AccountMaintenance\" />
+    </ItemGroup>
+
 </Project>

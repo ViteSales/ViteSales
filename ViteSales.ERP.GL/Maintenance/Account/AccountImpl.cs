@@ -8,8 +8,9 @@ using ViteSales.Data.Extensions;
 using ViteSales.Data.Models;
 using ViteSales.Data.Utils;
 using ViteSales.ERP.GL.Exceptions;
+using ViteSales.ERP.GL.Settings;
 
-namespace ViteSales.ERP.GL.AccountMaintenance;
+namespace ViteSales.ERP.GL.Maintenance.Account;
 
 public class AccountImpl
 {
@@ -237,7 +238,7 @@ public class AccountImpl
 
     public Glmast GetDefaultGlMast()
     {
-        var generalSettings = new SettingsImpl(_ctx).Get<SettingsGeneral>("General");
+        var generalSettings = new SettingsImpl(_ctx).Get<SettingsDefaultCurrency>("General");
         if (generalSettings == null)
         {
             throw new NoCurrencyException<string>("No Currency found in General Settings");
@@ -276,11 +277,9 @@ public class AccountImpl
         return maxKey + 1;
     }
 
-    public List<Glmast>? GetAccount(string accNo)
+    public List<Glmast> GetAccount(string accNo)
     {
-        var dt = _ctx.Resource.Glmasts.Where(row => row.AccNo == accNo).ToList();
-        if (dt.Count == 0) return null;
-        return dt;
+        return _ctx.Resource.Glmasts.Where(row => row.AccNo == accNo).ToList();
     }
 
     #endregion
@@ -291,8 +290,15 @@ public class AccountImpl
     {
         var faAcc = ds.Tables["FixedAsset"];
         var accDep = ds.Tables["AccumulatedDepreciation"];
-        if (faAcc == null || faAcc.Rows.Count == 0) return;
-        if (accDep == null || accDep.Rows.Count == 0) return;
+        if (faAcc == null || faAcc.Rows.Count == 0)
+        {
+            throw new MissingPropException<string>("Invalid Fixed Asset Account data provided in data set");
+        }
+
+        if (accDep == null || accDep.Rows.Count == 0)
+        {
+            throw new MissingPropException<string>("Invalid Accumulated Depreciation Account data provided in data set");
+        }
         
         using var transaction = _ctx.Resource.Database.BeginTransaction();
         try
@@ -302,8 +308,8 @@ public class AccountImpl
 
             _ctx.Resource.AssetLinks.Add(new AssetLink()
             {
-                AssetAccNo = faAcc.Rows[0]["AccNo"].ToString() ?? throw new MissingPropException<string>("Invalid 'Account No' provided in Fixed Asset Account'",faAcc.ToXml()),
-                AssetDeprnAccNo = accDep.Rows[0]["AccNo"].ToString() ?? throw new MissingPropException<string>("Invalid 'Account No' provided in Accumulated Depreciation Account'",accDep.ToXml()),
+                AssetAccNo = faAcc.Rows[0]["AccNo"].ToString() ?? throw new MissingPropException<string>("Invalid 'Account No' provided in Fixed Asset Account",faAcc.ToXml()),
+                AssetDeprnAccNo = accDep.Rows[0]["AccNo"].ToString() ?? throw new MissingPropException<string>("Invalid 'Account No' provided in Accumulated Depreciation Account",accDep.ToXml()),
             });
             
             _ctx.Resource.SaveChanges();

@@ -1,12 +1,12 @@
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
 using ViteSales.Data.Contracts;
 using ViteSales.Data.Entities;
 using ViteSales.Data.Extensions;
 using ViteSales.Data.Models;
 using ViteSales.ERP.GL.Exceptions;
+using ViteSales.ERP.GL.Maintenance.Account;
 
-namespace ViteSales.ERP.GL.AccountMaintenance;
+namespace ViteSales.ERP.GL.Settings;
 
 public class SettingsImpl(IViteSalesDataContext ctx)
 {
@@ -30,7 +30,7 @@ public class SettingsImpl(IViteSalesDataContext ctx)
         { "DeliveryOrder", "{\"DeliveryOrderDescription\":\"DELIVERY ORDER\",\"DeliveryOrder5CentsRoundingOption\":0,\"DeliveryOrderCommandFormStartup\":true}" },
         { "FinancialReport", "{\"UseNewFRSFormat\":false,\"UseLiveStockBalance\":false,\"UseOldCalculationForBSMonth\":false}" },
         { "FiscalYear", "{\"FiscalYearStartPeriod\":24289,\"ActualDataStartPeriod\":24289}" },
-        { "General", "{\"Country\": \"UK\",\"LocalCurrencyCode\": \"GBP\",\"LocalCurrencySymbol\": \"\u00a3\",\"LocalCurrencyName\": \"British Pound\",\"SearchCommandTimeout\": 600,\"CommandTimeout\": 60,\"DataInputEncoding\": \"unicode\"}" },
+        { "DefaultCurrency", "{\"Country\": \"UK\",\"LocalCurrencyCode\": \"GBP\",\"LocalCurrencySymbol\": \"\u00a3\",\"LocalCurrencyName\": \"British Pound\"}" },
         { "GoodsReceivedNote", "{\"GoodsReceiveCommandFormStartup\":true,\"UpdateCostFromGoodsReceivedNote\":0,\"GoodsReceiveDescription\":\"GOODS RECEIVED NOTE\",\"GoodsReceiveNote5CentsRoundingOption\":0}" },
         { "GST", "{\"TaxCodeDisplayName\":\"Tax\",\"MustSpecifyTaxCode\":false,\"EnableTaxDocumentNumberManagement\":false,\"AllowDifferentGSTCurrencyRate\":false,\"InclusiveSalesGST\":false,\"UnitPriceIsTaxInclusive\":false,\"UseDefaultTaxCodeInARAP\":true,\"TaxBaseCurrencyCode\":\"\",\"GSTRate\":6.0,\"IRASGSTRegistrationDate\":\"\",\"IRASGSTTaxablePeriod\":3,\"EnableIRASGSTFiling\":false,\"IsFirstTimeIRASGSTFilingRemind\":false,\"IsSecondTimeIRASGSTFilingRemind\":false,\"GSTPayableDescription\":\"GST payable @ {0}% on {1}\",\"GSTPayableDescriptionForZeroPercentageOnly\":\"GST payable @ {0}% on {1}\",\"GSTPayableDescriptionForSalesTax\":\"Sales Tax @ {0}% on {1}\",\"GSTPayableDescriptionForServiceTax\":\"Service Tax @ {0}% on {1}\",\"GSTPayableDescriptionForNonGST\":\"Tax @ {0}% on {1}\"}" },
         { "Invoice", "{\"Invoice5CentsRoundingOption\":0,\"InvoiceDescription\":\"INVOICE\",\"InvoiceORNoFollowIVNo\":true,\"InvoiceCommandFormStartup\":true}" },
@@ -96,9 +96,9 @@ public class SettingsImpl(IViteSalesDataContext ctx)
 
         foreach (var kv in _defaults)
         {
-            if (kv.Key == "General")
+            if (kv.Key == "DefaultCurrency")
             {
-                var gs = JsonSerializer.Deserialize<SettingsGeneral>(kv.Value);
+                var gs = JsonSerializer.Deserialize<SettingsDefaultCurrency>(kv.Value);
                 if (gs == null)
                 {
                     throw new NoCurrencyException<string>("No Currency Setting found",kv.Value);

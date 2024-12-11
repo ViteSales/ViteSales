@@ -1,10 +1,10 @@
 ﻿namespace ViteSales.Data.Entities;
 
-public partial class TaxCode
+public partial class TaxCodes
 {
     public long AutoKey { get; set; }
 
-    public string TaxCode1 { get; set; } = null!;
+    public string TaxCode { get; set; } = null!;
 
     public string? Description { get; set; }
 

@@ -68,7 +68,7 @@ public partial class PaymentMethods
 
     public virtual Glmast? BankChargeAccountNavigation { get; set; }
 
-    public virtual TaxCode? BankChargeTaxCodeNavigation { get; set; }
+    public virtual TaxCodes? BankChargeTaxCodeNavigation { get; set; }
 
     public virtual TaxEntity? BankChargeTaxEntity { get; set; }
 

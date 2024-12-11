@@ -5,8 +5,9 @@ using ViteSales.Data.Extensions;
 using ViteSales.Data.Models;
 using ViteSales.Data.Utils;
 using ViteSales.ERP.GL.Exceptions;
+using ViteSales.ERP.GL.Settings;
 
-namespace ViteSales.ERP.GL.AccountMaintenance;
+namespace ViteSales.ERP.GL.Maintenance.Account;
 
 public class FiscalYearImpl(IViteSalesDataContext ctx)
 {

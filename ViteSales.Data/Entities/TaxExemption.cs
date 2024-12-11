@@ -14,5 +14,5 @@ public partial class TaxExemption
 
     public int LastUpdate { get; set; }
 
-    public virtual TaxCode TaxCodeNavigation { get; set; } = null!;
+    public virtual TaxCodes TaxCodesNavigation { get; set; } = null!;
 }

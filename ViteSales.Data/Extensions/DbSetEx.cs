@@ -121,4 +121,25 @@ public static class DbSetEx
             property.SetValue(entity, value);
         }
     }
+
+    public static DataRow ToRow<TEntity>(this TEntity entity, DataTable table)
+    {
+        var properties = typeof(TEntity).GetProperties();
+        foreach (var property in properties)
+        {
+            if (!table.Columns.Contains(property.Name))
+            {
+                var columnType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+                table.Columns.Add(property.Name, columnType);
+            }
+        }
+
+        var row = table.NewRow();
+        foreach (var property in properties)
+        {
+            var value = property.GetValue(entity) ?? DBNull.Value;
+            row[property.Name] = value;
+        }
+        return row;
+    }
 }

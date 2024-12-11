@@ -40,5 +40,5 @@ public partial class Cbigdtl
 
     public string? SourceDtlType { get; set; }
 
-    public virtual TaxCode? TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? TaxCodeNavigation { get; set; }
 }

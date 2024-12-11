@@ -1,4 +1,5 @@
 using System.Data;
+using ViteSales.Data.Contracts;
 
 namespace ViteSales.Data.Extensions;
 

@@ -593,7 +593,7 @@ public partial class ViteSalesContext : DbContext
 
     public virtual DbSet<Tariff> Tariffs { get; set; }
 
-    public virtual DbSet<TaxCode> TaxCodes { get; set; }
+    public virtual DbSet<TaxCodes> TaxCodes { get; set; }
 
     public virtual DbSet<TaxDocNo> TaxDocNos { get; set; }
 
@@ -1138,17 +1138,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ADVQT_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.AdvqtFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_ADVQT_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.AdvqtFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_ADVQT_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.AdvqtFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_ADVQT_Footer3TaxCode");
 
@@ -1280,7 +1280,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ADVQTDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Advqtdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_ADVQTDTL_TaxCode");
 
@@ -1560,7 +1560,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_APCNDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Apcndtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_APCNDTL_TaxCode");
         });
@@ -1821,7 +1821,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_APDepositPaymentDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.ApdepositPaymentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APDepositPaymentDTL_BankChargeTaxCode");
 
@@ -1906,7 +1906,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_APDepositRefundPaymentDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.ApdepositRefundPaymentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APDepositRefundPaymentDTL_BankChargeTaxCode");
 
@@ -2137,7 +2137,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_APDNDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Apdndtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_APDNDTL_TaxCode");
         });
@@ -2380,7 +2380,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_APInvoiceDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.ApinvoiceDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_APInvoiceDTL_TaxCode");
         });
@@ -2543,7 +2543,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_APPaymentDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.AppaymentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APPaymentDTL_BankChargeTaxCode");
 
@@ -2731,7 +2731,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_APRefundDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.AprefundDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_APRefundDTL_BankChargeTaxCode");
 
@@ -3172,7 +3172,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ARCNDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Arcndtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_ARCNDTL_TaxCode");
         });
@@ -3439,7 +3439,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ARDepositPaymentDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.ArdepositPaymentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARDepositPaymentDTL_BankChargeTaxCode");
 
@@ -3524,7 +3524,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ARDepositRefundPaymentDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.ArdepositRefundPaymentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARDepositRefundPaymentDTL_BankChargeTaxCode");
 
@@ -3760,7 +3760,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ARDNDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Ardndtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_ARDNDTL_TaxCode");
         });
@@ -3989,7 +3989,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ARInvoiceDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.ArinvoiceDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_ARInvoiceDTL_TaxCode");
         });
@@ -4141,7 +4141,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ARPaymentDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.ArpaymentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARPaymentDTL_BankChargeTaxCode");
 
@@ -4376,7 +4376,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ARRefundDTL_BankChargeProjNo");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.ArrefundDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_ARRefundDTL_BankChargeTaxCode");
 
@@ -5630,17 +5630,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_CS_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.CFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_CS_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.CFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_CS_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.CFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_CS_Footer3TaxCode");
 
@@ -5939,7 +5939,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_CBDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Cbdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_CBDTL_TaxCode");
 
@@ -5979,7 +5979,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxableAmt).HasColumnType("decimal(19, 2)");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Cbigdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_CBIGDTL_TaxCode");
         });
@@ -6015,7 +6015,7 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.ToBankRate).HasColumnType("decimal(19, 12)");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.CbpaymentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_CBPaymentDTL_BankChargeTaxCode");
 
@@ -6319,17 +6319,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_CN_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.CnFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_CN_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.CnFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_CN_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.CnFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_CN_Footer3TaxCode");
 
@@ -6514,7 +6514,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_CNDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Cndtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_CNDTL_TaxCode");
 
@@ -7013,7 +7013,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ConsignmentDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.ConsignmentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_ConsignmentDTL_TaxCode");
 
@@ -7293,7 +7293,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_ConsignmentReturnDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.ConsignmentReturnDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_ConsignmentReturnDTL_TaxCode");
 
@@ -7520,17 +7520,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_CP_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.CpFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_CP_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.CpFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_CP_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.CpFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_CP_Footer3TaxCode");
 
@@ -7699,7 +7699,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_CPDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Cpdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_CPDTL_TaxCode");
 
@@ -7914,7 +7914,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Creditor_PurchaseAgent");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Creditors)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_Creditor_TaxCode");
 
@@ -8120,7 +8120,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_CSDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Csdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_CSDTL_TaxCode");
 
@@ -8603,7 +8603,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Debtor_SalesAgent");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Debtors)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_Debtor_TaxCode");
 
@@ -8949,17 +8949,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_DN_DNType");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.DnFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_DN_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.DnFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_DN_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.DnFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_DN_Footer3TaxCode");
 
@@ -9135,7 +9135,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_DNDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Dndtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_DNDTL_TaxCode");
 
@@ -9333,17 +9333,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_DO_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.DoFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_DO_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.DoFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_DO_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.DoFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_DO_Footer3TaxCode");
 
@@ -9779,7 +9779,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_DODTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Dodtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_DODTL_TaxCode");
 
@@ -9942,17 +9942,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_DR_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.DrFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_DR_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.DrFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_DR_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.DrFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_DR_Footer3TaxCode");
 
@@ -10092,7 +10092,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_DRDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Drdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_DRDTL_TaxCode");
 
@@ -10178,7 +10178,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_DRProcessing_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Drprocessings)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_DRProcessing_TaxCode");
 
@@ -10545,7 +10545,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Footer_AccNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Footers)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_Footer_TaxCode");
         });
@@ -10702,7 +10702,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_GLDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Gldtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_GLDTL_TaxCode");
         });
@@ -10756,12 +10756,12 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_GLMast_CurrencyCode");
 
             entity.HasOne(d => d.InputTaxCodeNavigation).WithMany(p => p.GlmastInputTaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.InputTaxCode)
                 .HasConstraintName("FK_GLMast_InputTaxCode");
 
             entity.HasOne(d => d.OutputTaxCodeNavigation).WithMany(p => p.GlmastOutputTaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.OutputTaxCode)
                 .HasConstraintName("FK_GLMast_OutputTaxCode");
 
@@ -10976,17 +10976,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_GR_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.GrFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_GR_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.GrFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_GR_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.GrFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_GR_Footer3TaxCode");
 
@@ -11143,7 +11143,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_GRDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Grdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_GRDTL_TaxCode");
 
@@ -11567,17 +11567,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_GT_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.GtFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_GT_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.GtFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_GT_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.GtFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_GT_Footer3TaxCode");
 
@@ -11715,7 +11715,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_GTDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Gtdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_GTDTL_TaxCode");
 
@@ -12100,7 +12100,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Item_LastModifiedUserID");
 
             entity.HasOne(d => d.PurchaseTaxCodeNavigation).WithMany(p => p.ItemPurchaseTaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.PurchaseTaxCode)
                 .HasConstraintName("FK_Item_PurchaseTaxCode");
 
@@ -12110,7 +12110,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_Item_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.ItemTaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_Item_TaxCode");
         });
@@ -13144,17 +13144,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_IV_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.IvFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_IV_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.IvFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_IV_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.IvFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_IV_Footer3TaxCode");
 
@@ -13372,7 +13372,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_IVDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Ivdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_IVDTL_TaxCode");
 
@@ -13663,7 +13663,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_JEDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Jedtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_JEDTL_TaxCode");
 
@@ -14226,12 +14226,12 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PackageDTL_Package");
 
             entity.HasOne(d => d.PurchaseTaxCodeNavigation).WithMany(p => p.PackageDtlPurchaseTaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.PurchaseTaxCode)
                 .HasConstraintName("FK_PackageDTL_PurchaseTaxCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.PackageDtlTaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_PackageDTL_TaxCode");
 
@@ -14301,7 +14301,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PaymentMethod_BankChargeAccount");
 
             entity.HasOne(d => d.BankChargeTaxCodeNavigation).WithMany(p => p.PaymentMethods)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.BankChargeTaxCode)
                 .HasConstraintName("FK_PaymentMethod_BankChargeTaxCode");
 
@@ -14634,17 +14634,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PI_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.PiFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_PI_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.PiFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_PI_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.PiFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_PI_Footer3TaxCode");
 
@@ -14813,7 +14813,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PIDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Pidtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_PIDTL_TaxCode");
 
@@ -15071,17 +15071,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PO_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.PoFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_PO_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.PoFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_PO_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.PoFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_PO_Footer3TaxCode");
 
@@ -15233,7 +15233,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PODTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Podtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_PODTL_TaxCode");
 
@@ -15631,17 +15631,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PR_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.PrFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_PR_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.PrFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_PR_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.PrFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_PR_Footer3TaxCode");
 
@@ -15803,7 +15803,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PRDTL_TariffCode");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Prdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_PRDTL_TaxCode");
 
@@ -16581,7 +16581,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PurchaseConsignmentDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.PurchaseConsignmentDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_PurchaseConsignmentDTL_TaxCode");
 
@@ -16849,7 +16849,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_PurchaseConsignmentReturnDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.PurchaseConsignmentReturnDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_PurchaseConsignmentReturnDTL_TaxCode");
 
@@ -17037,17 +17037,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_QT_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.QtFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_QT_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.QtFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_QT_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.QtFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_QT_Footer3TaxCode");
 
@@ -17174,7 +17174,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_QTDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Qtdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_QTDTL_TaxCode");
 
@@ -17666,17 +17666,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_RQ_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.RqFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_RQ_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.RqFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_RQ_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.RqFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_RQ_Footer3TaxCode");
 
@@ -17805,7 +17805,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_RQDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Rqdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_RQDTL_TaxCode");
 
@@ -18195,17 +18195,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_SO_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.SoFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_SO_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.SoFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_SO_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.SoFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_SO_Footer3TaxCode");
 
@@ -18426,7 +18426,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_SODTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Sodtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_SODTL_TaxCode");
 
@@ -18970,11 +18970,11 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TariffCode).HasMaxLength(12);
         });
 
-        modelBuilder.Entity<TaxCode>(entity =>
+        modelBuilder.Entity<TaxCodes>(entity =>
         {
             entity.HasKey(e => e.AutoKey).HasName("PK_TaxType_AutoKey");
 
-            entity.ToTable("TaxCode", tb =>
+            entity.ToTable("TaxCodes", tb =>
                 {
                     tb.HasTrigger("TaxCodeChangeLog");
                     tb.HasTrigger("UpdateTaxCodeChangeCount");
@@ -18982,7 +18982,7 @@ public partial class ViteSalesContext : DbContext
 
             entity.HasIndex(e => e.Guid, "UIX_TaxType_Guid").IsUnique();
 
-            entity.HasIndex(e => e.TaxCode1, "UIX_TaxType_TaxType").IsUnique();
+            entity.HasIndex(e => e.TaxCode, "UIX_TaxType_TaxType").IsUnique();
 
             entity.Property(e => e.AddToCost)
                 .HasMaxLength(1)
@@ -19017,7 +19017,7 @@ public partial class ViteSalesContext : DbContext
                 .HasDefaultValue("S")
                 .IsFixedLength();
             entity.Property(e => e.TaxAccNo).HasMaxLength(12);
-            entity.Property(e => e.TaxCode1)
+            entity.Property(e => e.TaxCode)
                 .HasMaxLength(14)
                 .HasColumnName("TaxCode");
             entity.Property(e => e.TaxRate).HasColumnType("decimal(18, 6)");
@@ -19123,8 +19123,8 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.SalesExemptionNo).HasMaxLength(60);
             entity.Property(e => e.TaxCode).HasMaxLength(14);
 
-            entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.TaxExemptions)
-                .HasPrincipalKey(p => p.TaxCode1)
+            entity.HasOne(d => d.TaxCodesNavigation).WithMany(p => p.TaxExemptions)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TaxExemption_TaxCode");
@@ -19217,8 +19217,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.TaxAccNo)
                 .HasConstraintName("FK_TaxTrans_TaxAccNo");
 
-            entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.TaxTrans)
-                .HasPrincipalKey(p => p.TaxCode1)
+            entity.HasOne(d => d.TaxCodesNavigation).WithMany(p => p.TaxTrans)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TaxTrans_TaxCode");
@@ -19327,8 +19327,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.TaxAccNo)
                 .HasConstraintName("FK_TaxTransAuditDTL_TaxAccNo");
 
-            entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.TaxTransAuditDtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+            entity.HasOne(d => d.TaxCodesNavigation).WithMany(p => p.TaxTransAuditDtls)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TaxTransAuditDTL_TaxCode");
@@ -19421,8 +19421,8 @@ public partial class ViteSalesContext : DbContext
                 .HasForeignKey(d => d.TaxAccNo)
                 .HasConstraintName("FK_TaxTransCancelled_TaxAccNo");
 
-            entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.TaxTransCancelleds)
-                .HasPrincipalKey(p => p.TaxCode1)
+            entity.HasOne(d => d.TaxCodesNavigation).WithMany(p => p.TaxTransCancelleds)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TaxTransCancelled_TaxCode");
@@ -20629,17 +20629,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_XS_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.XFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_XS_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.XFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_XS_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.XFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_XS_Footer3TaxCode");
 
@@ -20908,17 +20908,17 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_XP_DisplayTerm");
 
             entity.HasOne(d => d.Footer1TaxCodeNavigation).WithMany(p => p.XpFooter1TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer1TaxCode)
                 .HasConstraintName("FK_XP_Footer1TaxCode");
 
             entity.HasOne(d => d.Footer2TaxCodeNavigation).WithMany(p => p.XpFooter2TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer2TaxCode)
                 .HasConstraintName("FK_XP_Footer2TaxCode");
 
             entity.HasOne(d => d.Footer3TaxCodeNavigation).WithMany(p => p.XpFooter3TaxCodeNavigations)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.Footer3TaxCode)
                 .HasConstraintName("FK_XP_Footer3TaxCode");
 
@@ -21047,7 +21047,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_XPDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Xpdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_XPDTL_TaxCode");
 
@@ -21160,7 +21160,7 @@ public partial class ViteSalesContext : DbContext
                 .HasConstraintName("FK_XSDTL_ProjNo");
 
             entity.HasOne(d => d.TaxCodeNavigation).WithMany(p => p.Xsdtls)
-                .HasPrincipalKey(p => p.TaxCode1)
+                .HasPrincipalKey(p => p.TaxCode)
                 .HasForeignKey(d => d.TaxCode)
                 .HasConstraintName("FK_XSDTL_TaxCode");
 

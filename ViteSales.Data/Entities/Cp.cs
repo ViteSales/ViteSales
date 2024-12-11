@@ -232,11 +232,11 @@ public partial class Cp
 
     public virtual Term DisplayTermNavigation { get; set; } = null!;
 
-    public virtual TaxCode? Footer1TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? Footer1TaxCodeNavigation { get; set; }
 
-    public virtual TaxCode? Footer2TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? Footer2TaxCodeNavigation { get; set; }
 
-    public virtual TaxCode? Footer3TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? Footer3TaxCodeNavigation { get; set; }
 
     public virtual User LastModifiedUser { get; set; } = null!;
 

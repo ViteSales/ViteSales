@@ -48,7 +48,7 @@ public partial class AprefundDtl
 
     public virtual Project? BankChargeProjNoNavigation { get; set; }
 
-    public virtual TaxCode? BankChargeTaxCodeNavigation { get; set; }
+    public virtual TaxCodes? BankChargeTaxCodeNavigation { get; set; }
 
     public virtual PaymentMethods PaymentMethodsNavigation { get; set; } = null!;
 }

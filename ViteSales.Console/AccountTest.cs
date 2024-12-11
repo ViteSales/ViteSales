@@ -1,7 +1,7 @@
 using System.Data;
 using ViteSales.Data.Entities;
 using ViteSales.Data.Extensions;
-using ViteSales.ERP.GL.AccountMaintenance;
+using ViteSales.ERP.GL.Maintenance.Account;
 
 namespace ViteSales.Console;
 

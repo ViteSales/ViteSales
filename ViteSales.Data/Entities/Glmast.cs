@@ -166,7 +166,7 @@ public partial class Glmast
 
     public virtual ICollection<Gt> Gts { get; set; } = new List<Gt>();
 
-    public virtual TaxCode? InputTaxCodeNavigation { get; set; }
+    public virtual TaxCodes? InputTaxCodeNavigation { get; set; }
 
     public virtual ICollection<Iphist> Iphists { get; set; } = new List<Iphist>();
 
@@ -218,7 +218,7 @@ public partial class Glmast
 
     public virtual ICollection<Obdtl> Obdtls { get; set; } = new List<Obdtl>();
 
-    public virtual TaxCode? OutputTaxCodeNavigation { get; set; }
+    public virtual TaxCodes? OutputTaxCodeNavigation { get; set; }
 
     public virtual ICollection<PaymentMethods> PaymentMethodBankAccountNavigations { get; set; } = new List<PaymentMethods>();
 
@@ -278,7 +278,7 @@ public partial class Glmast
 
     public virtual Tariff? TariffCodeNavigation { get; set; }
 
-    public virtual ICollection<TaxCode> TaxCodes { get; set; } = new List<TaxCode>();
+    public virtual ICollection<TaxCodes> TaxCodes { get; set; } = new List<TaxCodes>();
 
     public virtual ICollection<TaxTran> TaxTranTaxAccNoNavigations { get; set; } = new List<TaxTran>();
 

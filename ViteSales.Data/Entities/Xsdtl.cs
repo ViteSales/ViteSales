@@ -128,5 +128,5 @@ public partial class Xsdtl
 
     public virtual Project? ProjNoNavigation { get; set; }
 
-    public virtual TaxCode? TaxCodeNavigation { get; set; }
+    public virtual TaxCodes? TaxCodeNavigation { get; set; }
 }

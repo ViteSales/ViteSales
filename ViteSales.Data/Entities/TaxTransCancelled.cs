@@ -80,7 +80,7 @@ public partial class TaxTransCancelled
 
     public virtual Glmast? TaxAccNoNavigation { get; set; }
 
-    public virtual TaxCode TaxCodeNavigation { get; set; } = null!;
+    public virtual TaxCodes TaxCodesNavigation { get; set; } = null!;
 
     public virtual TaxEntity? TaxEntity { get; set; }
 
