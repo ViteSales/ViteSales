@@ -236,7 +236,7 @@ public partial class TaxCodes
 
     public virtual ICollection<TaxExemption> TaxExemptions { get; set; } = new List<TaxExemption>();
 
-    public virtual ICollection<TaxTran> TaxTrans { get; set; } = new List<TaxTran>();
+    public virtual ICollection<TaxTrans> TaxTrans { get; set; } = new List<TaxTrans>();
 
     public virtual ICollection<TaxTransAuditDtl> TaxTransAuditDtls { get; set; } = new List<TaxTransAuditDtl>();
 

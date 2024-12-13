@@ -118,7 +118,7 @@ public partial class Currency
 
     public virtual ICollection<So> Sos { get; set; } = new List<So>();
 
-    public virtual ICollection<TaxTran> TaxTrans { get; set; } = new List<TaxTran>();
+    public virtual ICollection<TaxTrans> TaxTrans { get; set; } = new List<TaxTrans>();
 
     public virtual ICollection<TaxTransAuditDtl> TaxTransAuditDtls { get; set; } = new List<TaxTransAuditDtl>();
 

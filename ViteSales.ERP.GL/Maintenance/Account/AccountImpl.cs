@@ -238,10 +238,10 @@ public class AccountImpl
 
     public Glmast GetDefaultGlMast()
     {
-        var generalSettings = new SettingsImpl(_ctx).Get<SettingsDefaultCurrency>("General");
+        var generalSettings = new SettingsImpl(_ctx).Get<SettingsDefaultCurrency>("DefaultCurrency");
         if (generalSettings == null)
         {
-            throw new NoCurrencyException<string>("No Currency found in General Settings");
+            throw new NoCurrencyException<string>("No Currency found in DefaultCurrency Settings");
         }
         return new Glmast()
         {

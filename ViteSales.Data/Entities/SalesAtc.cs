@@ -28,7 +28,7 @@ public partial class SalesAtc
 
     public virtual ICollection<Jedtl> Jedtls { get; set; } = new List<Jedtl>();
 
-    public virtual ICollection<TaxTran> TaxTrans { get; set; } = new List<TaxTran>();
+    public virtual ICollection<TaxTrans> TaxTrans { get; set; } = new List<TaxTrans>();
 
     public virtual ICollection<TaxTransAuditDtl> TaxTransAuditDtls { get; set; } = new List<TaxTransAuditDtl>();
 

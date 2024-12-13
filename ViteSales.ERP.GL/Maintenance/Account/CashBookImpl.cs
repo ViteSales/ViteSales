@@ -171,7 +171,7 @@ public class CashBookImpl(IViteSalesDataContext ctx)
         var cb = ds.Tables["CashBook"];
         var cbDtls = ds.Tables["CashBookDetail"];
         var cbPaymentDtls = ds.Tables["CashBookPayment"];
-
+        
         if (cb == null)
         {
             throw new MissingPropException<string>("Invalid Cash Book data provided in data set");
@@ -184,19 +184,36 @@ public class CashBookImpl(IViteSalesDataContext ctx)
         {
             throw new MissingPropException<string>("Invalid Cash Book Payment data provided in data set");
         }
+        
+        var cbClsList = cb.ToList<Cb>();
+        if (cbClsList.Count == 0)
+        {
+            throw new EmptyDataException<string>("No Cash Book data provided in data set");
+        }
+        var cbDtlsCls = cbDtls.ToList<Cbdtl>();
+        if (cbDtlsCls.Count == 0)
+        {
+            throw new EmptyDataException<string>("No Cash Book Detail data provided in data set");
+        }
+        var cbPaymentDtlsCls = cbPaymentDtls.ToList<CbpaymentDtl>();
+        if (cbPaymentDtlsCls.Count == 0)
+        {
+            throw new EmptyDataException<string>("No Cash Book Payment data provided in data set");
+        }
 
-        var docDate = Convert.ToDateTime(cb.Rows[0]["DocDate"]);
+        var cbCls = cbClsList[0];
+        var docDate = Convert.ToDateTime(cbCls.DocDate);
         
         var fy = new FiscalYearImpl(ctx);
         fy.CheckTransactionDate(docDate);
 
         try
         {
-            var taxDate = Convert.ToDateTime(cb.Rows[0]["TaxDate"]);
+            var taxDate = Convert.ToDateTime(cbCls.TaxDate);
             fy.CheckTransactionDate(taxDate);
+            
         }
         catch(Exception) {}
-        
     }
     
     public void DeleteCashbook(long docKey)

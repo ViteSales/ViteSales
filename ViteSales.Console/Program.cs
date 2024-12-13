@@ -3,7 +3,7 @@ using ViteSales.Console;
 using ViteSales.Data.Entities;
 using ViteSales.ERP.GL.Settings;
 
-var dbProvider = new DatabaseProvider(false).Get();
+var dbProvider = new DatabaseProvider(true).Get();
 using var ctx = dbProvider.GetRequiredService<ViteSalesContext>();
 
 var connProvider = new ConnectionProvider(ctx);

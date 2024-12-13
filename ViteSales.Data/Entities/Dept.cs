@@ -180,7 +180,7 @@ public partial class Dept
 
     public virtual ICollection<StockPbalance> StockPbalances { get; set; } = new List<StockPbalance>();
 
-    public virtual ICollection<TaxTran> TaxTrans { get; set; } = new List<TaxTran>();
+    public virtual ICollection<TaxTrans> TaxTrans { get; set; } = new List<TaxTrans>();
 
     public virtual ICollection<TaxTransAuditDtl> TaxTransAuditDtls { get; set; } = new List<TaxTransAuditDtl>();
 

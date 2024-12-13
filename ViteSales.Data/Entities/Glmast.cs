@@ -280,9 +280,9 @@ public partial class Glmast
 
     public virtual ICollection<TaxCodes> TaxCodes { get; set; } = new List<TaxCodes>();
 
-    public virtual ICollection<TaxTran> TaxTranTaxAccNoNavigations { get; set; } = new List<TaxTran>();
+    public virtual ICollection<TaxTrans> TaxTranTaxAccNoNavigations { get; set; } = new List<TaxTrans>();
 
-    public virtual ICollection<TaxTran> TaxTranTaxableAccNoNavigations { get; set; } = new List<TaxTran>();
+    public virtual ICollection<TaxTrans> TaxTranTaxableAccNoNavigations { get; set; } = new List<TaxTrans>();
 
     public virtual ICollection<TaxTransAuditDtl> TaxTransAuditDtlTaxAccNoNavigations { get; set; } = new List<TaxTransAuditDtl>();
 

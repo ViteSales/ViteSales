@@ -605,7 +605,7 @@ public partial class ViteSalesContext : DbContext
 
     public virtual DbSet<TaxSetting> TaxSettings { get; set; }
 
-    public virtual DbSet<TaxTran> TaxTrans { get; set; }
+    public virtual DbSet<TaxTrans> TaxTrans { get; set; }
 
     public virtual DbSet<TaxTransAudit> TaxTransAudits { get; set; }
 
@@ -19140,8 +19140,9 @@ public partial class ViteSalesContext : DbContext
             entity.Property(e => e.TaxValue).HasMaxLength(300);
         });
 
-        modelBuilder.Entity<TaxTran>(entity =>
+        modelBuilder.Entity<TaxTrans>(entity =>
         {
+            entity.ToTable("TaxTrans");
             entity.HasKey(e => e.TaxTransKey).HasName("PK_TaxTrans_TaxTransKey");
 
             entity.HasIndex(e => new { e.SourceType, e.SourceKey }, "IX_TaxTrans_SourceType_SourceKey");

@@ -50,7 +50,7 @@ public partial class Tariff
 
     public virtual ICollection<Prdtl> Prdtls { get; set; } = new List<Prdtl>();
 
-    public virtual ICollection<TaxTran> TaxTrans { get; set; } = new List<TaxTran>();
+    public virtual ICollection<TaxTrans> TaxTrans { get; set; } = new List<TaxTrans>();
 
     public virtual ICollection<TaxTransAuditDtl> TaxTransAuditDtls { get; set; } = new List<TaxTransAuditDtl>();
 

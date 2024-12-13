@@ -1,6 +1,6 @@
 ﻿namespace ViteSales.Data.Entities;
 
-public partial class TaxTran
+public partial class TaxTrans
 {
     public long TaxTransKey { get; set; }
 
