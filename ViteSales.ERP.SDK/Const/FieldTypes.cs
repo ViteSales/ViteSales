@@ -1,0 +1,83 @@
+namespace ViteSales.ERP.SDK.Const;
+
+public enum FieldTypes
+{
+    AutoNumber,
+    Checkbox,
+    ReadableId,
+    Currency,
+    Date,
+    DateTime,
+    Email,
+    File,
+    Guid,
+    Html,
+    Image,
+    MultiLine,
+    Geography,
+    MultiSelect,
+    Numeric,
+    Password,
+    Phone,
+    Select,
+    Text,
+    Url,
+    Time,
+    Vector,
+    Json,
+    Jsonb,
+    Xml,
+    Binary,
+    Enum,
+    Interval,
+    Int4Range,
+    Int8Range,
+    NumRange,
+    TsRange,
+    Hstore
+}
+
+public static class FieldTypesExtensions
+{
+    public static string GetPostgresType(this FieldTypes fieldType)
+    {
+        return fieldType switch
+        {
+            FieldTypes.AutoNumber => "SERIAL",
+            FieldTypes.Checkbox => "BOOLEAN",
+            FieldTypes.Currency => "NUMERIC(19,6)", 
+            FieldTypes.Date => "DATE",
+            FieldTypes.DateTime => "TIMESTAMP",
+            FieldTypes.ReadableId => "VARCHAR(40)", 
+            FieldTypes.Email => "VARCHAR(255)", 
+            FieldTypes.File => "BYTEA", 
+            FieldTypes.Guid => "UUID",
+            FieldTypes.Html => "TEXT",
+            FieldTypes.Image => "BYTEA", 
+            FieldTypes.MultiLine => "TEXT",
+            FieldTypes.Geography => "GEOGRAPHY", 
+            FieldTypes.MultiSelect => "TEXT[]", 
+            FieldTypes.Numeric => "NUMERIC", 
+            FieldTypes.Password => "TEXT", 
+            FieldTypes.Phone => "VARCHAR(20)", 
+            FieldTypes.Select => "VARCHAR(255)", 
+            FieldTypes.Text => "TEXT",
+            FieldTypes.Url => "VARCHAR(2048)", 
+            FieldTypes.Time => "TIME",
+            FieldTypes.Vector => "FLOAT[]",
+            FieldTypes.Json => "JSON",
+            FieldTypes.Jsonb => "JSONB",
+            FieldTypes.Xml => "XML",
+            FieldTypes.Binary => "BYTEA",
+            FieldTypes.Enum => "VARCHAR(255)", 
+            FieldTypes.Interval => "INTERVAL",
+            FieldTypes.Int4Range => "INT4RANGE",
+            FieldTypes.Int8Range => "INT8RANGE",
+            FieldTypes.NumRange => "NUMRANGE",
+            FieldTypes.TsRange => "TSRANGE",
+            FieldTypes.Hstore => "HSTORE",
+
+            _ => throw new ArgumentOutOfRangeException(nameof(fieldType), fieldType, "Unsupported FieldType")
+        };
+    }
+}
