@@ -1,8 +1,8 @@
+using ViteSales.ERP.Console.SamplePackage.Entities;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
-using ViteSales.Test.SamplePackage.Entities;
 
-namespace ViteSales.Test.SamplePackage.Modules;
+namespace ViteSales.ERP.Console.SamplePackage.Modules;
 
 public class InvoiceModule: IModule
 {

@@ -1,27 +1,28 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 
-namespace ViteSales.Test.SamplePackage.Entities;
+namespace ViteSales.ERP.Console.SamplePackage.Entities;
 
 [Display(Name = "Sales Invoice")]
 [Description("Create a new Sales Invoice")]
 public class Invoice
 {
     [PrimaryKey]
+    [UniqueKey]
+    [BindDataType(FieldTypes.Guid)]
     public Guid Id { get; set; }
     
     [Required]
     [Display(Name = "Document No.")]
     [BindDataType(FieldTypes.ReadableId)]
     [IndexColumn("ASC")]
-    [UniqueColumn]
+    [UniqueKey]
     public string DocNo { get; set; }
     
     [Required]
     [BindDataType(FieldTypes.ReadableId)]
-    [UniqueColumn]
     public string DocNoSet { get; set; }
     
     [Required]
@@ -32,8 +33,7 @@ public class Invoice
     public string DebtorCode { get; set; }
     
     [RelationalMapping("InvoiceItems", "Id", "InvoiceId")]
-    [RelationalMapping("InvoiceItems", "DocNo", "DocNo")]
-    public List<InvoiceItems> Items { get; set; } = new();
+    public List<InvoiceItems> Items { get; set; } = [];
 
     public List<object> GetDebtors()
     {

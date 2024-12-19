@@ -4,11 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.API", "ViteSales.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.Shared", "ViteSales.Shared\ViteSales.Shared.csproj", "{3EA8EC28-975D-44C5-AB38-F8DEF0CD0B1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.Test", "ViteSales.Test\ViteSales.Test.csproj", "{A8319E8E-0C8D-452A-96E3-DC8EF07CD87D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.Accounting", "ViteSales.ERP.Accounting\ViteSales.ERP.Accounting.csproj", "{6D5C3FC3-1D71-4F53-9EF5-9AE15B93A68E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.SDK", "ViteSales.ERP.SDK\ViteSales.ERP.SDK.csproj", "{10DDF32B-0F5C-4F4E-853F-14DF64008D31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.Console", "ViteSales.ERP.Console\ViteSales.ERP.Console.csproj", "{9B95965D-2E2A-48DF-B669-B0461379E58A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +24,6 @@ Global
 		{3EA8EC28-975D-44C5-AB38-F8DEF0CD0B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EA8EC28-975D-44C5-AB38-F8DEF0CD0B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EA8EC28-975D-44C5-AB38-F8DEF0CD0B1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8319E8E-0C8D-452A-96E3-DC8EF07CD87D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8319E8E-0C8D-452A-96E3-DC8EF07CD87D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8319E8E-0C8D-452A-96E3-DC8EF07CD87D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8319E8E-0C8D-452A-96E3-DC8EF07CD87D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D5C3FC3-1D71-4F53-9EF5-9AE15B93A68E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D5C3FC3-1D71-4F53-9EF5-9AE15B93A68E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D5C3FC3-1D71-4F53-9EF5-9AE15B93A68E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,5 +32,9 @@ Global
 		{10DDF32B-0F5C-4F4E-853F-14DF64008D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10DDF32B-0F5C-4F4E-853F-14DF64008D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10DDF32B-0F5C-4F4E-853F-14DF64008D31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B95965D-2E2A-48DF-B669-B0461379E58A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B95965D-2E2A-48DF-B669-B0461379E58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B95965D-2E2A-48DF-B669-B0461379E58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B95965D-2E2A-48DF-B669-B0461379E58A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

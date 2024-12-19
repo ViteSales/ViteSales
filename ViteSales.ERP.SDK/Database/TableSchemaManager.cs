@@ -8,6 +8,32 @@ namespace ViteSales.ERP.SDK.Database;
 
 public class TableSchemaManager(Connection connectionHandler)
 {
+    public async Task DropTablesAsync(IEnumerable<Type> types)
+    {
+        try
+        {
+            await connectionHandler.OpenConnectionAsync();
+            await connectionHandler.BeginTransactionAsync();
+            foreach (var type in types)
+            {
+                var tableName = type.Name;
+                await using var cmd = connectionHandler.CreateCommand();
+                cmd.CommandText = $"DROP TABLE IF EXISTS \"{tableName}\" CASCADE;";
+                await cmd.ExecuteNonQueryAsync();
+            }
+
+            await connectionHandler.CommitTransactionAsync();
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            await connectionHandler.CloseConnectionAsync();
+        }
+    }
+    
     public async Task CreateOrUpdateTablesAsync(IEnumerable<Type> types)
     {
         var tables = new List<TableInfo>();
@@ -31,6 +57,10 @@ public class TableSchemaManager(Connection connectionHandler)
                 var dataType = FieldTypes.Text.GetPostgresType();
                 var columnName = prop.Name;
                 var bindAttr = prop.GetCustomAttribute<BindDataTypeAttribute>();
+                
+                // Handle RelationalMappingAttribute
+                var relationalAttrs = prop.GetCustomAttributes<RelationalMappingAttribute>();
+                allRelationalMappings.AddRange(relationalAttrs.Select(relAttr => new RelationalMappingInfo { ToTable = relAttr.ToTable, FromColumn = relAttr.FromColumn, ToColumn = relAttr.ToColumn, FromTable = tableName }));
                 
                 if (typeof(System.Collections.IEnumerable).IsAssignableFrom(prop.PropertyType) && prop.PropertyType != typeof(string))
                 {
@@ -65,7 +95,7 @@ public class TableSchemaManager(Connection connectionHandler)
                 });
 
                 // Handle UniqueColumnAttribute
-                if (prop.GetCustomAttribute<UniqueColumnAttribute>() != null)
+                if (prop.GetCustomAttribute<UniqueKeyAttribute>() != null)
                 {
                     uniqueColumns.Add(columnName);
                 }
@@ -81,10 +111,6 @@ public class TableSchemaManager(Connection connectionHandler)
                         Direction = indexAttr.Direction
                     });
                 }
-
-                // Handle RelationalMappingAttribute
-                var relationalAttrs = prop.GetCustomAttributes<RelationalMappingAttribute>();
-                allRelationalMappings.AddRange(relationalAttrs.Select(relAttr => new RelationalMappingInfo { Table = relAttr.Table, From = relAttr.From, To = relAttr.To }));
             }
 
             if (uniqueColumns.Any())
@@ -103,10 +129,9 @@ public class TableSchemaManager(Connection connectionHandler)
             });
         }
 
-        await connectionHandler.OpenConnectionAsync();
-
         try
         {
+            await connectionHandler.OpenConnectionAsync();
             await connectionHandler.BeginTransactionAsync();
 
             if (requiresHstore)
@@ -167,22 +192,20 @@ public class TableSchemaManager(Connection connectionHandler)
             // Create Foreign Keys
             foreach (var rel in allRelationalMappings)
             {
-                var fkName = $"fk_{rel.From}_{rel.To}_{rel.Table}";
-                if (!await ForeignKeyExistsAsync(rel.From, fkName))
-                {
-                    var addFkCmd = $"ALTER TABLE \"{rel.From}\" ADD CONSTRAINT \"{fkName}\" FOREIGN KEY (\"{rel.To}\") REFERENCES \"{rel.Table}\"(\"{rel.To}\");";
-                    await using var fkCmd = connectionHandler.CreateCommand();
-                    fkCmd.CommandText = addFkCmd;
-                    await fkCmd.ExecuteNonQueryAsync();
-                }
+                var fkName = $"fk_{rel.FromColumn}_{rel.ToColumn}_{rel.FromTable}_{rel.ToTable}";
+                var addFkCmd = $"ALTER TABLE \"{rel.ToTable}\" ADD CONSTRAINT \"{fkName}\" FOREIGN KEY (\"{rel.ToColumn}\") REFERENCES \"{rel.FromTable}\"(\"{rel.FromColumn}\");";
+                Console.WriteLine(addFkCmd);
+                await using var fkCmd = connectionHandler.CreateCommand();
+                fkCmd.CommandText = addFkCmd;
+                await fkCmd.ExecuteNonQueryAsync();
             }
 
             await connectionHandler.CommitTransactionAsync();
         }
-        catch
+        catch(Exception e)
         {
             await connectionHandler.RollbackTransactionAsync();
-            throw;
+            throw e;
         }
         finally
         {
@@ -220,22 +243,6 @@ public class TableSchemaManager(Connection connectionHandler)
         return exists;
     }
 
-    private async Task<bool> ForeignKeyExistsAsync(string tableName, string fkName)
-    {
-        await using var cmd = connectionHandler.CreateCommand();
-        cmd.CommandText = @"
-            SELECT EXISTS (
-                SELECT 1 
-                FROM pg_constraint 
-                WHERE conname = @fkName 
-                AND conrelid = @table::regclass
-            );";
-        cmd.Parameters.AddWithValue("fkName", fkName);
-        cmd.Parameters.AddWithValue("table", $"public.{tableName}");
-        var exists = (bool)(await cmd.ExecuteScalarAsync() ?? false);
-        return exists;
-    }
-
     private async Task<HashSet<string>> GetExistingColumnsAsync(string tableName)
     {
         var columns = new HashSet<string>();
@@ -267,7 +274,7 @@ public class TableSchemaManager(Connection connectionHandler)
         });
 
         var primaryKeys = columns.Where(c => c.IsPrimaryKey).Select(c => $"\"{c.Name}\"").ToList();
-        if (primaryKeys.Count > 1)
+        if (primaryKeys.Count > 0)
         {
             sb.Append(string.Join(", ", columnDefs));
             sb.Append($", PRIMARY KEY ({string.Join(", ", primaryKeys)})");
@@ -307,9 +314,10 @@ public class TableSchemaManager(Connection connectionHandler)
 
     private class RelationalMappingInfo
     {
-        public string Table { get; set; }
-        public string From { get; set; }
-        public string To { get; set; }
+        public string FromTable { get; set; }
+        public string ToTable { get; set; }
+        public string FromColumn { get; set; }
+        public string ToColumn { get; set; }
     }
 
     private class IndexInfo

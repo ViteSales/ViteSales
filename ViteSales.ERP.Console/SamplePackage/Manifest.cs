@@ -1,9 +1,8 @@
+using ViteSales.ERP.Console.SamplePackage.Modules;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
-using ViteSales.Test.SamplePackage.Entities;
-using ViteSales.Test.SamplePackage.Modules;
 
-namespace ViteSales.Test.SamplePackage;
+namespace ViteSales.ERP.Console.SamplePackage;
 
 public class Manifest: IPackage
 {
