@@ -18,6 +18,12 @@ public class InvoiceItems
     public Guid InvoiceId { get; set; }
     
     [Required]
+    [Display(Name = "Item Name")]
+    [BindDataType(FieldTypes.Text)]
+    [IndexColumn("ASC")]
+    public string ItemName { get; set; }
+    
+    [Required]
     [Display(Name = "Item Code")]
     [BindDataType(FieldTypes.ReadableId)]
     public string ItemCode { get; set; }

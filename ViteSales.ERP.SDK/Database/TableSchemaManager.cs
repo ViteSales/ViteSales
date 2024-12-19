@@ -24,9 +24,10 @@ public class TableSchemaManager(Connection connectionHandler)
 
             await connectionHandler.CommitTransactionAsync();
         }
-        catch (Exception e)
+        catch
         {
-            throw e;
+            await connectionHandler.RollbackTransactionAsync();
+            throw;
         }
         finally
         {
@@ -158,9 +159,8 @@ public class TableSchemaManager(Connection connectionHandler)
                 {
                     var existingColumns = await GetExistingColumnsAsync(table.TableName);
                     var newColumns = table.Columns.Where(c => !existingColumns.Contains(c.Name.ToLower())).ToList();
-                    foreach (var column in newColumns)
+                    foreach (var addColumnCmd in newColumns.Select(column => GenerateAddColumnCommand(table.TableName, column)))
                     {
-                        var addColumnCmd = GenerateAddColumnCommand(table.TableName, column);
                         await using var cmd = connectionHandler.CreateCommand();
                         cmd.CommandText = addColumnCmd;
                         await cmd.ExecuteNonQueryAsync();
@@ -169,21 +169,16 @@ public class TableSchemaManager(Connection connectionHandler)
             }
 
             // Create Unique Indexes
-            foreach (var uniqueIndex in allUniqueIndexes)
+            foreach (var createUniqueIndexCmd in from uniqueIndex in allUniqueIndexes let indexName = $"{uniqueIndex.TableName}_unique_{string.Join("_", uniqueIndex.Columns)}" let columnsList = string.Join(", ", uniqueIndex.Columns.Select(c => $"\"{c}\"")) select $"CREATE UNIQUE INDEX IF NOT EXISTS \"{indexName}\" ON \"{uniqueIndex.TableName}\" ({columnsList});")
             {
-                var indexName = $"{uniqueIndex.TableName}_unique_{string.Join("_", uniqueIndex.Columns)}";
-                var columnsList = string.Join(", ", uniqueIndex.Columns.Select(c => $"\"{c}\""));
-                var createUniqueIndexCmd = $"CREATE UNIQUE INDEX IF NOT EXISTS \"{indexName}\" ON \"{uniqueIndex.TableName}\" ({columnsList});";
                 await using var uniqueCmd = connectionHandler.CreateCommand();
                 uniqueCmd.CommandText = createUniqueIndexCmd;
                 await uniqueCmd.ExecuteNonQueryAsync();
             }
 
             // Create Indexes
-            foreach (var index in allIndexes)
+            foreach (var createIndexCmd in from index in allIndexes let indexName = $"{index.TableName}_{index.ColumnName}_idx" select $"CREATE INDEX IF NOT EXISTS \"{indexName}\" ON \"{index.TableName}\" (\"{index.ColumnName}\" {index.Direction});")
             {
-                var indexName = $"{index.TableName}_{index.ColumnName}_idx";
-                var createIndexCmd = $"CREATE INDEX IF NOT EXISTS \"{indexName}\" ON \"{index.TableName}\" (\"{index.ColumnName}\" {index.Direction});";
                 await using var idxCmd = connectionHandler.CreateCommand();
                 idxCmd.CommandText = createIndexCmd;
                 await idxCmd.ExecuteNonQueryAsync();
@@ -193,8 +188,9 @@ public class TableSchemaManager(Connection connectionHandler)
             foreach (var rel in allRelationalMappings)
             {
                 var fkName = $"fk_{rel.FromColumn}_{rel.ToColumn}_{rel.FromTable}_{rel.ToTable}";
+                if (await ConstraintsExistsAsync(fkName)) continue;
+                
                 var addFkCmd = $"ALTER TABLE \"{rel.ToTable}\" ADD CONSTRAINT \"{fkName}\" FOREIGN KEY (\"{rel.ToColumn}\") REFERENCES \"{rel.FromTable}\"(\"{rel.FromColumn}\");";
-                Console.WriteLine(addFkCmd);
                 await using var fkCmd = connectionHandler.CreateCommand();
                 fkCmd.CommandText = addFkCmd;
                 await fkCmd.ExecuteNonQueryAsync();
@@ -202,10 +198,10 @@ public class TableSchemaManager(Connection connectionHandler)
 
             await connectionHandler.CommitTransactionAsync();
         }
-        catch(Exception e)
+        catch
         {
             await connectionHandler.RollbackTransactionAsync();
-            throw e;
+            throw;
         }
         finally
         {
@@ -215,7 +211,7 @@ public class TableSchemaManager(Connection connectionHandler)
 
     private async Task EnsureHstoreExtensionAsync()
     {
-        var cmdText = "CREATE EXTENSION IF NOT EXISTS hstore;";
+        const string cmdText = "CREATE EXTENSION IF NOT EXISTS hstore;";
         await using var cmd = connectionHandler.CreateCommand();
         cmd.CommandText = cmdText;
         await cmd.ExecuteNonQueryAsync();
@@ -223,7 +219,7 @@ public class TableSchemaManager(Connection connectionHandler)
 
     private async Task EnsurePostgisExtensionAsync()
     {
-        var cmdText = "CREATE EXTENSION IF NOT EXISTS postgis;";
+        const string cmdText = "CREATE EXTENSION IF NOT EXISTS postgis;";
         await using var cmd = connectionHandler.CreateCommand();
         cmd.CommandText = cmdText;
         await cmd.ExecuteNonQueryAsync();
@@ -238,7 +234,19 @@ public class TableSchemaManager(Connection connectionHandler)
                 WHERE table_schema = 'public' 
                 AND table_name = @table
             );";
-        cmd.Parameters.AddWithValue("table", tableName.ToLower());
+        cmd.Parameters.AddWithValue("table", tableName);
+        var exists = (bool)(await cmd.ExecuteScalarAsync() ?? false);
+        return exists;
+    }
+
+    private async Task<bool> ConstraintsExistsAsync(string fkName)
+    {
+        await using var cmd = connectionHandler.CreateCommand();
+        cmd.CommandText = @"
+            SELECT EXISTS(
+                SELECT 1 FROM pg_constraint WHERE conname = @fkName
+            );";
+        cmd.Parameters.AddWithValue("fkName", fkName);
         var exists = (bool)(await cmd.ExecuteScalarAsync() ?? false);
         return exists;
     }
@@ -252,7 +260,7 @@ public class TableSchemaManager(Connection connectionHandler)
             FROM information_schema.columns 
             WHERE table_schema = 'public' 
             AND table_name = @table;";
-        cmd.Parameters.AddWithValue("table", tableName.ToLower());
+        cmd.Parameters.AddWithValue("table", tableName);
         await using var reader = await cmd.ExecuteReaderAsync();
         while (await reader.ReadAsync())
         {
