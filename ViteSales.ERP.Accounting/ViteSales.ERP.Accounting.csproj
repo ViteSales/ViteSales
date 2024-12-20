@@ -9,12 +9,15 @@
     <ItemGroup>
       <Folder Include="AP\" />
       <Folder Include="AR\" />
-      <Folder Include="GL\" />
       <Folder Include="Inquiry\" />
       <Folder Include="Inventory\" />
       <Folder Include="Purchase\" />
       <Folder Include="Sales\" />
       <Folder Include="Tax\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ViteSales.ERP.SDK\ViteSales.ERP.SDK.csproj" />
     </ItemGroup>
 
 </Project>

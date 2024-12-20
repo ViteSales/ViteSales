@@ -308,36 +308,36 @@ public class TableSchemaManager(Connection connectionHandler)
 
     private class ColumnInfo
     {
-        public string Name { get; set; }
-        public string DataType { get; set; }
-        public bool IsPrimaryKey { get; set; }
-        public bool IsNullable { get; set; }
+        public required string Name { get; init; }
+        public required string DataType { get; init; }
+        public bool IsPrimaryKey { get; init; }
+        public bool IsNullable { get; init; }
     }
 
     private class TableInfo
     {
-        public string TableName { get; set; }
-        public List<ColumnInfo> Columns { get; set; }
+        public required string TableName { get; init; }
+        public required List<ColumnInfo> Columns { get; init; }
     }
 
     private class RelationalMappingInfo
     {
-        public string FromTable { get; set; }
-        public string ToTable { get; set; }
-        public string FromColumn { get; set; }
-        public string ToColumn { get; set; }
+        public required string FromTable { get; init; }
+        public required string ToTable { get; init; }
+        public required string FromColumn { get; init; }
+        public required string ToColumn { get; init; }
     }
 
     private class IndexInfo
     {
-        public string TableName { get; set; }
-        public string ColumnName { get; set; }
-        public string Direction { get; set; }
+        public required string TableName { get; init; }
+        public required string ColumnName { get; init; }
+        public required string Direction { get; init; }
     }
 
     private class UniqueIndexInfo
     {
-        public string TableName { get; set; }
-        public List<string> Columns { get; set; }
+        public required string TableName { get; init; }
+        public required List<string> Columns { get; init; }
     }
 }

@@ -6,6 +6,9 @@ public enum FieldTypes
     Checkbox,
     ReadableId,
     Currency,
+    Boolean,
+    SmallText,
+    ShortCode,
     Date,
     DateTime,
     Email,
@@ -44,8 +47,9 @@ public static class FieldTypesExtensions
         return fieldType switch
         {
             FieldTypes.AutoNumber => "SERIAL",
+            FieldTypes.Boolean => "BOOLEAN",
             FieldTypes.Checkbox => "BOOLEAN",
-            FieldTypes.Currency => "NUMERIC(19,6)", 
+            FieldTypes.Currency => "DECIMAL(19,6)", 
             FieldTypes.Date => "DATE",
             FieldTypes.DateTime => "TIMESTAMP",
             FieldTypes.ReadableId => "VARCHAR(40)", 
@@ -76,7 +80,8 @@ public static class FieldTypesExtensions
             FieldTypes.NumRange => "NUMRANGE",
             FieldTypes.TsRange => "TSRANGE",
             FieldTypes.Hstore => "HSTORE",
-
+            FieldTypes.SmallText => "VARCHAR(80)",
+            FieldTypes.ShortCode => "VARCHAR(80)",
             _ => throw new ArgumentOutOfRangeException(nameof(fieldType), fieldType, "Unsupported FieldType")
         };
     }

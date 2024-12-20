@@ -10,7 +10,6 @@ namespace ViteSales.ERP.Console.SamplePackage.Entities;
 public class Invoice
 {
     [PrimaryKey]
-    [UniqueKey]
     [BindDataType(FieldTypes.Guid)]
     public Guid Id { get; set; }
     

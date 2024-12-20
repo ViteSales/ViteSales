@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.SDK", "ViteSa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.Console", "ViteSales.ERP.Console\ViteSales.ERP.Console.csproj", "{9B95965D-2E2A-48DF-B669-B0461379E58A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP", "ViteSales.ERP\ViteSales.ERP.csproj", "{CBAE8348-7781-4BE8-B46A-07F6E3C8E7C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{9B95965D-2E2A-48DF-B669-B0461379E58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B95965D-2E2A-48DF-B669-B0461379E58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B95965D-2E2A-48DF-B669-B0461379E58A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBAE8348-7781-4BE8-B46A-07F6E3C8E7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBAE8348-7781-4BE8-B46A-07F6E3C8E7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBAE8348-7781-4BE8-B46A-07F6E3C8E7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBAE8348-7781-4BE8-B46A-07F6E3C8E7C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,7 @@
 using Npgsql;
+using SqlKata;
+using SqlKata.Compilers;
+using SqlKata.Execution;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.SDK.Database;
@@ -6,13 +9,22 @@ namespace ViteSales.ERP.SDK.Database;
 /// <summary>
 /// Initializes a new instance of the <see cref="Connection"/> class.
 /// </summary>
-/// <param name="ConnectionConfig">The PostgreSQL connection config.</param>
+/// <param name="config">The PostgreSQL connection config.</param>
 public class Connection(ConnectionConfig config): IDisposable
 {
     private NpgsqlConnection? _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;");
     private NpgsqlTransaction? _transaction = null;
     private bool _disposed = false;
 
+    public QueryFactory? DbInterface()
+    {
+        if (_connection != null && _connection.State != System.Data.ConnectionState.Open)
+        {
+            return new QueryFactory(_connection, new PostgresCompiler());
+        }
+        return null;
+    }
+    
     /// <summary>
     /// Opens a new PostgreSQL connection asynchronously.
     /// </summary>

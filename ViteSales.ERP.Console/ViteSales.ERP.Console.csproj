@@ -13,9 +13,4 @@
       <ProjectReference Include="..\ViteSales.Shared\ViteSales.Shared.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="RootPackage\Entities\" />
-      <Folder Include="RootPackage\Modules\" />
-    </ItemGroup>
-
 </Project>
