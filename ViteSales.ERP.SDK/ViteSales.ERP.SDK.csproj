@@ -7,12 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Internal\Core\Modules\" />
-      <Folder Include="Resources\" />
-      <Folder Include="Validator\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="FluentValidation" Version="11.11.0" />
       <PackageReference Include="Npgsql" Version="9.0.2" />
       <PackageReference Include="SqlKata" Version="2.4.0" />

@@ -27,7 +27,7 @@ public class Invoice
     [Required]
     [Display(Name = "Debtor Code")]
     [BindData(nameof(GetDebtors))]
-    [BindDataType(FieldTypes.Text)]
+    [BindDataType(FieldTypes.Char)]
     [Editable(false)]
     public string DebtorCode { get; set; }
     

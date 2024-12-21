@@ -44,11 +44,7 @@ public class AccountTypesModule: IModule
             {
                 case AccountTypes account:
                 {
-                    var res = _ctx.Get<AccountTypes>();
-                    await _ctx.SaveChanges(() =>
-                    {
-                        res.AsInsert(account);
-                    });
+                    
                     break;
                 }
                 default:

@@ -4,6 +4,7 @@ using ViteSales.ERP.SDK.Const;
 
 namespace ViteSales.ERP.Accounting.GL.Entities;
 
+[Display(Name = "Chart of Accounts")]
 public class AccountTypes
 {
     [PrimaryKey]
@@ -14,19 +15,22 @@ public class AccountTypes
     [Required]
     [UniqueKey]
     [BindDataType(FieldTypes.Text)]
+    [Display(Name = "Account Name")]
     public required string AccountName { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.ShortCode)]
+    [BindDataType(FieldTypes.SmallText)]
     public required string AccountRootType { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Text)]
+    [BindDataType(FieldTypes.SmallText)]
     public required string ParentAccount { get; set; }
     
     [Required]
     [UniqueKey]
-    [BindDataType(FieldTypes.ShortCode)]
+    [BindDataType(FieldTypes.MultiSelect)]
+    [BindData("GetAccountTypes")]
+    [Display(Name = "Account Type")]
     public required string AccountType { get; set; }
     
     [Required]

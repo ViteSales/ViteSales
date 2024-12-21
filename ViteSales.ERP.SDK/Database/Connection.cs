@@ -12,18 +12,9 @@ namespace ViteSales.ERP.SDK.Database;
 /// <param name="config">The PostgreSQL connection config.</param>
 public class Connection(ConnectionConfig config): IDisposable
 {
-    private NpgsqlConnection? _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;");
+    private NpgsqlConnection _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;");
     private NpgsqlTransaction? _transaction = null;
     private bool _disposed = false;
-
-    public QueryFactory? DbInterface()
-    {
-        if (_connection != null && _connection.State != System.Data.ConnectionState.Open)
-        {
-            return new QueryFactory(_connection, new PostgresCompiler());
-        }
-        return null;
-    }
     
     /// <summary>
     /// Opens a new PostgreSQL connection asynchronously.
@@ -31,7 +22,7 @@ public class Connection(ConnectionConfig config): IDisposable
     /// <returns>A task that represents the asynchronous open operation.</returns>
     public async Task OpenConnectionAsync()
     {
-        if (_connection != null && _connection.State != System.Data.ConnectionState.Open)
+        if (_connection.State != System.Data.ConnectionState.Open)
         {
             await _connection.OpenAsync();
         }
@@ -43,7 +34,7 @@ public class Connection(ConnectionConfig config): IDisposable
     /// <returns>A task that represents the asynchronous close operation.</returns>
     public async Task CloseConnectionAsync()
     {
-        if (_connection != null && _connection.State != System.Data.ConnectionState.Closed)
+        if (_connection.State != System.Data.ConnectionState.Closed)
         {
             await _connection.CloseAsync();
         }
@@ -101,6 +92,8 @@ public class Connection(ConnectionConfig config): IDisposable
         await _transaction.DisposeAsync();
         _transaction = null;
     }
+    
+    public NpgsqlTransaction? GetTransaction => _transaction;
 
     /// <summary>
     /// Creates a new PostgreSQL command associated with the current connection and transaction.
@@ -147,15 +140,21 @@ public class Connection(ConnectionConfig config): IDisposable
                     _transaction.Dispose();
                     _transaction = null;
                 }
-
-                if (_connection != null)
-                {
-                    _connection.Dispose();
-                    _connection = null;
-                }
+                _connection.Dispose();
             }
             _disposed = true;
         }
+    }
+    
+    public QueryFactory DbInterface()
+    {
+        if (_connection is not { State: System.Data.ConnectionState.Open })
+            throw new InvalidOperationException("Connection must be opened before creating commands.");
+        var db = new QueryFactory(_connection, new PostgresCompiler());
+        db.Logger = compiled => {
+            Console.WriteLine(compiled.ToString());
+        };
+        return db;
     }
 
     /// <summary>

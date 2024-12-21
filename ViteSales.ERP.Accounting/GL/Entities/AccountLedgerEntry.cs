@@ -21,7 +21,7 @@ public class AccountLedgerEntry
     [BindDataType(FieldTypes.ReadableId)]
     public string Code { get; set; }
     
-    [BindDataType(FieldTypes.SmallText)]
+    [BindDataType(FieldTypes.MultiSelect)]
     public string Type { get; set; }
     
     [BindDataType(FieldTypes.Currency)]
@@ -30,7 +30,7 @@ public class AccountLedgerEntry
     [BindDataType(FieldTypes.Currency)]
     public decimal Credit { get; set; }
     
-    [BindDataType(FieldTypes.SmallText)]
+    [BindDataType(FieldTypes.MultiSelect)]
     public string ReferenceType { get; set; }
     
     [BindDataType(FieldTypes.ReadableId)]

@@ -9,7 +9,6 @@ public class BindDataAttribute(string methodName) : Attribute
 
     public object? InvokeMethod(object target)
     {
-        // Retrieve the method using reflection
         var method = target.GetType().GetMethod(
             MethodName,
             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance
