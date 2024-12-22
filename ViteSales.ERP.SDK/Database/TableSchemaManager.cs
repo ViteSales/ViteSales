@@ -3,35 +3,37 @@ using System.Reflection;
 using System.Text;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
+using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.SDK.Database;
 
-public class TableSchemaManager(Connection connectionHandler)
+public class TableSchemaManager(ConnectionConfig config)
 {
+    private readonly Connection _connectionHandler = new(config);
     public async Task DropTablesAsync(IEnumerable<Type> types)
     {
         try
         {
-            await connectionHandler.OpenConnectionAsync();
-            await connectionHandler.BeginTransactionAsync();
+            await _connectionHandler.OpenConnectionAsync();
+            await _connectionHandler.BeginTransactionAsync();
             foreach (var type in types)
             {
                 var tableName = type.Name;
-                await using var cmd = connectionHandler.CreateCommand();
+                await using var cmd = _connectionHandler.CreateCommand();
                 cmd.CommandText = $"DROP TABLE IF EXISTS \"{tableName}\" CASCADE;";
                 await cmd.ExecuteNonQueryAsync();
             }
 
-            await connectionHandler.CommitTransactionAsync();
+            await _connectionHandler.CommitTransactionAsync();
         }
         catch
         {
-            await connectionHandler.RollbackTransactionAsync();
+            await _connectionHandler.RollbackTransactionAsync();
             throw;
         }
         finally
         {
-            await connectionHandler.CloseConnectionAsync();
+            await _connectionHandler.CloseConnectionAsync();
         }
     }
     
@@ -132,8 +134,8 @@ public class TableSchemaManager(Connection connectionHandler)
 
         try
         {
-            await connectionHandler.OpenConnectionAsync();
-            await connectionHandler.BeginTransactionAsync();
+            await _connectionHandler.OpenConnectionAsync();
+            await _connectionHandler.BeginTransactionAsync();
 
             if (requiresHstore)
             {
@@ -151,7 +153,7 @@ public class TableSchemaManager(Connection connectionHandler)
                 if (!tableExists)
                 {
                     var createTableCmd = GenerateCreateTableCommand(table.TableName, table.Columns);
-                    await using var cmd = connectionHandler.CreateCommand();
+                    await using var cmd = _connectionHandler.CreateCommand();
                     cmd.CommandText = createTableCmd;
                     await cmd.ExecuteNonQueryAsync();
                 }
@@ -161,7 +163,7 @@ public class TableSchemaManager(Connection connectionHandler)
                     var newColumns = table.Columns.Where(c => !existingColumns.Contains(c.Name.ToLower())).ToList();
                     foreach (var addColumnCmd in newColumns.Select(column => GenerateAddColumnCommand(table.TableName, column)))
                     {
-                        await using var cmd = connectionHandler.CreateCommand();
+                        await using var cmd = _connectionHandler.CreateCommand();
                         cmd.CommandText = addColumnCmd;
                         await cmd.ExecuteNonQueryAsync();
                     }
@@ -171,7 +173,7 @@ public class TableSchemaManager(Connection connectionHandler)
             // Create Unique Indexes
             foreach (var createUniqueIndexCmd in from uniqueIndex in allUniqueIndexes let indexName = $"{uniqueIndex.TableName}_unique_{string.Join("_", uniqueIndex.Columns)}" let columnsList = string.Join(", ", uniqueIndex.Columns.Select(c => $"\"{c}\"")) select $"CREATE UNIQUE INDEX IF NOT EXISTS \"{indexName}\" ON \"{uniqueIndex.TableName}\" ({columnsList});")
             {
-                await using var uniqueCmd = connectionHandler.CreateCommand();
+                await using var uniqueCmd = _connectionHandler.CreateCommand();
                 uniqueCmd.CommandText = createUniqueIndexCmd;
                 await uniqueCmd.ExecuteNonQueryAsync();
             }
@@ -179,7 +181,7 @@ public class TableSchemaManager(Connection connectionHandler)
             // Create Indexes
             foreach (var createIndexCmd in from index in allIndexes let indexName = $"{index.TableName}_{index.ColumnName}_idx" select $"CREATE INDEX IF NOT EXISTS \"{indexName}\" ON \"{index.TableName}\" (\"{index.ColumnName}\" {index.Direction});")
             {
-                await using var idxCmd = connectionHandler.CreateCommand();
+                await using var idxCmd = _connectionHandler.CreateCommand();
                 idxCmd.CommandText = createIndexCmd;
                 await idxCmd.ExecuteNonQueryAsync();
             }
@@ -191,28 +193,28 @@ public class TableSchemaManager(Connection connectionHandler)
                 if (await ConstraintsExistsAsync(fkName)) continue;
                 
                 var addFkCmd = $"ALTER TABLE \"{rel.ToTable}\" ADD CONSTRAINT \"{fkName}\" FOREIGN KEY (\"{rel.ToColumn}\") REFERENCES \"{rel.FromTable}\"(\"{rel.FromColumn}\");";
-                await using var fkCmd = connectionHandler.CreateCommand();
+                await using var fkCmd = _connectionHandler.CreateCommand();
                 fkCmd.CommandText = addFkCmd;
                 await fkCmd.ExecuteNonQueryAsync();
             }
 
-            await connectionHandler.CommitTransactionAsync();
+            await _connectionHandler.CommitTransactionAsync();
         }
         catch
         {
-            await connectionHandler.RollbackTransactionAsync();
+            await _connectionHandler.RollbackTransactionAsync();
             throw;
         }
         finally
         {
-            await connectionHandler.CloseConnectionAsync();
+            await _connectionHandler.CloseConnectionAsync();
         }
     }
 
     private async Task EnsureHstoreExtensionAsync()
     {
         const string cmdText = "CREATE EXTENSION IF NOT EXISTS hstore;";
-        await using var cmd = connectionHandler.CreateCommand();
+        await using var cmd = _connectionHandler.CreateCommand();
         cmd.CommandText = cmdText;
         await cmd.ExecuteNonQueryAsync();
     }
@@ -220,14 +222,14 @@ public class TableSchemaManager(Connection connectionHandler)
     private async Task EnsurePostgisExtensionAsync()
     {
         const string cmdText = "CREATE EXTENSION IF NOT EXISTS postgis;";
-        await using var cmd = connectionHandler.CreateCommand();
+        await using var cmd = _connectionHandler.CreateCommand();
         cmd.CommandText = cmdText;
         await cmd.ExecuteNonQueryAsync();
     }
 
     private async Task<bool> TableExistsAsync(string tableName)
     {
-        await using var cmd = connectionHandler.CreateCommand();
+        await using var cmd = _connectionHandler.CreateCommand();
         cmd.CommandText = @"
             SELECT EXISTS (
                 SELECT FROM information_schema.tables 
@@ -241,7 +243,7 @@ public class TableSchemaManager(Connection connectionHandler)
 
     private async Task<bool> ConstraintsExistsAsync(string fkName)
     {
-        await using var cmd = connectionHandler.CreateCommand();
+        await using var cmd = _connectionHandler.CreateCommand();
         cmd.CommandText = @"
             SELECT EXISTS(
                 SELECT 1 FROM pg_constraint WHERE conname = @fkName
@@ -254,7 +256,7 @@ public class TableSchemaManager(Connection connectionHandler)
     private async Task<HashSet<string>> GetExistingColumnsAsync(string tableName)
     {
         var columns = new HashSet<string>();
-        await using var cmd = connectionHandler.CreateCommand();
+        await using var cmd = _connectionHandler.CreateCommand();
         cmd.CommandText = @"
             SELECT column_name 
             FROM information_schema.columns 

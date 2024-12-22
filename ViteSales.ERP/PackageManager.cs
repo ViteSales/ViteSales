@@ -12,8 +12,7 @@ public class PackageManager
     
     public PackageManager(ConnectionConfig config)
     {
-        var connectionHandler = new Connection(config);
-        _schemaManager = new TableSchemaManager(connectionHandler);
+        _schemaManager = new TableSchemaManager(config);
         _assemblies = AppDomain.CurrentDomain.GetAssemblies()
             .Where(a =>
             {

@@ -4,6 +4,7 @@ using ViteSales.ERP.SDK.Const;
 
 namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 
+[Serializable]
 public class PackageAuthorsInternal
 {
     [PrimaryKey]
@@ -26,7 +27,4 @@ public class PackageAuthorsInternal
     
     [BindDataType(FieldTypes.Phone)]
     public string? Phone { get; set; }
-    
-    [RelationalMapping("PackageInfoInternal", "Id", "AuthorId")]
-    public List<PackageInfoInternal> Packages { get; set; } = [];
 }

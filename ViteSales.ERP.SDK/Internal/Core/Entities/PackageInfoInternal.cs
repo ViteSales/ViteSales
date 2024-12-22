@@ -4,6 +4,7 @@ using ViteSales.ERP.SDK.Const;
 
 namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 
+[Serializable]
 public class PackageInfoInternal
 {
     [PrimaryKey]
@@ -26,6 +27,6 @@ public class PackageInfoInternal
     [BindDataType(FieldTypes.Text)]
     public string? License { get; set; }
     
-    [RelationalMapping("PackageDetailsInternal", "Id", "AuthorId")]
+    [RelationalMapping("PackageDetailsInternal", "Id", "PackageId")]
     public List<PackageDetailsInternal> Modules { get; set; } = [];
 }

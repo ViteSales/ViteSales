@@ -10,7 +10,7 @@ namespace ViteSales.ERP.SDK.Database;
 /// Initializes a new instance of the <see cref="Connection"/> class.
 /// </summary>
 /// <param name="config">The PostgreSQL connection config.</param>
-public class Connection(ConnectionConfig config): IDisposable
+internal class Connection(ConnectionConfig config): IDisposable
 {
     private NpgsqlConnection _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;");
     private NpgsqlTransaction? _transaction = null;
@@ -146,7 +146,7 @@ public class Connection(ConnectionConfig config): IDisposable
         }
     }
     
-    public QueryFactory DbInterface()
+    public QueryFactory SqlCompiler()
     {
         if (_connection is not { State: System.Data.ConnectionState.Open })
             throw new InvalidOperationException("Connection must be opened before creating commands.");
