@@ -15,7 +15,7 @@ public class AccountLedgerEntry
     public DateTime EntryDate { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.ReadableId)]
+    [BindDataType(FieldTypes.Guid)]
     public required string AccountId { get; set; }
     
     [BindDataType(FieldTypes.ReadableId)]

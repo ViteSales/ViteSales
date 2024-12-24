@@ -10,7 +10,7 @@ public class Manifest: IPackage
     public string License { get; } = "MIT";
     public AuthorInfo Author { get; } = new()
     {
-        Author = "Mohammad Julfikar <md.julfikar.mahmud@gmail.com>",
+        Name = "Mohammad Julfikar <md.julfikar.mahmud@gmail.com>",
         Company = "ViteSales Pvt. Ltd."
     };
     public string PackageName { get; } = "Core";

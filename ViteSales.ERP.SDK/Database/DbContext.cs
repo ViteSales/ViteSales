@@ -38,6 +38,9 @@ public class DbContext(ConnectionConfig config)
                         await DoDelete(operation);
                         break;
                     }
+                    case DbOperationTypes.Upsert:
+                        await DoUpsert(operation);
+                        break;
                     default:
                         throw new NotImplementedException("Only Insert, Update and Delete operations are supported.");
                 }
@@ -54,6 +57,18 @@ public class DbContext(ConnectionConfig config)
         {
             await _connection.CloseConnectionAsync();
         }
+    }
+
+    public async Task<bool> IsTableExist(string tableName)
+    {
+        await _connection.OpenConnectionAsync();
+        return await _connection.TableExistsAsync(tableName);
+    }
+
+    public async Task<bool> IsColumnExist(string tableName, string columnName)
+    {
+        await _connection.OpenConnectionAsync();
+        return await _connection.ColumnExistsAsync(tableName, columnName);
     }
 
     private async Task DoInsert(IOperation operation)
@@ -81,6 +96,27 @@ public class DbContext(ConnectionConfig config)
         }
 
         await _connection.UpdateAsync(operation);
+    }
+
+    private async Task DoUpsert(IOperation operation)
+    {
+        var data = operation.Data().GetType();
+        var genericValidatorType = typeof(FormValidator<>).MakeGenericType(data);
+        dynamic validator = Activator.CreateInstance(genericValidatorType);
+        var validate = await validator.ValidateAsync((dynamic)operation.Data());
+        if (!validate.IsValid)
+        {
+            throw new ValidationException(validate.Errors);
+        }
+
+        if (await _connection.RecordExistsAsync(operation))
+        {
+            await _connection.UpdateAsync(operation);
+        }
+        else
+        {
+            await _connection.InsertAsync(operation);
+        }
     }
 
     private async Task DoDelete(IOperation operation)

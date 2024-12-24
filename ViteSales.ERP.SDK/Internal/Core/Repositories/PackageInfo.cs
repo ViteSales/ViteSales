@@ -20,7 +20,8 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
         var mgr = new TableSchemaManager(_config);
         var authorId = Guid.NewGuid();
         var packageId = Guid.NewGuid();
-        if (!IgnoreModules.Contains(package.PackageName))
+        var initialTableExists = await IsTableExist(nameof(PackageInfoInternal));
+        if (initialTableExists)
         {
             var factory = await Get<PackageInfoInternal>();
             var packageCheck = factory.Select("*")
@@ -30,11 +31,15 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
             if (packageCheck is not null)
             {
                 var packageInfoCheck = packageCheck.ToList();
-                if (packageInfoCheck.First().Version == package.Version)
+                if (packageInfoCheck.Count > 0 && packageInfoCheck.First().Version == package.Version)
                 {
                     return;
                 }
             }
+        }
+        if (!IgnoreModules.Contains(package.PackageName) && !initialTableExists)
+        {
+            throw new Exception("Initial modules are not installed");
         }
         
         var details = (from module in package.Modules
@@ -56,24 +61,40 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
             await mgr.CreateOrUpdateTablesAsync(package.Modules.SelectMany(m => m.Entities));
             await SaveChanges(() =>
             {
-                var author = new Insert<PackageAuthorsInternal>(new PackageAuthorsInternal()
+                var author = new Upsert<PackageAuthorsInternal>(new PackageAuthorsInternal()
                 {
                     Id = authorId,
-                    Author = package.Author.Author,
+                    Name = package.Author.Name,
                     Company = package.Author.Company,
                     Email = package.Author.Email,
                     Phone = package.Author.Phone,
                     Website = package.Author.Website
-                });
-                var info = new Insert<PackageInfoInternal>(new PackageInfoInternal()
+                },new ConditionBuilder()
+                        .And("Name","=", package.Author.Name)
+                    );
+                var info = new Upsert<PackageInfoInternal>(new PackageInfoInternal()
                 {
                     AuthorId = authorId,
                     Id = packageId,
                     License = package.License,
                     Name = package.PackageName,
                     Version = package.Version
-                });
+                }, new ConditionBuilder()
+                    .And("Name", "=", package.PackageName));
                 var actions = new List<IOperation> { author, info };
+                foreach (var module in package.Modules.ToList())
+                {
+                    if (module.GetType().GetMethod("DefaultValues", System.Reflection.BindingFlags.Public) is { } defaultValuesMethod)
+                    {
+                        if (defaultValuesMethod.Invoke(null, null) is List<Type> defaultValuesList)
+                        {
+                            foreach (var type in defaultValuesList)
+                            {
+                                Console.WriteLine(type.FullName);
+                            }
+                        }
+                    }
+                }
                 actions.AddRange(details);
                 return actions;
             });

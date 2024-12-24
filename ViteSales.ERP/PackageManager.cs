@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
+using ViteSales.ERP.SDK.Internal.Core.Repositories;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP;
@@ -9,9 +10,11 @@ public class PackageManager
 {
     private readonly TableSchemaManager _schemaManager;
     private readonly List<Assembly> _assemblies;
+    private readonly PackageInfo _packageInfo;
     
     public PackageManager(ConnectionConfig config)
     {
+        _packageInfo = new PackageInfo(config);
         _schemaManager = new TableSchemaManager(config);
         _assemblies = AppDomain.CurrentDomain.GetAssemblies()
             .Where(a =>
@@ -36,7 +39,7 @@ public class PackageManager
         {
             try
             {
-                await _schemaManager.CreateOrUpdateTablesAsync(manifest.Modules.SelectMany(m => m.Entities));
+                await _packageInfo.Install(manifest);
             }
             catch (Exception e)
             {
@@ -60,7 +63,7 @@ public class PackageManager
         {
             try
             {
-                await _schemaManager.DropTablesAsync(manifest.Modules.SelectMany(m => m.Entities));
+                await _packageInfo.Uninstall(manifest);
             }
             catch (Exception e)
             {

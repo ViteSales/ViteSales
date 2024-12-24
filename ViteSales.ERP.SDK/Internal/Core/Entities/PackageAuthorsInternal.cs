@@ -13,7 +13,7 @@ public class PackageAuthorsInternal
     [Required]
     [UniqueKey]
     [BindDataType(FieldTypes.Text)]
-    public required string Author { get; set; }
+    public required string Name { get; set; }
     
     [BindDataType(FieldTypes.Email)]
     public string? Email { get; set; }
