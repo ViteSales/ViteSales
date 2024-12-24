@@ -12,6 +12,7 @@ public class AccountTypesModule: IModule
 
     public IEnumerable<Type> Entities { get; } = new List<Type>()
     {
+        typeof(AccountLedgerEntry),
         typeof(AccountTypes)
     };
     

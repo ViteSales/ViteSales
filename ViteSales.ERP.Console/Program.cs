@@ -18,6 +18,7 @@ var conn = new ConnectionConfig()
 
 var pkg = new PackageInfo(conn);
 await pkg.Install(new ViteSales.ERP.SDK.Internal.Core.Manifest());
+await pkg.Install(new ViteSales.ERP.Accounting.Manifest());
 // await pkg.Uninstall(new ViteSales.ERP.SDK.Internal.Core.Manifest());
 
 /*

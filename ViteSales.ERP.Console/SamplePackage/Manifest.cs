@@ -11,7 +11,7 @@ public class Manifest: IPackage
 
     public AuthorInfo Author { get; } = new()
     {
-        Author = "Mohammad Julfikar <md.julfikar.mahmud@gmail.com>",
+        Name = "Mohammad Julfikar <md.julfikar.mahmud@gmail.com>",
         Company = "ViteSales Pvt. Ltd."
     };
     public string PackageName { get; } = "Sales";

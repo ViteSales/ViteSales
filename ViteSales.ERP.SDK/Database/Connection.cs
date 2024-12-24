@@ -17,7 +17,7 @@ namespace ViteSales.ERP.SDK.Database;
 /// <param name="config">The PostgreSQL connection config.</param>
 internal class Connection(ConnectionConfig config): IDisposable
 {
-    private NpgsqlConnection _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;");
+    private NpgsqlConnection _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;Include Error Detail=true;");
     private NpgsqlTransaction? _transaction = null;
     private bool _disposed = false;
     
@@ -93,6 +93,7 @@ internal class Connection(ConnectionConfig config): IDisposable
         }
         var cmd = CreateCommand();
         cmd.CommandText = $"INSERT INTO \"{tableName}\" ({string.Join(",", columns)}) VALUES ({string.Join(",", parameterDbTypes.Select(x => x.Parameter))});";
+        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameterDbTypes)
         {
             cmd.Parameters.AddWithValue(dbType.Parameter, dbType.DbType, dbType.Value);
@@ -103,7 +104,6 @@ internal class Connection(ConnectionConfig config): IDisposable
     public async Task UpdateAsync(IOperation operation)
     {
         var type = operation.Data().GetType();
-        var data = operation.Data().GetType();
         var tableName = type.Name;
         var typeProperties = type.GetProperties();
         var parameterDbTypes = new Dictionary<string, NpgsqlDbTypeWithValue>();
@@ -117,9 +117,10 @@ internal class Connection(ConnectionConfig config): IDisposable
             var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
             if (bindType is null) continue;
 
-            var propertyValue = property.GetValue(data);
+            var instance = Activator.CreateInstance(property.DeclaringType ?? throw new InvalidOperationException("Property does not have a declaring type"));
+            var propertyValue = property.GetValue(instance);
             if (propertyValue is null) continue;
-            
+
             var dbColumnType = bindType.Type.GetPostgresDbType();
             parameterDbTypes.Add(property.Name, new NpgsqlDbTypeWithValue()
             {
@@ -138,6 +139,7 @@ internal class Connection(ConnectionConfig config): IDisposable
         
         var cmd = CreateCommand();
         cmd.CommandText = sql;
+        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameters)
         {
             cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
@@ -165,11 +167,79 @@ internal class Connection(ConnectionConfig config): IDisposable
         
         var cmd = CreateCommand();
         cmd.CommandText = sql;
+        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameters)
         {
             cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
         }
         await cmd.ExecuteNonQueryAsync();
+    }
+
+    public async Task<bool> RecordExistsAsync(IOperation operation)
+    {
+        var type = operation.Data().GetType();
+        var tableName = type.Name;
+        var whereParameterDbTypes = operation.Where();
+        if (whereParameterDbTypes is null)
+        {
+            throw new ArgumentNullException(nameof(whereParameterDbTypes));
+        }
+        var (whereClause, parameters) = whereParameterDbTypes.Build();
+        
+        var sql = $"SELECT * FROM \"{tableName}\" WHERE {whereClause}";
+        
+        var cmd = CreateCommand();
+        cmd.CommandText = sql;
+        Console.WriteLine(cmd.CommandText);
+        foreach (var dbType in parameters)
+        {
+            cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
+        }
+        
+        var reader = await cmd.ExecuteReaderAsync();
+        var hasRows = reader.HasRows;
+        await reader.CloseAsync();
+        return hasRows;
+    }
+    
+    /// <summary>
+    /// Checks if a column exists in a table.
+    /// </summary>
+    /// <param name="tableName">The name of the table to check.</param>
+    /// <param name="columnName">The name of the column to check.</param>
+    /// <returns>A boolean indicating whether the column exists or not.</returns>
+    public async Task<bool> ColumnExistsAsync(string tableName, string columnName)
+    {
+        var query = @"SELECT EXISTS (
+                          SELECT 1 
+                          FROM information_schema.columns 
+                          WHERE table_name = @tableName 
+                          AND column_name = @columnName
+                      );";
+        
+        var cmd = CreateCommand();
+        cmd.CommandText = query;
+        cmd.Parameters.AddWithValue("@tableName", NpgsqlDbType.Text, tableName);
+        cmd.Parameters.AddWithValue("@columnName", NpgsqlDbType.Text, columnName);
+
+        var result = await cmd.ExecuteScalarAsync();
+        return result is bool exists && exists;
+    }
+    
+    /// <summary>
+    /// Checks if a table exists in the database.
+    /// </summary>
+    /// <param name="tableName">The name of the table to check.</param>
+    /// <returns>A boolean indicating whether the table exists or not.</returns>
+    public async Task<bool> TableExistsAsync(string tableName)
+    {
+        var query = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = @tableName);";
+        var cmd = CreateCommand();
+        cmd.CommandText = query;
+        cmd.Parameters.AddWithValue("@tableName", NpgsqlDbType.Text, tableName);
+
+        var result = await cmd.ExecuteScalarAsync();
+        return result is bool exists && exists;
     }
     
     /// <summary>

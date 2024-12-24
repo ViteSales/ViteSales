@@ -4,5 +4,6 @@ public enum DbOperationTypes
 {
     Insert,
     Update,
+    Upsert,
     Delete
 }
