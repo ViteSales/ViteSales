@@ -3,7 +3,7 @@ using ViteSales.ERP.SDK.Interfaces;
 
 namespace ViteSales.ERP.SDK.Database.Operation;
 
-public class Update<T>(T data, List<WhereClause>? whereClauses = null) : IOperation
+public class Update<T>(T data, ConditionBuilder? whereClauses = null) : IOperation
     where T : class
 {
     public DbOperationTypes Type { get; } = DbOperationTypes.Update;
@@ -14,7 +14,7 @@ public class Update<T>(T data, List<WhereClause>? whereClauses = null) : IOperat
         return Data;
     }
 
-    public List<WhereClause>? Where()
+    public ConditionBuilder? Where()
     {
         return whereClauses;
     }

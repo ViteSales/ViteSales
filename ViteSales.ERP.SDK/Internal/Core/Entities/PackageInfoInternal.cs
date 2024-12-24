@@ -4,7 +4,6 @@ using ViteSales.ERP.SDK.Const;
 
 namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 
-[Serializable]
 public class PackageInfoInternal
 {
     [PrimaryKey]

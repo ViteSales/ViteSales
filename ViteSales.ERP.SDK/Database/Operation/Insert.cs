@@ -14,7 +14,7 @@ public class Insert<T>(T data) : IOperation
         return Data;
     }
 
-    public List<WhereClause>? Where()
+    public ConditionBuilder? Where()
     {
         return null;
     }

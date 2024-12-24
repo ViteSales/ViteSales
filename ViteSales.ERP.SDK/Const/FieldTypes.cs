@@ -43,7 +43,54 @@ public enum FieldTypes
 
 public static class FieldTypesExtensions
 {
-    public static string GetPostgresType(this FieldTypes fieldType)
+    
+    public static NpgsqlTypes.NpgsqlDbType GetPostgresDbType(this FieldTypes fieldType)
+    {
+        return fieldType switch
+        {
+            FieldTypes.AutoNumber => NpgsqlTypes.NpgsqlDbType.Integer,
+            FieldTypes.Boolean => NpgsqlTypes.NpgsqlDbType.Boolean,
+            FieldTypes.Checkbox => NpgsqlTypes.NpgsqlDbType.Boolean,
+            FieldTypes.Currency => NpgsqlTypes.NpgsqlDbType.Numeric,
+            FieldTypes.Date => NpgsqlTypes.NpgsqlDbType.Date,
+            FieldTypes.DateTime => NpgsqlTypes.NpgsqlDbType.Timestamp,
+            FieldTypes.Char => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.ReadableId => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.Email => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.File => NpgsqlTypes.NpgsqlDbType.Bytea,
+            FieldTypes.Guid => NpgsqlTypes.NpgsqlDbType.Uuid,
+            FieldTypes.Html => NpgsqlTypes.NpgsqlDbType.Text,
+            FieldTypes.Image => NpgsqlTypes.NpgsqlDbType.Bytea,
+            FieldTypes.MultiLine => NpgsqlTypes.NpgsqlDbType.Text,
+            FieldTypes.Geography => NpgsqlTypes.NpgsqlDbType.Geography,
+            FieldTypes.MultiSelect => NpgsqlTypes.NpgsqlDbType.Array,
+            FieldTypes.Numeric => NpgsqlTypes.NpgsqlDbType.Numeric,
+            FieldTypes.Password => NpgsqlTypes.NpgsqlDbType.Text,
+            FieldTypes.Phone => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.Select => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.Text => NpgsqlTypes.NpgsqlDbType.Text,
+            FieldTypes.Url => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.Time => NpgsqlTypes.NpgsqlDbType.Time,
+            FieldTypes.Vector => NpgsqlTypes.NpgsqlDbType.Array,
+            FieldTypes.Json => NpgsqlTypes.NpgsqlDbType.Json,
+            FieldTypes.Jsonb => NpgsqlTypes.NpgsqlDbType.Jsonb,
+            FieldTypes.Xml => NpgsqlTypes.NpgsqlDbType.Xml,
+            FieldTypes.Binary => NpgsqlTypes.NpgsqlDbType.Bytea,
+            FieldTypes.Enum => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.Interval => NpgsqlTypes.NpgsqlDbType.Interval,
+            FieldTypes.Int4Range => NpgsqlTypes.NpgsqlDbType.IntegerRange,
+            FieldTypes.Int8Range => NpgsqlTypes.NpgsqlDbType.IntegerRange,
+            FieldTypes.NumRange => NpgsqlTypes.NpgsqlDbType.NumericRange,
+            FieldTypes.TsRange => NpgsqlTypes.NpgsqlDbType.TimestampRange,
+            FieldTypes.Hstore => NpgsqlTypes.NpgsqlDbType.Hstore,
+            FieldTypes.SmallText => NpgsqlTypes.NpgsqlDbType.Varchar,
+            FieldTypes.ShortCode => NpgsqlTypes.NpgsqlDbType.Varchar,
+            _ => throw new ArgumentOutOfRangeException(nameof(fieldType), 
+                fieldType, "Unsupported FieldType")
+        };
+    }
+    
+    public static string GetPostgresColumnType(this FieldTypes fieldType)
     {
         return fieldType switch
         {

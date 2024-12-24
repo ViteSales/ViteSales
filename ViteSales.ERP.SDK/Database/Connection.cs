@@ -1,8 +1,13 @@
+using System.Reflection;
 using Npgsql;
-using SqlKata;
+using NpgsqlTypes;
 using SqlKata.Compilers;
 using SqlKata.Execution;
+using ViteSales.ERP.SDK.Attributes;
+using ViteSales.ERP.SDK.Const;
+using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.Shared.Extensions;
 
 namespace ViteSales.ERP.SDK.Database;
 
@@ -61,6 +66,112 @@ internal class Connection(ConnectionConfig config): IDisposable
         }
     }
 
+    public async Task InsertAsync(IOperation operation)
+    {
+        var data = operation.Data();
+        var type = data.GetType();
+        var tableName = type.Name;
+        var typeProperties = type.GetProperties();
+        var parameterDbTypes = new List<NpgsqlDbTypeWithValue>();
+        var columns = new List<string>();
+        foreach (var property in typeProperties)
+        {
+            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            if (bindType is null) continue;
+            
+            var propertyValue = property.GetValue(data);
+            if (propertyValue is null) continue;
+            
+            var dbColumnType = bindType.Type.GetPostgresDbType();
+            parameterDbTypes.Add(new NpgsqlDbTypeWithValue()
+            {
+                Parameter = $"@{property.Name}",
+                DbType = dbColumnType,
+                Value = propertyValue.ToObjectInferred()
+            });
+            columns.Add($"\"{property.Name}\"");
+        }
+        var cmd = CreateCommand();
+        cmd.CommandText = $"INSERT INTO \"{tableName}\" ({string.Join(",", columns)}) VALUES ({string.Join(",", parameterDbTypes.Select(x => x.Parameter))});";
+        foreach (var dbType in parameterDbTypes)
+        {
+            cmd.Parameters.AddWithValue(dbType.Parameter, dbType.DbType, dbType.Value);
+        }
+        await cmd.ExecuteNonQueryAsync();
+    }
+
+    public async Task UpdateAsync(IOperation operation)
+    {
+        var type = operation.Data().GetType();
+        var data = operation.Data().GetType();
+        var tableName = type.Name;
+        var typeProperties = type.GetProperties();
+        var parameterDbTypes = new Dictionary<string, NpgsqlDbTypeWithValue>();
+        var whereParameterDbTypes = operation.Where();
+        if (whereParameterDbTypes is null)
+        {
+            throw new ArgumentNullException(nameof(whereParameterDbTypes));
+        }
+        foreach (var property in typeProperties)
+        {
+            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            if (bindType is null) continue;
+
+            var propertyValue = property.GetValue(data);
+            if (propertyValue is null) continue;
+            
+            var dbColumnType = bindType.Type.GetPostgresDbType();
+            parameterDbTypes.Add(property.Name, new NpgsqlDbTypeWithValue()
+            {
+                Parameter = $"@{property.Name}",
+                DbType = dbColumnType,
+                Value = propertyValue.ToObjectInferred()
+            });
+        }
+
+        var (whereClause, parameters) = whereParameterDbTypes.Build();
+
+        var sql = $"UPDATE \"{tableName}\" SET";
+        var values = parameterDbTypes.Select(kv => $" \"{kv.Key}\" = {kv.Value.Parameter}").ToList();
+        sql += string.Join(",", values);
+        sql += $" WHERE {whereClause}";
+        
+        var cmd = CreateCommand();
+        cmd.CommandText = sql;
+        foreach (var dbType in parameters)
+        {
+            cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
+        }
+
+        foreach (var dbType in parameterDbTypes)
+        {
+            cmd.Parameters.AddWithValue(dbType.Value.Parameter, dbType.Value.DbType, dbType.Value.Value);
+        }
+        await cmd.ExecuteNonQueryAsync();
+    }
+
+    public async Task DeleteAsync(IOperation operation)
+    {
+        var type = operation.Data().GetType();
+        var tableName = type.Name;
+        var whereParameterDbTypes = operation.Where();
+        if (whereParameterDbTypes is null)
+        {
+            throw new ArgumentNullException(nameof(whereParameterDbTypes));
+        }
+        var (whereClause, parameters) = whereParameterDbTypes.Build();
+        
+        var sql = $"DELETE FROM \"{tableName}\" WHERE {whereClause}";
+        
+        var cmd = CreateCommand();
+        cmd.CommandText = sql;
+        foreach (var dbType in parameters)
+        {
+            cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
+        }
+        await cmd.ExecuteNonQueryAsync();
+    }
+    
     /// <summary>
     /// Commits the current transaction asynchronously.
     /// </summary>

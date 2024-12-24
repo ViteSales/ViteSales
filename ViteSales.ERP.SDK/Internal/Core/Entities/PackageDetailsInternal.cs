@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 
 namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 
-[Serializable]
 public class PackageDetailsInternal
 {
     [PrimaryKey]
@@ -26,5 +26,5 @@ public class PackageDetailsInternal
     
     [Required]
     [BindDataType(FieldTypes.Json)]
-    public required string Entities { get; set; }
+    public required object Entities { get; set; }
 }

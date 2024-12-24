@@ -1,5 +1,7 @@
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Xml.Linq;
 using FluentValidation;
 using SqlKata.Execution;
 using ViteSales.ERP.SDK.Attributes;
@@ -15,13 +17,12 @@ public class FormValidator<T> : AbstractValidator<T> where T : class
         var properties = typeof(T).GetProperties();
         foreach (var prop in properties)
         {
-            var uniqueAttr = prop.GetCustomAttribute<UniqueKeyAttribute>();
             var bindAttr = prop.GetCustomAttribute<BindDataTypeAttribute>();
             var errorMessageAttr = prop.GetCustomAttribute<ErrorMessageAttribute>();
-            var errorMessage = "Validation Error: {PropertyName}";
+            var errorMessage = $"Validation Error: {prop.Name}";
             if (errorMessageAttr != null)
             {
-                errorMessage = errorMessageAttr.Message;
+                errorMessage = $"{prop.Name}: {errorMessageAttr.Message}";
             }
             if (bindAttr != null)
             {
@@ -155,7 +156,7 @@ public class FormValidator<T> : AbstractValidator<T> where T : class
                         break;
                     case FieldTypes.Url:
                         RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(x => Uri.IsWellFormedUriString(x, UriKind.Absolute))
+                            .Must(x => Uri.IsWellFormedUriString(x, UriKind.Absolute) || string.IsNullOrEmpty(x))
                             .WithMessage(errorMessage);
                         break;
 
@@ -173,14 +174,14 @@ public class FormValidator<T> : AbstractValidator<T> where T : class
 
                     case FieldTypes.Json:
                     case FieldTypes.Jsonb:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(IsValidJson)
+                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => IsValidJson(x))
                             .WithMessage(errorMessage);
                         break;
 
                     case FieldTypes.Xml:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(IsValidXml)
+                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as XDocument)
+                            .Must(x => x is not null)
                             .WithMessage(errorMessage);
                         break;
 
@@ -229,13 +230,20 @@ public class FormValidator<T> : AbstractValidator<T> where T : class
         }
     }
 
-    private bool IsValidJson(string? json)
+    private bool IsValidJson(object? json)
     {
         try
         {
-            if (string.IsNullOrEmpty(json)) return false;
-            JsonSerializer.Deserialize<object>(json);
-            return true;
+            switch (json)
+            {
+                case null:
+                    return false;
+                case string str:
+                    JsonSerializer.Deserialize<object>(str);
+                    return true;
+                default:
+                    return json is JsonArray or JsonObject or JsonNode or JsonElement or JsonDocument or JsonValue or IEnumerable<object>;
+            }
         }
         catch
         {

@@ -1,4 +1,7 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 using SqlKata.Execution;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Database.Operation;
@@ -44,7 +47,7 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
                 PackageId = packageId,
                 ModuleId = $"{moduleNamespace}.{moduleClassName}",
                 Name = module.Name,
-                Entities = JsonSerializer.Serialize(module.Entities.Select(x => Activator.CreateInstance(x)!))
+                Entities = module.Entities.Select(x => x.Name)
             })
         ).ToList();
 
@@ -70,10 +73,8 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
                     Name = package.PackageName,
                     Version = package.Version
                 });
-                var actions = new List<IOperation>();
-                actions.Add(author);
+                var actions = new List<IOperation> { author, info };
                 actions.AddRange(details);
-                actions.Add(info);
                 return actions;
             });
         }
@@ -111,24 +112,12 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
             {
                 var actions = new List<IOperation>
                 {
-                    new Delete<PackageAuthorsInternal>([new WhereClause()
-                    {
-                        Field = "Id",
-                        Operator = "=",
-                        Value = pkg.AuthorId
-                    }]),
-                    new Delete<PackageDetailsInternal>([new WhereClause()
-                    {
-                        Field = "PackageId",
-                        Operator = "=",
-                        Value = pkg.Id
-                    }]),
-                    new Delete<PackageInfoInternal>([new WhereClause()
-                    {
-                        Field = "Id",
-                        Operator = "=",
-                        Value = pkg.Id
-                    }])
+                    new Delete<PackageAuthorsInternal>(new ConditionBuilder()
+                        .And("Id","=",pkg.AuthorId)),
+                    new Delete<PackageDetailsInternal>(new ConditionBuilder()
+                        .And("PackageId","=",pkg.Id)),
+                    new Delete<PackageInfoInternal>(new ConditionBuilder()
+                        .And("Id","=",pkg.Id))
                 };
                 return actions;
             });

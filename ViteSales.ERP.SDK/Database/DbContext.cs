@@ -25,17 +25,17 @@ public class DbContext(ConnectionConfig config)
                 {
                     case DbOperationTypes.Insert:
                     {
-                        await DoInsert(db, operation);
+                        await DoInsert(operation);
                         break;
                     }
                     case DbOperationTypes.Update:
                     {
-                        await DoUpdate(db, operation);
+                        await DoUpdate(operation);
                         break;
                     }
                     case DbOperationTypes.Delete:
                     {
-                        await DoDelete(db, operation);
+                        await DoDelete(operation);
                         break;
                     }
                     default:
@@ -56,7 +56,7 @@ public class DbContext(ConnectionConfig config)
         }
     }
 
-    private async Task DoInsert(QueryFactory db, IOperation operation)
+    private async Task DoInsert(IOperation operation)
     {
         var data = operation.Data().GetType();
         var genericValidatorType = typeof(FormValidator<>).MakeGenericType(data);
@@ -66,10 +66,10 @@ public class DbContext(ConnectionConfig config)
         {
             throw new ValidationException(validate.Errors);
         }
-        await db.Query(data.Name).InsertAsync(operation.Data(), _connection.GetTransaction);
+        await _connection.InsertAsync(operation);
     }
 
-    private async Task DoUpdate(QueryFactory db, IOperation operation)
+    private async Task DoUpdate(IOperation operation)
     {
         var data = operation.Data().GetType();
         var genericValidatorType = typeof(FormValidator<>).MakeGenericType(data);
@@ -79,29 +79,13 @@ public class DbContext(ConnectionConfig config)
         {
             throw new ValidationException(validate.Errors);
         }
-        var qu = db.Query(data.Name);
-        if (operation?.Where() != null)
-        {
-            foreach (var whc in operation.Where()!)
-            {
-                qu = qu.Where(whc.Field, whc.Operator, whc.Value);
-            }
-        }
-        await qu.UpdateAsync(operation!.Data(), _connection.GetTransaction);
+
+        await _connection.UpdateAsync(operation);
     }
 
-    private async Task DoDelete(QueryFactory db, IOperation operation)
+    private async Task DoDelete(IOperation operation)
     {
-        var data = operation.Data().GetType();
-        var qd = db.Query(data.Name);
-        if (operation?.Where() != null)
-        {
-            foreach (var whc in operation.Where()!)
-            {
-                qd = qd.Where(whc.Field, whc.Operator, whc.Value);
-            }
-        }
-        await qd.DeleteAsync(_connection.GetTransaction);
+        await _connection.DeleteAsync(operation);
     }
 
     public async Task<Query> Get<T>() where T : class

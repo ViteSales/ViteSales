@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Models;
@@ -57,7 +59,7 @@ public class TableSchemaManager(ConnectionConfig config)
             foreach (var prop in properties)
             {
                 bool isPrimaryKey = false, isNullable = false;
-                var dataType = FieldTypes.Text.GetPostgresType();
+                var dataType = FieldTypes.Text.GetPostgresColumnType();
                 var columnName = prop.Name;
                 var bindAttr = prop.GetCustomAttribute<BindDataTypeAttribute>();
                 
@@ -67,11 +69,16 @@ public class TableSchemaManager(ConnectionConfig config)
                 
                 if (typeof(System.Collections.IEnumerable).IsAssignableFrom(prop.PropertyType) && prop.PropertyType != typeof(string))
                 {
-                    continue;
+                    if (!(prop.PropertyType == typeof(JsonArray) ||
+                          prop.PropertyType == typeof(JsonObject) ||
+                          typeof(JsonElement).IsAssignableFrom(prop.PropertyType)))
+                    {
+                        continue;
+                    }
                 }
                 if (bindAttr != null)
                 {
-                    dataType = bindAttr.Type.GetPostgresType();
+                    dataType = bindAttr.Type.GetPostgresColumnType();
                     isPrimaryKey = prop.GetCustomAttribute<PrimaryKeyAttribute>() != null;
                     isNullable = prop.GetCustomAttribute<RequiredAttribute>() == null;
 
