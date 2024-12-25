@@ -15,9 +15,9 @@ namespace ViteSales.ERP.SDK.Database;
 /// Initializes a new instance of the <see cref="Connection"/> class.
 /// </summary>
 /// <param name="config">The PostgreSQL connection config.</param>
-internal class Connection(ConnectionConfig config): IDisposable
+internal sealed class Connection(ConnectionConfig config): IDisposable
 {
-    private NpgsqlConnection _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;Include Error Detail=true;");
+    private readonly NpgsqlConnection _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;Include Error Detail=true;");
     private NpgsqlTransaction? _transaction = null;
     private bool _disposed = false;
     
@@ -309,7 +309,7 @@ internal class Connection(ConnectionConfig config): IDisposable
     /// Disposes the managed and unmanaged resources.
     /// </summary>
     /// <param name="disposing">Indicates whether to dispose managed resources.</param>
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
         if (!_disposed)
         {

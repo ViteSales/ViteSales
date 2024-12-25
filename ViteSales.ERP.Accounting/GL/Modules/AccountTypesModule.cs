@@ -59,7 +59,7 @@ public class AccountTypesModule: IModule
         throw new NotImplementedException();
     }
 
-    public List<AccountTypes> DefaultValues()
+    public List<object> DefaultValues()
     {
         return
         [
@@ -380,26 +380,6 @@ public class AccountTypesModule: IModule
                 AccountRootType = "Liability",
                 ParentAccount = "VAT Payable",
                 AccountType = "Tax",
-                IsGroup = false
-            },
-
-            new AccountTypes
-            {
-                Id = Guid.NewGuid(),
-                AccountName = "Loans Payable",
-                AccountRootType = "Liability",
-                ParentAccount = "Current Liabilities",
-                AccountType = "",
-                IsGroup = true
-            },
-
-            new AccountTypes
-            {
-                Id = Guid.NewGuid(),
-                AccountName = "Secured Loans",
-                AccountRootType = "Liability",
-                ParentAccount = "Loans Payable",
-                AccountType = "",
                 IsGroup = false
             },
 
@@ -843,46 +823,6 @@ public class AccountTypesModule: IModule
                 AccountType = "",
                 IsGroup = false
             },
-
-            new AccountTypes
-            {
-                Id = Guid.NewGuid(),
-                AccountName = "Unsecured Loans",
-                AccountRootType = "Liability",
-                ParentAccount = "Loans Payable",
-                AccountType = "",
-                IsGroup = false
-            },
-
-            new AccountTypes
-            {
-                Id = Guid.NewGuid(),
-                AccountName = "Bank Overdraft",
-                AccountRootType = "Liability",
-                ParentAccount = "Loans Payable",
-                AccountType = "",
-                IsGroup = false
-            },
-
-            new AccountTypes
-            {
-                Id = Guid.NewGuid(),
-                AccountName = "Fixed Deposit Account",
-                AccountRootType = "Asset",
-                ParentAccount = "Bank Accounts",
-                AccountType = "Bank",
-                IsGroup = false
-            },
-
-            new AccountTypes
-            {
-                Id = Guid.NewGuid(),
-                AccountName = "Discounts Received",
-                AccountRootType = "Income",
-                ParentAccount = "Indirect Income",
-                AccountType = "Other Income",
-                IsGroup = false
-            }
         ];
     }
 }

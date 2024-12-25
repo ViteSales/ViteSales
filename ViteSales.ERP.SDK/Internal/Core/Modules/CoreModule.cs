@@ -35,4 +35,9 @@ public class CoreModule: IModule
     {
         throw new NotImplementedException();
     }
+
+    public List<object> DefaultValues()
+    {
+        return [];
+    }
 }
