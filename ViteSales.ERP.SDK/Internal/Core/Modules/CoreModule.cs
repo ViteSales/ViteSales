@@ -16,6 +16,9 @@ public class CoreModule: IModule
         typeof(PackageInfoInternal),
         typeof(AuditTrailInternal)
     };
+
+    public IEnumerable<Type> ToStream { get; } = new List<Type>();
+
     public void OnLoad(DbContext ctx)
     {
         
@@ -27,11 +30,6 @@ public class CoreModule: IModule
     }
 
     public Task OnSave(List<object> records)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnValidate(List<object> records)
     {
         throw new NotImplementedException();
     }

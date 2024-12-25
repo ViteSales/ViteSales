@@ -11,7 +11,7 @@ using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.SDK.Internal.Core.Repositories;
 
-public class PackageInfo(ConnectionConfig config): DbContext(config)
+public class PackageInfo(ConnectionConfig config): DbContext(config,"PackageInfo")
 {
     private readonly ConnectionConfig _config = config;
 
@@ -61,7 +61,7 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
             await mgr.CreateOrUpdateTablesAsync(package.Modules.SelectMany(m => m.Entities));
             await SaveChanges(() =>
             {
-                var author = new Upsert<PackageAuthorsInternal>(new PackageAuthorsInternal()
+                var author = new Upsert<PackageAuthorsInternal>(new PackageAuthorsInternal
                 {
                     Id = authorId,
                     Name = package.Author.Name,
@@ -72,7 +72,7 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
                 },new ConditionBuilder()
                         .And("Name","=", package.Author.Name)
                     );
-                var info = new Upsert<PackageInfoInternal>(new PackageInfoInternal()
+                var info = new Upsert<PackageInfoInternal>(new PackageInfoInternal
                 {
                     AuthorId = authorId,
                     Id = packageId,
