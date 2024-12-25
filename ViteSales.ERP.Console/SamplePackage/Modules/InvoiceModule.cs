@@ -34,5 +34,8 @@ public class InvoiceModule:IModule
         throw new NotImplementedException();
     }
 
-    public List<object> DefaultValues { get; }
+    List<object> IModule.DefaultValues()
+    {
+        throw new NotImplementedException();
+    }
 }

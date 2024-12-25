@@ -84,16 +84,9 @@ public class PackageInfo(ConnectionConfig config): DbContext(config)
                 var actions = new List<IOperation> { author, info };
                 foreach (var module in package.Modules.ToList())
                 {
-                    if (module.GetType().GetMethod("DefaultValues", System.Reflection.BindingFlags.Public) is { } defaultValuesMethod)
-                    {
-                        if (defaultValuesMethod.Invoke(null, null) is List<Type> defaultValuesList)
-                        {
-                            foreach (var type in defaultValuesList)
-                            {
-                                Console.WriteLine(type.FullName);
-                            }
-                        }
-                    }
+                    var defaultValues = module.DefaultValues();
+                    if (defaultValues is { Count: 0 }) continue;
+                    actions.AddRange(from defaultValue in defaultValues let type = defaultValue.GetType() let insertOperationType = typeof(Insert<>).MakeGenericType(type) select (IOperation)Activator.CreateInstance(insertOperationType, defaultValue)!);
                 }
                 actions.AddRange(details);
                 return actions;

@@ -19,19 +19,18 @@ public class AccountTypes
     public required string AccountName { get; set; }
     
     [Required]
+    [UniqueKey]
     [BindDataType(FieldTypes.SmallText)]
     public required string AccountRootType { get; set; }
-    
-    [Required]
-    [BindDataType(FieldTypes.SmallText)]
-    public required string ParentAccount { get; set; }
-    
-    [Required]
+
+    [BindDataType(FieldTypes.SmallText)] 
     [UniqueKey]
-    [BindDataType(FieldTypes.MultiSelect)]
+    public string ParentAccount { get; set; } = string.Empty;
+    
+    [BindDataType(FieldTypes.Select)]
     [BindData("GetAccountTypes")]
     [Display(Name = "Account Type")]
-    public required string AccountType { get; set; }
+    public string AccountType { get; set; } = string.Empty;
     
     [Required]
     [BindDataType(FieldTypes.Boolean)]

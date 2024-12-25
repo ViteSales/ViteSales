@@ -13,8 +13,9 @@ public interface IModule
     public void OnChangeEvent(EventChange data);
     public Task OnSave(List<object> records);
     public void OnValidate(List<object> records);
-    public List<T> DefaultValues<T>() where T : class, new()
+    /*public List<T> DefaultValues<T>() where T : class, new()
     {
         return [new T()];
-    }
+    }*/
+    public List<object> DefaultValues();
 }

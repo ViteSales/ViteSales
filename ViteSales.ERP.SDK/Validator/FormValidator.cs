@@ -1,12 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Xml.Linq;
 using FluentValidation;
-using SqlKata.Execution;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
-using ViteSales.ERP.SDK.Database;
 
 namespace ViteSales.ERP.SDK.Validator;
 
@@ -17,215 +16,199 @@ public class FormValidator<T> : AbstractValidator<T> where T : class
         var properties = typeof(T).GetProperties();
         foreach (var prop in properties)
         {
+            IRuleBuilderOptions<T, object?>? rule = null;
             var bindAttr = prop.GetCustomAttribute<BindDataTypeAttribute>();
+            
+            var instance = Activator.CreateInstance(prop.DeclaringType ?? throw new InvalidOperationException("Property does not have a declaring type"));
+            var propertyValue = prop.GetValue(instance);
+            
             var errorMessageAttr = prop.GetCustomAttribute<ErrorMessageAttribute>();
-            var errorMessage = $"Validation Error: {prop.Name}";
+            var errorMessage = $"Validation Error: Property <{prop.Name}> ";
+            if (propertyValue != null)
+            {
+                errorMessage = $"{errorMessage} Value <{propertyValue}> ";
+            }
             if (errorMessageAttr != null)
             {
-                errorMessage = $"{prop.Name}: {errorMessageAttr.Message}";
+                errorMessage = $"{errorMessage} {errorMessageAttr.Message}";
             }
+            var requiredAttr = prop.GetCustomAttribute<RequiredAttribute>();
+            
             if (bindAttr != null)
             {
                 switch (bindAttr.Type)
                 {
                     case FieldTypes.AutoNumber:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Empty()
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Empty();
                         break;
 
                     case FieldTypes.Boolean:
                     case FieldTypes.Checkbox:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is bool)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is bool);
                         break;
 
                     case FieldTypes.ReadableId:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
                             .Must(x => x?.Length <= 40)
-                            .NotEmpty()
-                            .WithMessage(errorMessage);
+                            .NotEmpty();
                         break;
 
                     case FieldTypes.Currency:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is decimal)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is decimal);
                         break;
 
                     case FieldTypes.SmallText:
                     case FieldTypes.ShortCode:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .NotEmpty()
-                            .Must(x => x?.Length <= 80)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .Must(x => x?.Length <= 80);
                         break;
 
                     case FieldTypes.Date:
                     case FieldTypes.DateTime:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is DateTime)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is DateTime);
                         break;
 
                     case FieldTypes.Email:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .EmailAddress()
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .EmailAddress();
                         break;
 
                     case FieldTypes.File:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .NotEmpty()
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .NotEmpty();
                         break;
 
                     case FieldTypes.Guid:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is Guid)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is Guid);
                         break;
 
                     case FieldTypes.Html:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(x => !string.IsNullOrWhiteSpace(x))
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .Must(x => !string.IsNullOrWhiteSpace(x));
                         break;
 
                     case FieldTypes.Image:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .NotEmpty()
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .NotEmpty();
                         break;
 
                     case FieldTypes.MultiLine:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .NotEmpty()
-                            .MaximumLength(1000)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .MaximumLength(1000);
                         break;
 
                     case FieldTypes.Geography:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is string)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is string);
                         break;
 
                     case FieldTypes.MultiSelect:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is IEnumerable<object>)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is IEnumerable<object>);
                         break;
 
                     case FieldTypes.Numeric:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is int or double or float)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is int or double or float);
                         break;
 
                     case FieldTypes.Password:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
                             .NotEmpty()
-                            .MinimumLength(8)
-                            .WithMessage(errorMessage);
+                            .MinimumLength(8);
                         break;
 
                     case FieldTypes.Phone:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Matches(@"^\+?[1-9]\d{1,14}$") 
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .Matches(@"^\+?[1-9]\d{1,14}$") ;
                         break;
 
                     case FieldTypes.Select:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .NotNull()
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .NotNull();
                         break;
 
                     case FieldTypes.Text:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(x => x?.Length <= 200)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .Must(x => x?.Length <= 200);
                         break;
 
                     case FieldTypes.Char:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(x => x?.Length <= 2)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .Must(x => x?.Length <= 2);
                         break;
                     case FieldTypes.Url:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(x => Uri.IsWellFormedUriString(x, UriKind.Absolute) || string.IsNullOrEmpty(x))
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .Must(x => Uri.IsWellFormedUriString(x, UriKind.Absolute) || string.IsNullOrEmpty(x));
                         break;
 
                     case FieldTypes.Time:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is TimeSpan)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is TimeSpan);
                         break;
 
                     case FieldTypes.Vector:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .NotEmpty()
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .NotEmpty();
                         break;
 
                     case FieldTypes.Json:
                     case FieldTypes.Jsonb:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => IsValidJson(x))
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(IsValidJson);
                         break;
 
                     case FieldTypes.Xml:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as XDocument)
-                            .Must(x => x is not null)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as XDocument)
+                            .Must(x => x is not null);
                         break;
 
                     case FieldTypes.Binary:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is byte[])
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is byte[]);
                         break;
 
                     case FieldTypes.Enum:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
-                            .Must(x => x?.Length <= 255)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as string)
+                            .Must(x => x?.Length <= 255);
                         break;
 
                     case FieldTypes.Interval:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is TimeSpan)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is TimeSpan);
                         break;
 
                     case FieldTypes.Int4Range:
                     case FieldTypes.Int8Range:
                     case FieldTypes.NumRange:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is IEnumerable<int> ints && ints.Count() == 2)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is IEnumerable<int> ints && ints.Count() == 2);
                         break;
 
                     case FieldTypes.TsRange:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
-                            .Must(x => x is IEnumerable<DateTime> times && times.Count() == 2)
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x))
+                            .Must(x => x is IEnumerable<DateTime> times && times.Count() == 2);
                         break;
 
                     case FieldTypes.Hstore:
-                        RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as IDictionary<string, string>)
-                            .NotEmpty()
-                            .WithMessage(errorMessage);
+                        rule = RuleFor(x => x.GetType().GetProperty(prop.Name)!.GetValue(x) as IDictionary<string, string>)
+                            .NotEmpty();
                         break;
 
                     default:
                         throw new NotImplementedException();
                 }
+                if (requiredAttr != null && rule != null)
+                {
+                    rule = rule.NotEmpty();
+                    errorMessage = $"[Required] {errorMessage}";
+                }
+                rule?.WithMessage(errorMessage);
             }
         }
     }
