@@ -1,16 +1,22 @@
+using System.Data;
+using System.Reflection;
+using System.Text.Json;
 using FluentValidation;
 using SqlKata;
-using SqlKata.Execution;
+using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
+using ViteSales.ERP.SDK.Database.Operation;
 using ViteSales.ERP.SDK.Interfaces;
+using ViteSales.ERP.SDK.Internal.Core.Entities;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Validator;
 
 namespace ViteSales.ERP.SDK.Database;
 
-public class DbContext(ConnectionConfig config)
+public class DbContext(ConnectionConfig config, string moduleName)
 {
     private readonly Connection _connection = new (config);
+    
     public async Task SaveChanges(Func<List<IOperation>> callback)
     {
         await _connection.OpenConnectionAsync();
@@ -30,12 +36,16 @@ public class DbContext(ConnectionConfig config)
                     }
                     case DbOperationTypes.Update:
                     {
+                        var auditableRecords = await GetAuditableRecords(operation);
                         await DoUpdate(operation);
+                        await DoAudit(auditableRecords, DbOperationTypes.Update);
                         break;
                     }
                     case DbOperationTypes.Delete:
                     {
+                        var auditableRecords = await GetAuditableRecords(operation);
                         await DoDelete(operation);
+                        await DoAudit(auditableRecords, DbOperationTypes.Delete);
                         break;
                     }
                     case DbOperationTypes.Upsert:
@@ -111,7 +121,9 @@ public class DbContext(ConnectionConfig config)
 
         if (await _connection.RecordExistsAsync(operation))
         {
+            var auditableRecords = await GetAuditableRecords(operation);
             await _connection.UpdateAsync(operation);
+            await DoAudit(auditableRecords, DbOperationTypes.Update);
         }
         else
         {
@@ -122,6 +134,50 @@ public class DbContext(ConnectionConfig config)
     private async Task DoDelete(IOperation operation)
     {
         await _connection.DeleteAsync(operation);
+    }
+
+    private async Task DoAudit(DataTable? dt, DbOperationTypes operationTypes)
+    {
+        if (dt is null) return;
+        foreach (DataRow row in dt.Rows)
+        {
+            var primaryKeyColumn = dt.PrimaryKey?.FirstOrDefault();
+            var primaryKeyValue = primaryKeyColumn != null ? row[primaryKeyColumn] : null;
+            if (primaryKeyValue is not null)
+            {
+                await _connection.InsertAsync(new Insert<AuditTrailInternal>(new AuditTrailInternal()
+                {
+                    Action = operationTypes.ToAction(),
+                    ActionAt = DateTime.Now,
+                    ActionBy = config.User,
+                    Module = moduleName,
+                    Data = JsonSerializer.Serialize(row),
+                    DataId = primaryKeyValue.ToString(),
+                }));
+            }
+        }
+    }
+
+    private async Task<DataTable?> GetAuditableRecords(IOperation operation)
+    {
+        var type = operation.Data().GetType();
+        var tableName = type.Name;
+        if (tableName.Contains("Internal"))
+            return null;
+        var typeProperties = type.GetProperties();
+        foreach (var property in typeProperties)
+        {
+            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            if (bindType is null) continue;
+            var primaryKeyType = property.GetCustomAttribute<PrimaryKeyAttribute>();
+            if (primaryKeyType is not null)
+            {
+                var dt = await _connection.GetRecordsAsync(operation);
+                dt.PrimaryKey = [new DataColumn(property.Name, property.PropertyType)];
+                return dt;
+            }
+        }
+        return null;
     }
 
     public async Task<Query> Get<T>() where T : class

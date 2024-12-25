@@ -15,43 +15,17 @@ public class AccountTypesModule: IModule
         typeof(AccountLedgerEntry),
         typeof(AccountTypes)
     };
-    
+
+    public IEnumerable<Type> ToStream { get; } = new List<Type>();
+
     public void OnLoad(DbContext ctx)
     {
         _ctx = ctx;
     }
 
-    public void OnValidate(List<object> records)
-    {
-        foreach (var record in records)
-        {
-            switch (record)
-            {
-                case AccountTypes account:
-                {
-                    break;
-                }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-    }
-
     public async Task OnSave(List<object> records)
     {
-        foreach (var record in records)
-        {
-            switch (record)
-            {
-                case AccountTypes account:
-                {
-                    
-                    break;
-                }
-                default:
-                    throw new NotImplementedException();
-            }
-        }
+        
     }
 
     public void OnChangeEvent(EventChange data)

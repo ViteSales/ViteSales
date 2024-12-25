@@ -1,4 +1,6 @@
+using System.Data;
 using System.Reflection;
+using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
 using SqlKata.Compilers;
@@ -6,6 +8,8 @@ using SqlKata.Execution;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Interfaces;
+using ViteSales.ERP.SDK.Internal.Core.Entities;
+using ViteSales.ERP.SDK.Internal.Core.Repositories;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.Shared.Extensions;
 
@@ -200,6 +204,34 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         var hasRows = reader.HasRows;
         await reader.CloseAsync();
         return hasRows;
+    }
+
+    public async Task<DataTable> GetRecordsAsync(IOperation operation)
+    {
+        var type = operation.Data().GetType();
+        var tableName = type.Name;
+        var whereParameterDbTypes = operation.Where();
+        if (whereParameterDbTypes is null)
+        {
+            throw new ArgumentNullException(nameof(whereParameterDbTypes));
+        }
+        var (whereClause, parameters) = whereParameterDbTypes.Build();
+        
+        var sql = $"SELECT * FROM \"{tableName}\" WHERE {whereClause}";
+        
+        var cmd = CreateCommand();
+        cmd.CommandText = sql;
+        Console.WriteLine(cmd.CommandText);
+        foreach (var dbType in parameters)
+        {
+            cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
+        }
+        
+        var reader = await cmd.ExecuteReaderAsync();
+        var dataTable = new DataTable();
+        dataTable.Load(reader);
+        await reader.CloseAsync();
+        return dataTable;
     }
     
     /// <summary>

@@ -13,7 +13,13 @@ public class InvoiceModule:IModule
         typeof(Invoice),
         typeof(InvoiceItems)
     };
-    
+
+    public IEnumerable<Type> ToStream { get; } = new List<Type>()
+    {
+        typeof(Invoice),
+        typeof(InvoiceItems)
+    };
+
     public void OnLoad(DbContext ctx)
     {
         throw new NotImplementedException();
@@ -25,11 +31,6 @@ public class InvoiceModule:IModule
     }
 
     public Task OnSave(List<object> records)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnValidate(List<object> records)
     {
         throw new NotImplementedException();
     }

@@ -8,14 +8,10 @@ public interface IModule
 {
     public string Name { get; }
     public IEnumerable<Type> Entities { get; }
+    public IEnumerable<Type> ToStream { get; }
     
     public void OnLoad(DbContext ctx);
     public void OnChangeEvent(EventChange data);
     public Task OnSave(List<object> records);
-    public void OnValidate(List<object> records);
-    /*public List<T> DefaultValues<T>() where T : class, new()
-    {
-        return [new T()];
-    }*/
     public List<object> DefaultValues();
 }
