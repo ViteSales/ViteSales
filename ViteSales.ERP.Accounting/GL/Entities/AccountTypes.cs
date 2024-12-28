@@ -5,6 +5,7 @@ using ViteSales.ERP.SDK.Const;
 namespace ViteSales.ERP.Accounting.GL.Entities;
 
 [Display(Name = "Chart of Accounts")]
+[MqStream]
 public class AccountTypes
 {
     [PrimaryKey]

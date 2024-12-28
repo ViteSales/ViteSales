@@ -13,4 +13,9 @@ public static class Utility
         }
         return new string(uniqueAlphabets.ToArray());
     }
+
+    public static string QueueName(string host, string db, string table)
+    {
+        return new string($"{host}{db}{table}".Where(char.IsLetterOrDigit).ToArray()).ToLower();
+    }
 }

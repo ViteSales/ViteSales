@@ -5,13 +5,16 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
+using ViteSales.ERP.SDK.MessageQueue;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.ERP.SDK.Utils;
 
 namespace ViteSales.ERP.SDK.Database;
 
 public class TableSchemaManager(ConnectionConfig config)
 {
     private readonly Connection _connectionHandler = new(config);
+    private readonly PubSub _pubSub = new();
     public async Task DropTablesAsync(IEnumerable<Type> types)
     {
         try
@@ -24,6 +27,7 @@ public class TableSchemaManager(ConnectionConfig config)
                 await using var cmd = _connectionHandler.CreateCommand();
                 cmd.CommandText = $"DROP TABLE IF EXISTS \"{tableName}\" CASCADE;";
                 await cmd.ExecuteNonQueryAsync();
+                await _pubSub.Drop(GetQueueName(tableName));
             }
 
             await _connectionHandler.CommitTransactionAsync();
@@ -55,6 +59,12 @@ public class TableSchemaManager(ConnectionConfig config)
 
             var columns = new List<ColumnInfo>();
             var uniqueColumns = new List<string>();
+            
+            var streamAttr = type.GetCustomAttribute<MqStreamAttribute>();
+            if (streamAttr != null)
+            {
+                await _pubSub.InitTopicAsync(GetQueueName(tableName));
+            }
 
             foreach (var prop in properties)
             {
@@ -76,6 +86,7 @@ public class TableSchemaManager(ConnectionConfig config)
                         continue;
                     }
                 }
+                
                 if (bindAttr != null)
                 {
                     dataType = bindAttr.Type.GetPostgresColumnType();
@@ -204,7 +215,6 @@ public class TableSchemaManager(ConnectionConfig config)
                 fkCmd.CommandText = addFkCmd;
                 await fkCmd.ExecuteNonQueryAsync();
             }
-
             await _connectionHandler.CommitTransactionAsync();
         }
         catch
@@ -313,6 +323,11 @@ public class TableSchemaManager(ConnectionConfig config)
             sb.Append(" NOT NULL");
         sb.Append(";");
         return sb.ToString();
+    }
+
+    private string GetQueueName(string tableName)
+    {
+        return Utility.QueueName(config.Host, config.Database, tableName);
     }
 
     private class ColumnInfo

@@ -54,6 +54,7 @@ public class DbContext(ConnectionConfig config, string moduleName)
                     default:
                         throw new NotImplementedException("Only Insert, Update and Delete operations are supported.");
                 }
+                await _connection.QueueMessageAsync(operation);
             }
             await _connection.CommitTransactionAsync();
         }
