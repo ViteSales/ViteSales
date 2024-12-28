@@ -2,7 +2,7 @@ using SqlKata;
 
 namespace ViteSales.ERP.SDK.Attributes;
 
-[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.Property)]
 public class RelationalMappingAttribute(string table, string from, string to): IgnoreAttribute
 {
     public string FromTable => nameof(RelationalMappingAttribute);

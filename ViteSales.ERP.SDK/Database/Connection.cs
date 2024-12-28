@@ -8,9 +8,10 @@ using SqlKata.Execution;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Interfaces;
-using ViteSales.ERP.SDK.Internal.Core.Entities;
-using ViteSales.ERP.SDK.Internal.Core.Repositories;
+using ViteSales.ERP.SDK.MessageQueue;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.ERP.SDK.Utils;
+using ViteSales.Shared.Exceptions;
 using ViteSales.Shared.Extensions;
 
 namespace ViteSales.ERP.SDK.Database;
@@ -21,8 +22,9 @@ namespace ViteSales.ERP.SDK.Database;
 /// <param name="config">The PostgreSQL connection config.</param>
 internal sealed class Connection(ConnectionConfig config): IDisposable
 {
-    private readonly NpgsqlConnection _connection = new ($"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;Include Error Detail=true;");
+    private readonly NpgsqlConnection _connection = new(CreateConnectionString(config));
     private NpgsqlTransaction? _transaction = null;
+    private PubSub _pubSub = new();
     private bool _disposed = false;
     
     /// <summary>
@@ -31,7 +33,7 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
     /// <returns>A task that represents the asynchronous open operation.</returns>
     public async Task OpenConnectionAsync()
     {
-        if (_connection.State != System.Data.ConnectionState.Open)
+        if (_connection.State != ConnectionState.Open)
         {
             await _connection.OpenAsync();
         }
@@ -43,7 +45,7 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
     /// <returns>A task that represents the asynchronous close operation.</returns>
     public async Task CloseConnectionAsync()
     {
-        if (_connection.State != System.Data.ConnectionState.Closed)
+        if (_connection.State != ConnectionState.Closed)
         {
             await _connection.CloseAsync();
         }
@@ -68,6 +70,54 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         {
             throw new InvalidOperationException("A transaction is already in progress.");
         }
+    }
+
+    public async Task QueueMessageAsync(IOperation operation)
+    {
+        var data = operation.Data();
+        var type = data.GetType();
+        var tableName = type.Name;
+        var isMqStreamEnabled = type.GetCustomAttribute<MqStreamAttribute>();
+        if (isMqStreamEnabled is null)
+        {
+            return;
+        }
+        var typeProperties = type.GetProperties();
+        var operationType = operation.Type;
+        var queueData = new Dictionary<string, object>();
+        foreach (var property in typeProperties)
+        {
+            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            if (bindType is null) continue;
+            
+            var propertyValue = property.GetValue(data);
+            if (propertyValue is null) continue;
+            
+            queueData.Add(property.Name, propertyValue.ToObjectInferred());
+        }
+
+        var queueName = Utility.QueueName(config.Host, config.Database, tableName);
+        var message = new PubSubMessage
+        {
+            QueuedBy = config.User,
+            QueuedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            Action = operationType.ToString(),
+            Data = JsonSerializer.Serialize(queueData)
+        };
+        await _pubSub.PublishAsync(queueName, message);
+    }
+
+    public async Task<Subscriber> ListenMessage<T>() where T: class
+    {
+        var type = typeof(T);
+        var tableName = type.Name;
+        var isMqStreamEnabled = type.GetCustomAttribute<MqStreamAttribute>();
+        if (isMqStreamEnabled is null)
+        {
+            throw new StreamingException<string>("Streaming is not enabled for this module.");
+        }
+        var queueName = Utility.QueueName(config.Host, config.Database, tableName);
+        return await _pubSub.InitTopicAsync(queueName);
     }
 
     public async Task InsertAsync(IOperation operation)
@@ -361,7 +411,7 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
     
     public QueryFactory SqlCompiler()
     {
-        if (_connection is not { State: System.Data.ConnectionState.Open })
+        if (_connection is not { State: ConnectionState.Open })
             throw new InvalidOperationException("Connection must be opened before creating commands.");
         var db = new QueryFactory(_connection, new PostgresCompiler());
         db.Logger = compiled => {
@@ -376,5 +426,10 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
     ~Connection()
     {
         Dispose(false);
+    }
+    
+    private static string CreateConnectionString(ConnectionConfig config)
+    {
+        return $"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;Include Error Detail=true;";
     }
 }

@@ -4,6 +4,7 @@ using ViteSales.ERP.SDK.Const;
 
 namespace ViteSales.ERP.Accounting.GL.Entities;
 
+[MqStream]
 public class AccountLedgerEntry
 {
     [PrimaryKey]

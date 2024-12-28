@@ -6,10 +6,10 @@ using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Repositories;
 using ViteSales.ERP.SDK.Models;
 
-var manifest = new Manifest();
 var conn = new ConnectionConfig()
 {
-    Host = "localhost",
+    /*Host = "localhost"*/
+    Host = "db.xrttljlbpuzsmzottcgs.supabase.co",
     Port = 5432,
     User = "postgres",
     Password = "frf@!333!@Fg",
