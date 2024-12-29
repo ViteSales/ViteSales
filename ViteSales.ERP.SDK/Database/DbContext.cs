@@ -187,4 +187,6 @@ public class DbContext(ConnectionConfig config, string moduleName)
         var db = _connection.SqlCompiler();
         return db.Query(typeof(T).Name);
     }
+    
+    public async Task<DataTable> GetRecords(IOperation operation) => await _connection.GetRecordsAsync(operation);
 }

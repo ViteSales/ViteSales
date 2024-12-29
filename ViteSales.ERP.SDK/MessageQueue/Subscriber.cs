@@ -32,7 +32,7 @@ public sealed class Subscriber
                 Name = _subscriptionName.ToString(),
                 Topic = topicName.ToString(),
                 ExpirationPolicy = new ExpirationPolicy { Ttl = Duration.FromTimeSpan(TimeSpan.FromDays(7)) },
-                AckDeadlineSeconds = 60 * 60,
+                AckDeadlineSeconds = 60 * 10,
                 PushConfig = subscriptionSettings,
                 EnableMessageOrdering = true,
                 EnableExactlyOnceDelivery = true

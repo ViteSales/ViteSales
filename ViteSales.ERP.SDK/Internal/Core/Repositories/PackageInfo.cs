@@ -1,13 +1,13 @@
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Xml.Linq;
-using System.Xml.Serialization;
+using Google.Protobuf.WellKnownTypes;
+using Semver;
 using SqlKata.Execution;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Database.Operation;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Entities;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.Shared.Extensions;
 
 namespace ViteSales.ERP.SDK.Internal.Core.Repositories;
 
@@ -20,41 +20,63 @@ public class PackageInfo(ConnectionConfig config): DbContext(config,"PackageInfo
         var mgr = new TableSchemaManager(_config);
         var authorId = Guid.NewGuid();
         var packageId = Guid.NewGuid();
+
         var initialTableExists = await IsTableExist(nameof(PackageInfoInternal));
         if (initialTableExists)
         {
             var factory = await Get<PackageInfoInternal>();
             var packageCheck = factory.Select("*")
                 .Where("Name", package.PackageName)
-                .Get<PackageInfoInternal>();
-        
-            if (packageCheck is not null)
+                .Get<PackageInfoInternal>()
+                ?.ToList();
+
+            if (packageCheck?.Any() == true)
             {
-                var packageInfoCheck = packageCheck.ToList();
-                if (packageInfoCheck.Count > 0 && packageInfoCheck.First().Version == package.Version)
+                packageId = packageCheck.First().Id;
+                authorId = packageCheck.First().AuthorId;
+                var existingVersion = packageCheck.First().Version;
+                if (SemVersion.TryParse(existingVersion, out var oldVersion) &&
+                    SemVersion.TryParse(package.Version, out var newVersion) &&
+                    oldVersion.CompareSortOrderTo(newVersion) > 0)
                 {
                     return;
                 }
             }
         }
-        if (!IgnoreModules.Contains(package.PackageName) && !initialTableExists)
+        
+        if (!IgnorePackages.Contains(package.PackageName) && !initialTableExists)
         {
             throw new Exception("Initial modules are not installed");
         }
-        
-        var details = (from module in package.Modules
-            let moduleType = module.GetType()
-            let moduleNamespace = moduleType.Namespace ?? string.Empty
-            let moduleClassName = moduleType.Name
-            select new Insert<PackageDetailsInternal>(new PackageDetailsInternal()
+
+        List<PackageDetailsInternal> installedModules = new();
+        if (await IsTableExist(nameof(PackageDetailsInternal)))
+        {
+            var queryCompiler = await Get<PackageDetailsInternal>();
+            installedModules = queryCompiler
+                .Get<PackageDetailsInternal>()
+                .ToList();
+        }
+
+        var details = package.Modules.Select(module =>
+        {
+            var moduleType = module.GetType();
+            return new Insert<PackageDetailsInternal>(new PackageDetailsInternal
             {
                 Id = Guid.NewGuid(),
                 PackageId = packageId,
-                ModuleId = $"{moduleNamespace}.{moduleClassName}",
+                ModuleId = $"{moduleType.Namespace ?? string.Empty}.{moduleType.Name}",
                 Name = module.Name,
-                Entities = module.Entities.Select(x => x.Name)
-            })
-        ).ToList();
+                Entities = module.Entities.Select(x => x.Name),
+                Others = new Dictionary<string, object>
+                {
+                    ["IsDefaultInserted"] = false
+                }
+            });
+        }).ToList();
+
+        details.RemoveAll(detail => installedModules
+            .Any(module => module?.ModuleId == detail?.Data.ModuleId));
 
         try
         {
@@ -82,13 +104,42 @@ public class PackageInfo(ConnectionConfig config): DbContext(config,"PackageInfo
                 }, new ConditionBuilder()
                     .And("Name", "=", package.PackageName));
                 var actions = new List<IOperation> { author, info };
+                var updates = new List<IOperation>();
                 foreach (var module in package.Modules.ToList())
                 {
+                    var moduleType = module.GetType();
+                    var moduleNamespace = moduleType.Namespace ?? string.Empty;
+                    var moduleClassName = moduleType.Name;
+                    var moduleId = $"{moduleNamespace}.{moduleClassName}";
+
+                    var defaultInserted = installedModules
+                        .Where(installed => installed?.ModuleId == moduleId)
+                        .Any(@internal => @internal?.Others.GetJsonPropertyValue<bool>("IsDefaultInserted") ?? false);
+
                     var defaultValues = module.DefaultValues();
-                    if (defaultValues is { Count: 0 }) continue;
-                    actions.AddRange(from defaultValue in defaultValues let type = defaultValue.GetType() let insertOperationType = typeof(Insert<>).MakeGenericType(type) select (IOperation)Activator.CreateInstance(insertOperationType, defaultValue)!);
+                    if (!defaultInserted && defaultValues.Count > 0)
+                    {
+                        actions.AddRange(defaultValues.Select(defaultValue =>
+                        {
+                            var type = defaultValue.GetType();
+                            var insertOperationType = typeof(Insert<>).MakeGenericType(type);
+                            return (IOperation)Activator.CreateInstance(insertOperationType, defaultValue)!;
+                        }));
+                        updates.Add(new Update<PackageDetailsInternal>(
+                            new PackageDetailsInternal
+                            {
+                                Name = moduleClassName,
+                                Entities = module.Entities.Select(x => x.Name),
+                                Others = new Dictionary<string, object> { ["IsDefaultInserted"] = true },
+                                PackageId = packageId,
+                                ModuleId = moduleId,
+                            }, 
+                            new ConditionBuilder().And("ModuleId", "=", moduleId)
+                        ));
+                    }
                 }
                 actions.AddRange(details);
+                actions.AddRange(updates);
                 return actions;
             });
         }
@@ -144,7 +195,7 @@ public class PackageInfo(ConnectionConfig config): DbContext(config,"PackageInfo
         }
     }
     
-    private List<string> IgnoreModules { get; } = [
+    private List<string> IgnorePackages { get; } = [
         "AuditTrailInternal",
         "PackageAuthorsInternal",
         "PackageDetailsInternal",

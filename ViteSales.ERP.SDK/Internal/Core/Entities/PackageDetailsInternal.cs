@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 
@@ -27,4 +28,8 @@ public class PackageDetailsInternal
     [Required]
     [BindDataType(FieldTypes.Json)]
     public required object Entities { get; set; }
+
+    [Required]
+    [BindDataType(FieldTypes.Json)]
+    public object Others { get; set; }
 }

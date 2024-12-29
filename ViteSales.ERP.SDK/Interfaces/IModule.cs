@@ -8,7 +8,6 @@ public interface IModule
 {
     public string Name { get; }
     public IEnumerable<Type> Entities { get; }
-    public IEnumerable<Type> ToStream { get; }
     
     public void OnLoad(DbContext ctx);
     public void OnChangeEvent(EventChange data);
