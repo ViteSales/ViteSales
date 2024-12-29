@@ -2,6 +2,7 @@ using ViteSales.ERP.Console.SamplePackage;
 using ViteSales.ERP.Console.SamplePackage.Entities;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Database.Operation;
+using ViteSales.ERP.SDK.Database.Roles;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Repositories;
 using ViteSales.ERP.SDK.Models;
@@ -19,6 +20,22 @@ var conn = new ConnectionConfig()
 var pkg = new PackageInfo(conn);
 await pkg.Install(new ViteSales.ERP.SDK.Internal.Core.Manifest());
 await pkg.Install(new ViteSales.ERP.Accounting.Manifest());
+
+// const string username = "staff_member";
+//
+// var rbac = new RoleAccessManager(conn);
+// await rbac.DropUser(username);
+// await rbac.CreateUser(username);
+// await rbac.GrantAccess(username, [
+//     DbUserRoles.Read,
+//     DbUserRoles.Write
+// ], ["AccountTypes"]);
+// await rbac.IsUserExists(username);
+// await rbac.RemoveAccess(username, [
+//     DbUserRoles.Read,
+//     DbUserRoles.Write
+// ], ["AccountTypes"]);
+
 // await pkg.Uninstall(new ViteSales.ERP.SDK.Internal.Core.Manifest());
 
 /*

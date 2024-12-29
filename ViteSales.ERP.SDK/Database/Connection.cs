@@ -170,20 +170,22 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         {
             var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
             if (bindType is null) continue;
+            
+            var primaryKey = property.GetCustomAttribute<PrimaryKeyAttribute>();
+            if (primaryKey is not null) continue;
 
-            var instance = Activator.CreateInstance(property.DeclaringType ?? throw new InvalidOperationException("Property does not have a declaring type"));
-            var propertyValue = property.GetValue(instance);
-            if (propertyValue is null) continue;
+            var propertyValue = property.GetValue(operation.Data());
+            if (propertyValue == null || (propertyValue is IEnumerable<object> enumerable && !enumerable.Any())) continue;
 
             var dbColumnType = bindType.Type.GetPostgresDbType();
-            parameterDbTypes.Add(property.Name, new NpgsqlDbTypeWithValue()
+            parameterDbTypes.Add(property.Name, new NpgsqlDbTypeWithValue
             {
                 Parameter = $"@{property.Name}",
                 DbType = dbColumnType,
                 Value = propertyValue.ToObjectInferred()
             });
         }
-
+        if (parameterDbTypes.Count == 0) return;
         var (whereClause, parameters) = whereParameterDbTypes.Build();
 
         var sql = $"UPDATE \"{tableName}\" SET";
@@ -254,6 +256,33 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         var hasRows = reader.HasRows;
         await reader.CloseAsync();
         return hasRows;
+    }
+    
+    public async Task<bool> RawExecuteNonQueryAsync(string sql, Dictionary<string, object> parameters)
+    {
+        var cmd = CreateCommand();
+        cmd.CommandText = sql;
+        foreach (var parameter in parameters)
+        {
+            cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
+        }
+        var result = await cmd.ExecuteNonQueryAsync();
+        return result > 0;
+    }
+
+    public async Task<DataTable> RawExecuteQueryAsync(string sql, Dictionary<string, object> parameters)
+    {
+        var cmd = CreateCommand();
+        cmd.CommandText = sql;
+        foreach (var parameter in parameters)
+        {
+            cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
+        }
+        var reader = await cmd.ExecuteReaderAsync();
+        var dataTable = new DataTable();
+        dataTable.Load(reader);
+        await reader.CloseAsync();
+        return dataTable;
     }
 
     public async Task<DataTable> GetRecordsAsync(IOperation operation)

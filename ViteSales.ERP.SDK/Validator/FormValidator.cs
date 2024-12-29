@@ -225,7 +225,7 @@ public class FormValidator<T> : AbstractValidator<T> where T : class
                     JsonSerializer.Deserialize<object>(str);
                     return true;
                 default:
-                    return json is JsonArray or JsonObject or JsonNode or JsonElement or JsonDocument or JsonValue or IEnumerable<object>;
+                    return json is JsonArray or JsonObject or JsonNode or JsonElement or JsonDocument or JsonValue or IEnumerable<object> or IDictionary<string, object>;
             }
         }
         catch

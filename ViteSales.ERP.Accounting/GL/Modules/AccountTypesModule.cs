@@ -10,13 +10,11 @@ public class AccountTypesModule: IModule
     private DbContext _ctx;
     public string Name { get; } = "Account Maintenance";
 
-    public IEnumerable<Type> Entities { get; } = new List<Type>()
+    public IEnumerable<Type> Entities { get; } = new List<Type>
     {
         typeof(AccountLedgerEntry),
         typeof(AccountTypes)
     };
-
-    public IEnumerable<Type> ToStream { get; } = new List<Type>();
 
     public void OnLoad(DbContext ctx)
     {

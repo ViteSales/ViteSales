@@ -6,7 +6,7 @@ namespace ViteSales.ERP.Accounting;
 
 public class Manifest: IPackage
 {
-    public string Version { get; } = "0.0.1";
+    public string Version { get; } = "0.0.2";
     public string License { get; } = "MIT";
     public AuthorInfo Author { get; } = new()
     {
@@ -14,5 +14,8 @@ public class Manifest: IPackage
         Company = "ViteSales Pvt. Ltd."
     };
     public string PackageName { get; } = "Accounting";
-    public IEnumerable<IModule> Modules { get; } = [new AccountTypesModule()];
+    public IEnumerable<IModule> Modules { get; } = [
+        new AccountTypesModule(),
+        new FiscalYearsModule()
+    ];
 }
