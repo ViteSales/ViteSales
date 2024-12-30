@@ -1,5 +1,4 @@
-using Npgsql;
-using ViteSales.ERP.SDK.Database.Roles;
+using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.SDK.Database;
@@ -101,7 +100,7 @@ public class RoleAccessManager(ConnectionConfig config)
         }
     }
 
-    public async Task GrantAccess(string username, List<DbUserRoles> roles, List<string> tables)
+    public async Task GrantAccess(string username, List<AccessTypes> roles, List<string> tables)
     {
         await _connectionHandler.OpenConnectionAsync();
         try
@@ -110,10 +109,10 @@ public class RoleAccessManager(ConnectionConfig config)
 
             foreach (var query in tables.SelectMany(table => roles, (table, role) => role switch
                      {
-                         DbUserRoles.Read => $"GRANT SELECT ON \"{table}\" TO {username}",
-                         DbUserRoles.Write => $"GRANT INSERT, UPDATE ON \"{table}\" TO {username}",
-                         DbUserRoles.Delete => $"GRANT DELETE ON \"{table}\" TO {username}",
-                         DbUserRoles.All => $"GRANT ALL PRIVILEGES ON \"{table}\" TO {username}",
+                         AccessTypes.Read => $"GRANT SELECT ON \"{table}\" TO {username}",
+                         AccessTypes.Write => $"GRANT INSERT, UPDATE ON \"{table}\" TO {username}",
+                         AccessTypes.Delete => $"GRANT DELETE ON \"{table}\" TO {username}",
+                         AccessTypes.All => $"GRANT ALL PRIVILEGES ON \"{table}\" TO {username}",
                          _ => null!
                      }).Where(query => !string.IsNullOrEmpty(query)))
             {
@@ -133,7 +132,7 @@ public class RoleAccessManager(ConnectionConfig config)
         }
     }
     
-    public async Task RemoveAccess(string username, List<DbUserRoles> roles, List<string> tables)
+    public async Task RemoveAccess(string username, List<AccessTypes> roles, List<string> tables)
     {
         await _connectionHandler.OpenConnectionAsync();
         try
@@ -142,10 +141,10 @@ public class RoleAccessManager(ConnectionConfig config)
 
             foreach (var query in tables.SelectMany(table => roles, (table, role) => role switch
                      {
-                         DbUserRoles.Read => $"REVOKE SELECT ON \"{table}\" FROM {username}",
-                         DbUserRoles.Write => $"REVOKE INSERT, UPDATE ON \"{table}\" FROM {username}",
-                         DbUserRoles.Delete => $"REVOKE DELETE ON \"{table}\" FROM {username}",
-                         DbUserRoles.All => $"REVOKE ALL PRIVILEGES ON \"{table}\" FROM {username}",
+                         AccessTypes.Read => $"REVOKE SELECT ON \"{table}\" FROM {username}",
+                         AccessTypes.Write => $"REVOKE INSERT, UPDATE ON \"{table}\" FROM {username}",
+                         AccessTypes.Delete => $"REVOKE DELETE ON \"{table}\" FROM {username}",
+                         AccessTypes.All => $"REVOKE ALL PRIVILEGES ON \"{table}\" FROM {username}",
                          _ => null!
                      }).Where(query => !string.IsNullOrEmpty(query)))
             {
