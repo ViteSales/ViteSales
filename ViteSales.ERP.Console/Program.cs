@@ -1,23 +1,69 @@
-using ViteSales.ERP.SDK.Internal.Core.Repositories;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ViteSales.ERP.SDK.Interfaces;
+using ViteSales.ERP.SDK.Manager;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.ERP.SDK.Utils;
 
-var conn = new ConnectionConfig()
+var gcpConfig = GcpConfig.ReadGcpJsonFile();
+var conn = new ConnectionConfig
 {
-    /*Host = "localhost"*/
-    Host = "db.xrttljlbpuzsmzottcgs.supabase.co",
+    Host = "localhost",//"db.xrttljlbpuzsmzottcgs.supabase.co",
     Port = 5432,
     User = "postgres",
     Password = "frf@!333!@Fg",
     Database = "postgres"
 };
 
-var pkg = new PackageInfo(conn);
+var services = new ServiceCollection();
+services.Configure<GcpConfig>(options =>
+{
+    options.Credential = gcpConfig.Credential;
+    options.AuthInfo = gcpConfig.AuthInfo;
+});
+services.Configure<ConnectionConfig>(options =>
+{
+    options.Host = conn.Host;
+    options.Database = conn.Database;
+    options.Port = conn.Port;
+    options.User = conn.User;
+    options.Password = conn.Password;
+});
+services.AddLogging(configure =>
+{
+    configure.AddConsole();
+});
+
+services.AddTransient<IPackageInstallerService, PackageInstallerService>();
+services.AddTransient<IPackageService, PackageService>();
+services.AddTransient<ITableSchemaManager, TableSchemaService>();
+services.AddTransient<IRoleAccessManager, RoleAccessService>();
+var provider = services.BuildServiceProvider();
+
+var pkg = provider.GetRequiredService<IPackageInstallerService>();
 await pkg.Install(new ViteSales.ERP.SDK.Internal.Core.Manifest());
 await pkg.Install(new ViteSales.ERP.Accounting.Manifest());
 
+/*using ViteSales.ERP.SDK.Internal.Core.Repositories;
+using ViteSales.ERP.SDK.Models;
+
+var conn = new ConnectionConfig()
+{
+/*Host = "localhost"#1#
+Host = "db.xrttljlbpuzsmzottcgs.supabase.co",
+Port = 5432,
+User = "postgres",
+Password = "frf@!333!@Fg",
+Database = "postgres"
+};
+
+var pkg = new PackageInstallerService(conn);
+await pkg.Install(new ViteSales.ERP.SDK.Internal.Core.Manifest());
+await pkg.Install(new ViteSales.ERP.Accounting.Manifest());*/
+
 // const string username = "staff_member";
 //
-// var rbac = new RoleAccessManager(conn);
+// var rbac = new RoleAccessService(conn);
 // await rbac.DropUser(username);
 // await rbac.CreateUser(username);
 // await rbac.GrantAccess(username, [
@@ -34,28 +80,6 @@ await pkg.Install(new ViteSales.ERP.Accounting.Manifest());
 
 /*
 var db = new DbContext(conn);
-var manager = new TableSchemaManager(conn);
+var manager = new TableSchemaService(conn);
 await manager.CreateOrUpdateTablesAsync(manifest.Modules.SelectMany(x => x.Entities));
-
-var invoice = new Invoice()
-{
-    Id = Guid.NewGuid(),
-    DocNo = "1001",
-    DocNoSet = "D1001",
-    DebtorCode = "A1"
-};
-await db.SaveChanges(() =>[
-    new Insert<Invoice>(invoice),
-    new Update<Invoice>(invoice,[new WhereClause()
-    {
-        Field = "Id",
-        Operator = "=",
-        Value = invoice.Id
-    }]),
-    new Delete<Invoice>([new WhereClause()
-    {
-        Field = "Id",
-        Operator = "=",
-        Value = invoice.Id
-    }])
-]);*/
+*/

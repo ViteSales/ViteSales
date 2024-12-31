@@ -55,7 +55,6 @@ public sealed class Subscriber
         {
             try
             {
-                Console.WriteLine($"Received message: {message.Data.ToStringUtf8()}");
                 var pubSubMessage = PubSubMessage.FromByteString(message.Data.ToStringUtf8());
                 OnThresholdReached(new ThresholdReachedEventArgs { Message = pubSubMessage });
             }
