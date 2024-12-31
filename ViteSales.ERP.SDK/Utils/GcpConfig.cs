@@ -9,7 +9,7 @@ public class GcpConfig
     public GcpAuthInfo AuthInfo { get; set; }
     public static GcpConfig ReadGcpJsonFile()
     {
-        const string fileName = "vitesales.json";
+        const string fileName = "gcp.json";
         var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
 
         if (!File.Exists(filePath))

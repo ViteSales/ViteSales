@@ -147,7 +147,6 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         }
         var cmd = CreateCommand();
         cmd.CommandText = $"INSERT INTO \"{tableName}\" ({string.Join(",", columns)}) VALUES ({string.Join(",", parameterDbTypes.Select(x => x.Parameter))});";
-        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameterDbTypes)
         {
             cmd.Parameters.AddWithValue(dbType.Parameter, dbType.DbType, dbType.Value);
@@ -195,7 +194,6 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         
         var cmd = CreateCommand();
         cmd.CommandText = sql;
-        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameters)
         {
             cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
@@ -223,7 +221,6 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         
         var cmd = CreateCommand();
         cmd.CommandText = sql;
-        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameters)
         {
             cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
@@ -246,7 +243,6 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         
         var cmd = CreateCommand();
         cmd.CommandText = sql;
-        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameters)
         {
             cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);
@@ -300,7 +296,6 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         
         var cmd = CreateCommand();
         cmd.CommandText = sql;
-        Console.WriteLine(cmd.CommandText);
         foreach (var dbType in parameters)
         {
             cmd.Parameters.AddWithValue(dbType.Key, dbType.Value.DbType, dbType.Value.Value);

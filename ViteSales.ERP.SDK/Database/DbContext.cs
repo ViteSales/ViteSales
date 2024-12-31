@@ -13,7 +13,7 @@ using ViteSales.ERP.SDK.Validator;
 
 namespace ViteSales.ERP.SDK.Database;
 
-public class DbContext(ConnectionConfig config, string moduleName)
+public class DbContext(ConnectionConfig config, string moduleName): IDbContext
 {
     private readonly Connection _connection = new (config);
     
@@ -60,7 +60,6 @@ public class DbContext(ConnectionConfig config, string moduleName)
         }
         catch(Exception ex)
         {
-            Console.WriteLine(ex.Message);
             await _connection.RollbackTransactionAsync();
             throw;
         }
