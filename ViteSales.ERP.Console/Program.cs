@@ -1,7 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
-using ViteSales.ERP.SDK.Manager;
+using ViteSales.ERP.SDK.Services;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Utils;
 
@@ -14,7 +15,6 @@ var conn = new ConnectionConfig
     Password = "frf@!333!@Fg",
     Database = "postgres"
 };
-
 var services = new ServiceCollection();
 services.Configure<GcpConfig>(options =>
 {
@@ -33,7 +33,7 @@ services.AddLogging(configure =>
 {
     configure.AddConsole();
 });
-
+services.AddTransient<IDbContext, DbContext>();
 services.AddTransient<IPackageInstallerService, PackageInstallerService>();
 services.AddTransient<IPackageService, PackageService>();
 services.AddTransient<ITableSchemaManager, TableSchemaService>();

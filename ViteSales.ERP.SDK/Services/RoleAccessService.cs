@@ -5,7 +5,7 @@ using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
 
-namespace ViteSales.ERP.SDK.Manager;
+namespace ViteSales.ERP.SDK.Services;
 
 public class RoleAccessService : IRoleAccessManager
 {

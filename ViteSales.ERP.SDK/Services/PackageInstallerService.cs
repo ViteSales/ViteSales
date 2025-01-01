@@ -2,28 +2,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Semver;
 using SqlKata.Execution;
-using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Database.Operation;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Entities;
-using ViteSales.ERP.SDK.Manager;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.Shared.Extensions;
 
-namespace ViteSales.ERP.SDK.Manager;
+namespace ViteSales.ERP.SDK.Services;
 
 public class PackageInstallerService: IPackageInstallerService
 {
     private readonly ILogger<PackageInstallerService> _logger;
-    private readonly DbContext _dbContext;
+    private readonly IDbContext _dbContext;
     private readonly ITableSchemaManager _tableSchemaManager;
 
-    public PackageInstallerService(ITableSchemaManager tableSchemaManager, IOptions<ConnectionConfig> cfg, ILogger<PackageInstallerService> log)
+    public PackageInstallerService(ITableSchemaManager tableSchemaManager, IDbContext dbContext, IOptions<ConnectionConfig> cfg, ILogger<PackageInstallerService> log)
     {
         ArgumentNullException.ThrowIfNull(cfg);
         ArgumentNullException.ThrowIfNull(log);
         _logger = log;
-        _dbContext = new DbContext(cfg.Value, "PackageInstallerService");
+        _dbContext = dbContext;
         _tableSchemaManager = tableSchemaManager;
     }
     
