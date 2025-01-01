@@ -10,7 +10,11 @@ using ViteSales.ERP.SDK.Database.Operation;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Entities;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.ERP.SDK.Services.MessageQueue;
+using ViteSales.ERP.SDK.Utils;
 using ViteSales.ERP.SDK.Validator;
+using ViteSales.Shared.Exceptions;
+using ViteSales.Shared.Extensions;
 
 namespace ViteSales.ERP.SDK.Database;
 
@@ -18,12 +22,14 @@ public class DbContext: IDbContext
 {
     private readonly Connection _connection;
     private readonly ConnectionConfig _config;
+    private readonly IPubSub _pubSub;
     
-    public DbContext(IOptions<ConnectionConfig> cfg)
+    public DbContext(IPubSub pubSub, IOptions<ConnectionConfig> cfg)
     {
         ArgumentNullException.ThrowIfNull(cfg);
-        _connection = new Connection(cfg.Value);
         _config = cfg.Value;
+        _connection = new Connection(cfg.Value);
+        _pubSub = pubSub;
     }
     
     public async Task SaveChanges(Func<List<IOperation>> callback)
@@ -63,7 +69,7 @@ public class DbContext: IDbContext
                     default:
                         throw new NotImplementedException("Only Insert, Update and Delete operations are supported.");
                 }
-                await _connection.QueueMessageAsync(operation);
+                await QueueMessageAsync(operation);
             }
             await _connection.CommitTransactionAsync();
         }
@@ -197,4 +203,52 @@ public class DbContext: IDbContext
     }
     
     public async Task<DataTable> GetRecords(IOperation operation) => await _connection.GetRecordsAsync(operation);
+    
+    public async Task QueueMessageAsync(IOperation operation)
+    {
+        var data = operation.Data();
+        var type = data.GetType();
+        var tableName = type.Name;
+        var isMqStreamEnabled = type.GetCustomAttribute<MqStreamAttribute>();
+        if (isMqStreamEnabled is null)
+        {
+            return;
+        }
+        var typeProperties = type.GetProperties();
+        var operationType = operation.Type;
+        var queueData = new Dictionary<string, object>();
+        foreach (var property in typeProperties)
+        {
+            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            if (bindType is null) continue;
+            
+            var propertyValue = property.GetValue(data);
+            if (propertyValue is null) continue;
+            
+            queueData.Add(property.Name, propertyValue.ToObjectInferred());
+        }
+
+        var queueName = Utility.QueueName(_config.Host, _config.Database, tableName);
+        var message = new PubSubMessage
+        {
+            QueuedBy = _config.User,
+            QueuedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            Action = operationType.ToString(),
+            Data = JsonSerializer.Serialize(queueData)
+        };
+        await _pubSub.PublishAsync(queueName, message);
+    }
+    
+    public async Task<Subscriber> ListenMessage<T>() where T: class
+    {
+        var type = typeof(T);
+        var tableName = type.Name;
+        var isMqStreamEnabled = type.GetCustomAttribute<MqStreamAttribute>();
+        if (isMqStreamEnabled is null)
+        {
+            throw new StreamingException<string>("Streaming is not enabled for this module.");
+        }
+        var queueName = Utility.QueueName(_config.Host, _config.Database, tableName);
+        return await _pubSub.InitTopicAsync(queueName);
+    }
 }
