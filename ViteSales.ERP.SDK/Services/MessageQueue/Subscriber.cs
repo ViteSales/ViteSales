@@ -3,24 +3,24 @@ using Google.Cloud.PubSub.V1;
 using Google.Protobuf.WellKnownTypes;
 using ViteSales.ERP.SDK.Utils;
 
-namespace ViteSales.ERP.SDK.MessageQueue;
+namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
 public sealed class Subscriber
 {
     private readonly  SubscriberServiceApiClient? _subscriberClient;
-    private readonly GcpConfig _config;
+    private readonly AppSettings _secret;
     private SubscriptionName _subscriptionName;
     private SubscriberClient _subscriber;
     
-    public Subscriber()
+    public Subscriber(AppSettings settings)
     {
-        _config = GcpConfig.ReadGcpJsonFile();
+        _secret = settings;
         _subscriberClient = SubscriberServiceApiClient.Create();
     }
 
     public async Task CreateSubscription(TopicName topicName, string subId)
     {
-        _subscriptionName = SubscriptionName.FromProjectSubscription(projectId: _config.AuthInfo.ProjectId, subscriptionId: subId);
+        _subscriptionName = SubscriptionName.FromProjectSubscription(projectId: _secret.GcpCredentials.ProjectId, subscriptionId: subId);
         try
         {
             var subscriptionSettings = new PushConfig

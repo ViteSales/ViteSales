@@ -1,22 +1,25 @@
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.PubSub.V1;
 using Grpc.Auth;
+using Microsoft.Extensions.Options;
+using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Utils;
 
-namespace ViteSales.ERP.SDK.MessageQueue;
+namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
-public class PubSub
+public class PubSub: IPubSub
 {
     private readonly PublisherServiceApiClient _publisher;
     private readonly GoogleCredential _credential;
-    private readonly GcpConfig _config;
+    private readonly AppSettings _secret;
     private TopicName _topicName;
     private Subscriber _subscriber;
     
-    public PubSub()
+    public PubSub(IOptions<AppSettings> settings)
     {
-        _config = GcpConfig.ReadGcpJsonFile();
-        _credential = _config.Credential ?? throw new Exception("GCP config read failed");
+        ArgumentNullException.ThrowIfNull(settings);
+        _secret = settings.Value;
+        _credential = _secret.GoogleCredential;
         _publisher = new PublisherServiceApiClientBuilder
         {
             ChannelCredentials = _credential.ToChannelCredentials()
@@ -26,8 +29,8 @@ public class PubSub
     public async Task<Subscriber> InitTopicAsync(string topicName)
     {
         var subscriptionName = $"{topicName}._subscription_";
-        _topicName = TopicName.FromProjectTopic(projectId: _config.AuthInfo.ProjectId, topicId: topicName);
-        _subscriber = new Subscriber();
+        _topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: topicName);
+        _subscriber = new Subscriber(_secret);
         try
         {
             await _publisher.CreateTopicAsync(new Topic
@@ -52,7 +55,7 @@ public class PubSub
 
     public async Task PublishAsync(string topicName, PubSubMessage message)
     {
-        _topicName = TopicName.FromProjectTopic(projectId: _config.AuthInfo.ProjectId, topicId: topicName);
+        _topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: topicName);
         await _publisher.PublishAsync(_topicName, [new PubsubMessage { Data = message.ToByteString() }]);
     }
 

@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Google.Protobuf;
 
-namespace ViteSales.ERP.SDK.MessageQueue;
+namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
 [Serializable]
 public class PubSubMessage

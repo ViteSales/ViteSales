@@ -9,8 +9,8 @@ using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
-using ViteSales.ERP.SDK.MessageQueue;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.ERP.SDK.Services.MessageQueue;
 using ViteSales.ERP.SDK.Utils;
 
 namespace ViteSales.ERP.SDK.Services;
@@ -20,16 +20,17 @@ public class TableSchemaService: ITableSchemaManager
     private readonly ConnectionConfig _config;
     private readonly Connection _connectionHandler;
     private readonly ILogger<TableSchemaService> _logger;
-    private readonly PubSub _pubSub = new();
+    private readonly IPubSub _pubSub;
 
-    public TableSchemaService(IOptions<ConnectionConfig> cfg, ILogger<TableSchemaService> log)
+    public TableSchemaService(IPubSub pubSub, IOptions<ConnectionConfig> cfg,ILogger<TableSchemaService> log)
     {
         ArgumentNullException.ThrowIfNull(cfg);
         ArgumentNullException.ThrowIfNull(log);
         
         _logger = log;
-        _connectionHandler = new Connection(cfg.Value);
         _config = cfg.Value;
+        _connectionHandler = new Connection(cfg.Value);
+        _pubSub = pubSub;
     }
     
     public async Task DropTablesAsync(IEnumerable<Type> types)
