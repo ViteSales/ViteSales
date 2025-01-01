@@ -13,7 +13,7 @@ using ViteSales.ERP.SDK.MessageQueue;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Utils;
 
-namespace ViteSales.ERP.SDK.Manager;
+namespace ViteSales.ERP.SDK.Services;
 
 public class TableSchemaService: ITableSchemaManager
 {

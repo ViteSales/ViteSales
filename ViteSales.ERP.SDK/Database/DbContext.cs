@@ -2,6 +2,7 @@ using System.Data;
 using System.Reflection;
 using System.Text.Json;
 using FluentValidation;
+using Microsoft.Extensions.Options;
 using SqlKata;
 using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
@@ -13,9 +14,17 @@ using ViteSales.ERP.SDK.Validator;
 
 namespace ViteSales.ERP.SDK.Database;
 
-public class DbContext(ConnectionConfig config, string moduleName): IDbContext
+public class DbContext: IDbContext
 {
-    private readonly Connection _connection = new (config);
+    private readonly Connection _connection;
+    private readonly ConnectionConfig _config;
+    
+    public DbContext(IOptions<ConnectionConfig> cfg)
+    {
+        ArgumentNullException.ThrowIfNull(cfg);
+        _connection = new Connection(cfg.Value);
+        _config = cfg.Value;
+    }
     
     public async Task SaveChanges(Func<List<IOperation>> callback)
     {
@@ -145,14 +154,14 @@ public class DbContext(ConnectionConfig config, string moduleName): IDbContext
             var primaryKeyValue = primaryKeyColumn != null ? row[primaryKeyColumn] : null;
             if (primaryKeyValue is not null)
             {
-                await _connection.InsertAsync(new Insert<AuditTrailInternal>(new AuditTrailInternal()
+                await _connection.InsertAsync(new Insert<AuditTrailInternal>(new AuditTrailInternal
                 {
                     Action = operationTypes.ToAction(),
                     ActionAt = DateTime.Now,
-                    ActionBy = config.User,
-                    Module = moduleName,
+                    ActionBy = _config.User,
+                    Module = dt.TableName,
                     Data = JsonSerializer.Serialize(row),
-                    DataId = primaryKeyValue.ToString(),
+                    DataId = primaryKeyValue.ToString()!,
                 }));
             }
         }

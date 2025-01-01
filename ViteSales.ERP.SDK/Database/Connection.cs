@@ -305,7 +305,20 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         var dataTable = new DataTable();
         dataTable.Load(reader);
         await reader.CloseAsync();
+        
+        dataTable.TableName = await GetModuleNameOfTableAsync(tableName);
+        
         return dataTable;
+    }
+
+    public async Task<string> GetModuleNameOfTableAsync(string tableName)
+    {
+        var query = "SELECT \"Name\" AS module FROM \"PackageDetailsInternal\" WHERE \"Entities\"::jsonb ?  @tableName;";
+        var cmd = CreateCommand();
+        cmd.CommandText = query;
+        cmd.Parameters.AddWithValue("@tableName", NpgsqlDbType.Text, tableName);
+        var result = await cmd.ExecuteScalarAsync();
+        return result as string ?? string.Empty;
     }
     
     /// <summary>
