@@ -26,7 +26,7 @@ public class DbContext: IDbContext
     
     public DbContext(IPubSub pubSub, IOptions<ConnectionConfig> cfg)
     {
-        ArgumentNullException.ThrowIfNull(cfg);
+        ArgumentNullException.ThrowIfNull(cfg.Value);
         _config = cfg.Value;
         _connection = new Connection(cfg.Value);
         _pubSub = pubSub;

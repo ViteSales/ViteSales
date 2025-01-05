@@ -16,7 +16,7 @@ public class RoleAccessService : IRoleAccessManager
 
     public RoleAccessService(IOptions<ConnectionConfig> cfg, ILogger<RoleAccessService> log)
     {
-        ArgumentNullException.ThrowIfNull(cfg);
+        ArgumentNullException.ThrowIfNull(cfg.Value);
         ArgumentNullException.ThrowIfNull(log);
 
         _logger = log;

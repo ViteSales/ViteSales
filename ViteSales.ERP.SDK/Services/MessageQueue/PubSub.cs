@@ -17,7 +17,7 @@ public class PubSub: IPubSub
     
     public PubSub(IOptions<AppSettings> settings)
     {
-        ArgumentNullException.ThrowIfNull(settings);
+        ArgumentNullException.ThrowIfNull(settings.Value);
         _secret = settings.Value;
         _credential = _secret.GoogleCredential;
         _publisher = new PublisherServiceApiClientBuilder

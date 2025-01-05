@@ -32,6 +32,8 @@ public class AppSettings
     public static AppSettings Read()
     {
         var appSettingsPath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+        if (!File.Exists(appSettingsPath))
+            throw new FileNotFoundException("appsettings.json not found");
         var json = File.ReadAllText(appSettingsPath);
         return JsonSerializer.Deserialize<AppSettings>(json, new JsonSerializerOptions
         {
