@@ -1,13 +1,12 @@
+using System.Data;
 using ViteSales.ERP.Accounting.GL.Entities;
-using ViteSales.ERP.SDK.Database;
-using ViteSales.ERP.SDK.Interfaces;
+using ViteSales.ERP.Accounting.GL.Interfaces;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.Accounting.GL.Modules;
 
-public class AccountTypesModule: IModule
+public class AccountTypesModule: IAccountTypes
 {
-    private DbContext _ctx;
     public string Name { get; } = "Account Maintenance";
 
     public IEnumerable<Type> Entities { get; } = new List<Type>
@@ -16,12 +15,12 @@ public class AccountTypesModule: IModule
         typeof(AccountTypes)
     };
 
-    public void OnLoad(DbContext ctx)
+    public void OnLoad()
     {
-        _ctx = ctx;
+     
     }
 
-    public async Task OnSave(List<object> records)
+    public async Task OnSave(DataTable dataTable)
     {
         
     }

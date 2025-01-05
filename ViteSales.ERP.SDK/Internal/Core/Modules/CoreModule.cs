@@ -1,3 +1,4 @@
+using System.Data;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Entities;
@@ -17,7 +18,7 @@ public class CoreModule: IModule
         typeof(AuditTrailInternal)
     };
 
-    public void OnLoad(DbContext ctx)
+    public void OnLoad()
     {
         
     }
@@ -27,7 +28,7 @@ public class CoreModule: IModule
         throw new NotImplementedException();
     }
 
-    public Task OnSave(List<object> records)
+    public Task OnSave(DataTable dataTable)
     {
         throw new NotImplementedException();
     }

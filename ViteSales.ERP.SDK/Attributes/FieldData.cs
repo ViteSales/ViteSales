@@ -3,7 +3,7 @@ using System.Reflection;
 namespace ViteSales.ERP.SDK.Attributes;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class BindDataAttribute(string methodName) : Attribute
+public class FieldDataAttribute(string methodName) : Attribute
 {
     public string MethodName { get; } = methodName;
 

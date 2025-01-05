@@ -182,7 +182,7 @@ public class DbContext: IDbContext
         var typeProperties = type.GetProperties();
         foreach (var property in typeProperties)
         {
-            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            var bindType = property.GetCustomAttribute<FieldDataTypeAttribute>();
             if (bindType is null) continue;
             var primaryKeyType = property.GetCustomAttribute<PrimaryKeyAttribute>();
             if (primaryKeyType is not null)
@@ -219,7 +219,7 @@ public class DbContext: IDbContext
         var queueData = new Dictionary<string, object>();
         foreach (var property in typeProperties)
         {
-            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            var bindType = property.GetCustomAttribute<FieldDataTypeAttribute>();
             if (bindType is null) continue;
             
             var propertyValue = property.GetValue(data);

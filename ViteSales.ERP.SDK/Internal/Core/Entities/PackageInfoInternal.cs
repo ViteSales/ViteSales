@@ -7,23 +7,23 @@ namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 public class PackageInfoInternal
 {
     [PrimaryKey]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     public Guid Id { get; set; }
     
     [Required]
     [UniqueKey]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public required string Name { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     public required Guid AuthorId { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.SmallText)]
+    [FieldDataType(FieldTypes.SmallText)]
     public required string Version { get; set; }
     
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public string? License { get; set; }
     
     [RelationalMapping("PackageDetailsInternal", "Id", "PackageId")]

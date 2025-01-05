@@ -9,31 +9,31 @@ namespace ViteSales.ERP.Accounting.GL.Entities;
 public class AccountTypes
 {
     [PrimaryKey]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     [RelationalMapping("AccountLedgerEntry","Id","AccountId")]
     public Guid Id { get; set; }
     
     [Required]
     [UniqueKey]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     [Display(Name = "Account Name")]
     public required string AccountName { get; set; }
     
     [Required]
     [UniqueKey]
-    [BindDataType(FieldTypes.SmallText)]
+    [FieldDataType(FieldTypes.SmallText)]
     public required string AccountRootType { get; set; }
 
-    [BindDataType(FieldTypes.SmallText)] 
+    [FieldDataType(FieldTypes.SmallText)] 
     [UniqueKey]
     public string ParentAccount { get; set; } = string.Empty;
     
-    [BindDataType(FieldTypes.Select)]
-    [BindData("GetAccountTypes")]
+    [FieldDataType(FieldTypes.Select)]
+    [FieldData("GetAccountTypes")]
     [Display(Name = "Account Type")]
     public string AccountType { get; set; } = string.Empty;
     
     [Required]
-    [BindDataType(FieldTypes.Boolean)]
+    [FieldDataType(FieldTypes.Boolean)]
     public required bool IsGroup { get; set; }
 }
