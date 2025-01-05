@@ -1,6 +1,8 @@
 using Google.Cloud.Iam.V1;
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf.WellKnownTypes;
+using Grpc.Auth;
+using Grpc.Core;
 using ViteSales.ERP.SDK.Utils;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
@@ -15,7 +17,10 @@ public sealed class Subscriber
     public Subscriber(AppSettings settings)
     {
         _secret = settings;
-        _subscriberClient = SubscriberServiceApiClient.Create();
+        _subscriberClient = new SubscriberServiceApiClientBuilder
+        {
+            ChannelCredentials = _secret.GoogleCredential.ToChannelCredentials()
+        }.Build();
     }
 
     public async Task CreateSubscription(TopicName topicName, string subId)

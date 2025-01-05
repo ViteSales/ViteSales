@@ -17,8 +17,6 @@ public class CoreModule: IModule
         typeof(AuditTrailInternal)
     };
 
-    public IEnumerable<Type> ToStream { get; } = new List<Type>();
-
     public void OnLoad(DbContext ctx)
     {
         

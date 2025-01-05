@@ -15,7 +15,7 @@ public class PackageService: IPackageService
     
     public PackageService(IPackageInstallerService installerService,IOptions<ConnectionConfig> cfg, ILogger<PackageService> log)
     {
-        ArgumentNullException.ThrowIfNull(cfg);
+        ArgumentNullException.ThrowIfNull(cfg.Value);
         ArgumentNullException.ThrowIfNull(log);
         _logger = log;
         _logger.LogInformation("PackageService initialized");

@@ -24,7 +24,7 @@ public class TableSchemaService: ITableSchemaManager
 
     public TableSchemaService(IPubSub pubSub, IOptions<ConnectionConfig> cfg,ILogger<TableSchemaService> log)
     {
-        ArgumentNullException.ThrowIfNull(cfg);
+        ArgumentNullException.ThrowIfNull(cfg.Value);
         ArgumentNullException.ThrowIfNull(log);
         
         _logger = log;
