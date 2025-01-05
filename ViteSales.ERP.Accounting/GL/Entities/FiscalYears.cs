@@ -9,27 +9,27 @@ namespace ViteSales.ERP.Accounting.GL.Entities;
 public class FiscalYears
 {
     [PrimaryKey]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     public Guid Id { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     [Display(Name = "Fiscal Year Name")]
     [UniqueKey]
     public required string Name { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Date)]
+    [FieldDataType(FieldTypes.Date)]
     [Display(Name = "Start Date")]
     public DateTime StartDate { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Date)]
+    [FieldDataType(FieldTypes.Date)]
     [Display(Name = "End Date")]
     public DateTime EndDate { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Boolean)]
+    [FieldDataType(FieldTypes.Boolean)]
     [Display(Name = "Is Active")]
     public required bool IsActive { get; set; }
 }

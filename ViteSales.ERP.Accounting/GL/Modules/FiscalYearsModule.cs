@@ -1,13 +1,12 @@
+using System.Data;
 using ViteSales.ERP.Accounting.GL.Entities;
-using ViteSales.ERP.SDK.Database;
-using ViteSales.ERP.SDK.Interfaces;
+using ViteSales.ERP.Accounting.GL.Interfaces;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.Accounting.GL.Modules;
 
-public class FiscalYearsModule: IModule
+public class FiscalYearsModule: IFiscalYears
 {
-    private DbContext _ctx;
     public string Name { get; } = "Fiscal Years";
 
     public IEnumerable<Type> Entities { get; } = new List<Type>
@@ -15,9 +14,8 @@ public class FiscalYearsModule: IModule
         typeof(FiscalYears)
     };
     
-    public void OnLoad(DbContext ctx)
+    public void OnLoad()
     {
-        _ctx = ctx;
     }
 
     public void OnChangeEvent(EventChange data)
@@ -25,7 +23,7 @@ public class FiscalYearsModule: IModule
         throw new NotImplementedException();
     }
 
-    public Task OnSave(List<object> records)
+    public Task OnSave(DataTable dataTable)
     {
         throw new NotImplementedException();
     }

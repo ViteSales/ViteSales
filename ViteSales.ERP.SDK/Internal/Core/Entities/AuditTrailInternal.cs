@@ -8,30 +8,30 @@ namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 public class AuditTrailInternal
 {
     [PrimaryKey]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     public Guid Id { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.ShortCode)]
+    [FieldDataType(FieldTypes.ShortCode)]
     public required string DataId { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public required string Module { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public required string Action { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Json)]
+    [FieldDataType(FieldTypes.Json)]
     public required string Data { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.ShortCode)]
+    [FieldDataType(FieldTypes.ShortCode)]
     public required string ActionBy { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.DateTime)]
+    [FieldDataType(FieldTypes.DateTime)]
     public required DateTime ActionAt { get; set; }
 }

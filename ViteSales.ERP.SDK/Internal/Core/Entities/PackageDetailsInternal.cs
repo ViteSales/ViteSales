@@ -9,27 +9,27 @@ namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 public class PackageDetailsInternal
 {
     [PrimaryKey]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     public Guid Id { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     public Guid PackageId { get; set; }
     
     [Required]
     [UniqueKey]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public required string Name { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public required string ModuleId { get; set; }
     
     [Required]
-    [BindDataType(FieldTypes.Json)]
+    [FieldDataType(FieldTypes.Json)]
     public required object Entities { get; set; }
 
     [Required]
-    [BindDataType(FieldTypes.Json)]
+    [FieldDataType(FieldTypes.Json)]
     public object Others { get; set; }
 }

@@ -17,7 +17,7 @@ public class FormValidator<T> : AbstractValidator<T> where T : class
         foreach (var prop in properties)
         {
             IRuleBuilderOptions<T, object?>? rule = null;
-            var bindAttr = prop.GetCustomAttribute<BindDataTypeAttribute>();
+            var bindAttr = prop.GetCustomAttribute<FieldDataTypeAttribute>();
             
             var instance = Activator.CreateInstance(prop.DeclaringType ?? throw new InvalidOperationException("Property does not have a declaring type"));
             var propertyValue = prop.GetValue(instance);

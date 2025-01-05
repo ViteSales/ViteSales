@@ -7,23 +7,23 @@ namespace ViteSales.ERP.SDK.Internal.Core.Entities;
 public class PackageAuthorsInternal
 {
     [PrimaryKey]
-    [BindDataType(FieldTypes.Guid)]
+    [FieldDataType(FieldTypes.Guid)]
     public Guid Id { get; set; }
     
     [Required]
     [UniqueKey]
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public required string Name { get; set; }
     
-    [BindDataType(FieldTypes.Email)]
+    [FieldDataType(FieldTypes.Email)]
     public string? Email { get; set; }
     
-    [BindDataType(FieldTypes.Text)]
+    [FieldDataType(FieldTypes.Text)]
     public string? Company { get; set; }
     
-    [BindDataType(FieldTypes.Url)]
+    [FieldDataType(FieldTypes.Url)]
     public string? Website { get; set; }
     
-    [BindDataType(FieldTypes.Phone)]
+    [FieldDataType(FieldTypes.Phone)]
     public string? Phone { get; set; }
 }

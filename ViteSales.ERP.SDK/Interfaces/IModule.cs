@@ -1,3 +1,4 @@
+using System.Data;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Models;
@@ -9,8 +10,8 @@ public interface IModule
     public string Name { get; }
     public IEnumerable<Type> Entities { get; }
     
-    public void OnLoad(DbContext ctx);
+    public void OnLoad();
     public void OnChangeEvent(EventChange data);
-    public Task OnSave(List<object> records);
+    public Task OnSave(DataTable dataTable);
     public List<object> DefaultValues();
 }

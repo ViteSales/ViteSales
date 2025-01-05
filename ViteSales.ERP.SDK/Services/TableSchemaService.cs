@@ -109,7 +109,7 @@ public class TableSchemaService: ITableSchemaManager
                 bool isPrimaryKey = false, isNullable = false;
                 var dataType = FieldTypes.Text.GetPostgresColumnType();
                 var columnName = prop.Name;
-                var bindAttr = prop.GetCustomAttribute<BindDataTypeAttribute>();
+                var bindAttr = prop.GetCustomAttribute<FieldDataTypeAttribute>();
 
                 // Log property being processed
                 _logger.LogTrace("Processing property \"{PropertyName}\" of table \"{TableName}\".", prop.Name, tableName);

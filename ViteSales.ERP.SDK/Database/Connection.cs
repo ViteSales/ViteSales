@@ -80,7 +80,7 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         var columns = new List<string>();
         foreach (var property in typeProperties)
         {
-            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            var bindType = property.GetCustomAttribute<FieldDataTypeAttribute>();
             if (bindType is null) continue;
             
             var propertyValue = property.GetValue(data);
@@ -117,7 +117,7 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
         }
         foreach (var property in typeProperties)
         {
-            var bindType = property.GetCustomAttribute<BindDataTypeAttribute>();
+            var bindType = property.GetCustomAttribute<FieldDataTypeAttribute>();
             if (bindType is null) continue;
             
             var primaryKey = property.GetCustomAttribute<PrimaryKeyAttribute>();
