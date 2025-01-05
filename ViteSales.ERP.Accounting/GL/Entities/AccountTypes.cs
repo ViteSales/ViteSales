@@ -5,6 +5,7 @@ using ViteSales.ERP.SDK.Const;
 namespace ViteSales.ERP.Accounting.GL.Entities;
 
 [Display(Name = "Chart of Accounts")]
+[MasterViewType(MasterViewTypes.TreeView)]
 [MqStream]
 public class AccountTypes
 {
