@@ -1,4 +1,4 @@
-namespace ViteSales.Shared.Interfaces;
+namespace ViteSales.ERP.Shared.Interfaces;
 
 public interface ICacheClient
 {

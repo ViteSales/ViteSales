@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Data;
 
-namespace ViteSales.Shared.Extensions;
+namespace ViteSales.ERP.Shared.Extensions;
 
 public static class DbSetEx
 {

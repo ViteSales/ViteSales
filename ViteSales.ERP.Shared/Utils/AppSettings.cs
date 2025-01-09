@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Google.Apis.Auth.OAuth2;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Models;
 
-namespace ViteSales.Shared.Utils;
+namespace ViteSales.ERP.Shared.Utils;
 
 public class AppSettings
 {

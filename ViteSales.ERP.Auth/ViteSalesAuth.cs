@@ -2,10 +2,10 @@
 using ViteSales.ERP.Auth.Client;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Auth.Services;
-using ViteSales.Shared.Cache;
-using ViteSales.Shared.Interfaces;
-using ViteSales.Shared.Models;
-using ViteSales.Shared.Utils;
+using ViteSales.ERP.Shared.Cache;
+using ViteSales.ERP.Shared.Interfaces;
+using ViteSales.ERP.Shared.Models;
+using ViteSales.ERP.Shared.Utils;
 
 namespace ViteSales.ERP.Auth;
 

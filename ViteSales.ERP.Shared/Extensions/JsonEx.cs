@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace ViteSales.Shared.Extensions;
+namespace ViteSales.ERP.Shared.Extensions;
 
 public static class JsonEx
 {

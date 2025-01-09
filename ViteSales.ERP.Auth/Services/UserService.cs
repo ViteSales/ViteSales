@@ -3,7 +3,7 @@ using Auth0.ManagementApi.Paging;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Auth.Models;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.Auth.Services;
 

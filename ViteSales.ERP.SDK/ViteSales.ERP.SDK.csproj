@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ViteSales.Shared\ViteSales.Shared.csproj" />
+      <ProjectReference Include="..\ViteSales.ERP.Shared\ViteSales.ERP.Shared.csproj" />
     </ItemGroup>
 
 </Project>

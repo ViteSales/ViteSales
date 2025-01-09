@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace ViteSales.Shared.Models;
+namespace ViteSales.ERP.Shared.Models;
 
 [Serializable]
 public class LoggingConfig

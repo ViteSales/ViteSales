@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.API", "ViteSales.API\ViteSales.API.csproj", "{282D3A7C-5B5D-4609-823D-74935CD71700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.Shared", "ViteSales.Shared\ViteSales.Shared.csproj", "{3EA8EC28-975D-44C5-AB38-F8DEF0CD0B1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.Shared", "ViteSales.ERP.Shared\ViteSales.ERP.Shared.csproj", "{3EA8EC28-975D-44C5-AB38-F8DEF0CD0B1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.Accounting", "ViteSales.ERP.Accounting\ViteSales.ERP.Accounting.csproj", "{6D5C3FC3-1D71-4F53-9EF5-9AE15B93A68E}"
 EndProject

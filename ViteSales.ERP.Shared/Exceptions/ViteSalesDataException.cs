@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using System.Text.Json;
 
-namespace ViteSales.Shared.Exceptions;
+namespace ViteSales.ERP.Shared.Exceptions;
 
 [Serializable]
 public class ViteSalesDataException<T>: Exception where T: class

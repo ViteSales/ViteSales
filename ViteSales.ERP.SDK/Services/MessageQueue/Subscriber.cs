@@ -1,7 +1,7 @@
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Auth;
-using ViteSales.Shared.Utils;
+using ViteSales.ERP.Shared.Utils;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
 

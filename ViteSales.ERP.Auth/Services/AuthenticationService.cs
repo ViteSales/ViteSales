@@ -2,8 +2,8 @@ using Auth0.AuthenticationApi.Builders;
 using Auth0.AuthenticationApi.Models;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.Auth.Interfaces;
-using ViteSales.Shared.Interfaces;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Interfaces;
+using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.Auth.Services;
 

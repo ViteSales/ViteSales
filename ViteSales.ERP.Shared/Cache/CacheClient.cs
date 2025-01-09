@@ -1,8 +1,8 @@
 using StackExchange.Redis;
-using ViteSales.Shared.Interfaces;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Interfaces;
+using ViteSales.ERP.Shared.Models;
 
-namespace ViteSales.Shared.Cache;
+namespace ViteSales.ERP.Shared.Cache;
 
 public class CacheClient(CacheDbCredentials auth, string prefix): ICacheClient, IDisposable
 {

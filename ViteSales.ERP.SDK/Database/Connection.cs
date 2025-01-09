@@ -8,8 +8,8 @@ using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
-using ViteSales.Shared.Extensions;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Extensions;
+using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Database;
 

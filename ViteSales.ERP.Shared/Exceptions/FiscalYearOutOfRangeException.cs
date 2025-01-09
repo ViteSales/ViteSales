@@ -1,4 +1,4 @@
-namespace ViteSales.Shared.Exceptions;
+namespace ViteSales.ERP.Shared.Exceptions;
 
 [Serializable]
 public class FiscalYearOutOfRangeException<T>: ViteSalesDataException<T> where T: class

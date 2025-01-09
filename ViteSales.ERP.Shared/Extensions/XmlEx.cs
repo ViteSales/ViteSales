@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace ViteSales.Shared.Extensions;
+namespace ViteSales.ERP.Shared.Extensions;
 
 public static class XmlEx
 {

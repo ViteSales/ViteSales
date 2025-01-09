@@ -2,9 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
-using ViteSales.Shared.Extensions;
-using ViteSales.Shared.Models;
-using ViteSales.Shared.Utils;
+using ViteSales.ERP.Shared.Extensions;
+using ViteSales.ERP.Shared.Models;
+using ViteSales.ERP.Shared.Utils;
 
 var conn = new ConnectionConfig
 {

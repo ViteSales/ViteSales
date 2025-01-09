@@ -5,8 +5,8 @@ using Microsoft.Extensions.Options;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Utils;
-using ViteSales.Shared.Models;
-using AppSettings = ViteSales.Shared.Utils.AppSettings;
+using ViteSales.ERP.Shared.Models;
+using AppSettings = ViteSales.ERP.Shared.Utils.AppSettings;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
