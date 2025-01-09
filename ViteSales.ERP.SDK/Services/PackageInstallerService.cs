@@ -7,6 +7,7 @@ using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Entities;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.Shared.Extensions;
+using ViteSales.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Services;
 

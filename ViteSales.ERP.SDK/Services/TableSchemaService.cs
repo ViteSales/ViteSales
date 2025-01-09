@@ -9,9 +9,8 @@ using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
-using ViteSales.ERP.SDK.Models;
-using ViteSales.ERP.SDK.Services.MessageQueue;
 using ViteSales.ERP.SDK.Utils;
+using ViteSales.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Services;
 
@@ -54,9 +53,6 @@ public class TableSchemaService: ITableSchemaManager
                 cmd.CommandText = $"DROP TABLE IF EXISTS \"{tableName}\" CASCADE;";
                 await cmd.ExecuteNonQueryAsync();
                 _logger.LogDebug("Table \"{TableName}\" dropped successfully.", tableName);
-                
-                await _pubSub.Drop(GetQueueName(tableName));
-                _logger.LogDebug("Queue for table \"{TableName}\" dropped successfully.", tableName);
             }
 
             await _connectionHandler.CommitTransactionAsync();

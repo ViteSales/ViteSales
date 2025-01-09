@@ -1,4 +1,4 @@
-namespace ViteSales.ERP.SDK.Models;
+namespace ViteSales.Shared.Models;
 
 public class ConnectionConfig
 {

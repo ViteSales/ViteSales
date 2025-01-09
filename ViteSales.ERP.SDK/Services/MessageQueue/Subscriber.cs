@@ -7,7 +7,7 @@ namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
 public sealed class Subscriber
 {
-    private readonly  SubscriberServiceApiClient? _subscriberClient;
+    private readonly  SubscriberServiceApiClient _subscriberClient;
     private readonly AppSettings _secret;
     private SubscriptionName _subscriptionName;
     private SubscriberClient _subscriber;
@@ -21,7 +21,7 @@ public sealed class Subscriber
         }.Build();
     }
 
-    public async Task CreateSubscription(TopicName topicName, string subId)
+    public async Task CreateSubscription(TopicName topicName, string subId, string route)
     {
         _subscriptionName = SubscriptionName.FromProjectSubscription(projectId: _secret.GcpCredentials.ProjectId, subscriptionId: subId);
         try
@@ -38,7 +38,8 @@ public sealed class Subscriber
                 AckDeadlineSeconds = 60 * 10,
                 PushConfig = subscriptionSettings,
                 EnableMessageOrdering = true,
-                EnableExactlyOnceDelivery = true
+                EnableExactlyOnceDelivery = false,
+                Filter = $"attributes.route = \"{route}\""
             });
         }
         catch (Grpc.Core.RpcException ex) when (ex.StatusCode == Grpc.Core.StatusCode.AlreadyExists)

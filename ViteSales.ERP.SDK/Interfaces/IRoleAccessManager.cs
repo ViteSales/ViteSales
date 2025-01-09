@@ -1,5 +1,6 @@
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Interfaces;
 
