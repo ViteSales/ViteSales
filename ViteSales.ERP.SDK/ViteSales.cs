@@ -37,7 +37,7 @@ public class ViteSales
             configure.AddConsole();
         });
         _services.AddSingleton<ICacheClient, CacheClient>();
-        _services.AddTransient<IPubSub, PubSub>();
+        _services.AddTransient<IPubSubService, PubSubServiceService>();
         _services.AddTransient<IDbContext, DbContext>();
         _services.AddTransient<IPackageService, PackageService>();
         _services.AddTransient<IRoleAccessManager, RoleAccessService>();

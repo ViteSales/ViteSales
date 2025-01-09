@@ -6,11 +6,12 @@ using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Utils;
 using ViteSales.ERP.Shared.Models;
+using ViteSales.ERP.Shared.Utils;
 using AppSettings = ViteSales.ERP.Shared.Utils.AppSettings;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
-public class PubSub: IPubSub
+public class PubSubServiceService: IPubSubService
 {
     private readonly PublisherServiceApiClient _publisher;
     private readonly GoogleCredential _credential;
@@ -19,7 +20,7 @@ public class PubSub: IPubSub
     private TopicName _topicName;
     private Subscriber _subscriber;
     
-    public PubSub(IOptions<AppSettings> settings, IOptions<ConnectionConfig> config)
+    public PubSubServiceService(IOptions<AppSettings> settings, IOptions<ConnectionConfig> config)
     {
         ArgumentNullException.ThrowIfNull(settings.Value);
         ArgumentNullException.ThrowIfNull(config.Value);
@@ -36,7 +37,7 @@ public class PubSub: IPubSub
     {
         _topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: Utility.GetTopicName(_config.Host, _config.Database));
         _subscriber = new Subscriber(_secret);
-        await _subscriber.CreateSubscription(_topicName, Utility.QueueName(_config.Host, _config.Database, tableName),tableName);
+        await _subscriber.CreateSubscription(_topicName, Utility.GetSubscriberName(_config.Host, _config.Database, tableName),tableName);
         return _subscriber;
     }
 

@@ -20,7 +20,6 @@ public class PackageInstallerService: IPackageInstallerService
     public PackageInstallerService(ITableSchemaManager tableSchemaManager, IDbContext dbContext, IOptions<ConnectionConfig> cfg, ILogger<PackageInstallerService> log)
     {
         ArgumentNullException.ThrowIfNull(cfg.Value);
-        ArgumentNullException.ThrowIfNull(log);
         _logger = log;
         _dbContext = dbContext;
         _tableSchemaManager = tableSchemaManager;

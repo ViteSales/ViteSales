@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ViteSales.ERP.Auth.Client;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Auth.Services;
@@ -41,6 +42,10 @@ public class ViteSalesAuth
         _services.AddTransient<IAuthentication, AuthenticationService>();
         _services.AddTransient<IOrganization, OrganizationService>();
         _services.AddTransient<IUser, UserService>();
+        _services.AddLogging(configure =>
+        {
+            configure.AddConsole();
+        });
     }
     
     public ServiceCollection GetServiceCollection()

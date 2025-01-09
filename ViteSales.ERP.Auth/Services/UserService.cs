@@ -1,5 +1,6 @@
 using Auth0.ManagementApi;
 using Auth0.ManagementApi.Paging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Auth.Models;

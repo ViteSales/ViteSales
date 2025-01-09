@@ -1,6 +1,7 @@
 using NpgsqlTypes;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Utils;
+using ViteSales.ERP.Shared.Utils;
 
 namespace ViteSales.ERP.SDK.Database.Operation;
 

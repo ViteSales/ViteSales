@@ -34,11 +34,11 @@ public sealed class Subscriber
             {
                 Name = _subscriptionName.ToString(),
                 Topic = topicName.ToString(),
-                ExpirationPolicy = new ExpirationPolicy { Ttl = Duration.FromTimeSpan(TimeSpan.FromDays(7)) },
+                ExpirationPolicy = new ExpirationPolicy { Ttl = Duration.FromTimeSpan(TimeSpan.FromDays(15)) },
                 AckDeadlineSeconds = 60 * 10,
                 PushConfig = subscriptionSettings,
                 EnableMessageOrdering = true,
-                EnableExactlyOnceDelivery = false,
+                EnableExactlyOnceDelivery = true,
                 Filter = $"attributes.route = \"{route}\""
             });
         }

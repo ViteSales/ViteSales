@@ -1,4 +1,4 @@
-namespace ViteSales.ERP.SDK.Utils;
+namespace ViteSales.ERP.Shared.Utils;
 
 public static class Utility
 {
@@ -14,7 +14,7 @@ public static class Utility
         return new string(uniqueAlphabets.ToArray());
     }
 
-    public static string QueueName(string host, string db, string table)
+    public static string GetSubscriberName(string host, string db, string table)
     {
         return new string($"{host}{db}{table}".Where(char.IsLetterOrDigit).ToArray()).ToLower();
     }
