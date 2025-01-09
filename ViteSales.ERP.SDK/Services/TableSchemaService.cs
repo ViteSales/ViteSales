@@ -19,17 +19,15 @@ public class TableSchemaService: ITableSchemaManager
     private readonly ConnectionConfig _config;
     private readonly Connection _connectionHandler;
     private readonly ILogger<TableSchemaService> _logger;
-    private readonly IPubSub _pubSub;
+    private readonly IPubSubService _pubSubService;
 
-    public TableSchemaService(IPubSub pubSub, IOptions<ConnectionConfig> cfg,ILogger<TableSchemaService> log)
+    public TableSchemaService(IPubSubService pubSubService, IOptions<ConnectionConfig> cfg, ILogger<TableSchemaService> log)
     {
         ArgumentNullException.ThrowIfNull(cfg.Value);
-        ArgumentNullException.ThrowIfNull(log);
-        
         _logger = log;
         _config = cfg.Value;
         _connectionHandler = new Connection(cfg.Value);
-        _pubSub = pubSub;
+        _pubSubService = pubSubService;
     }
     
     public async Task DropTablesAsync(IEnumerable<Type> types)
@@ -97,7 +95,7 @@ public class TableSchemaService: ITableSchemaManager
             if (streamAttr != null)
             {
                 _logger.LogDebug("Initializing queue topic for \"{TableName}\".", tableName);
-                await _pubSub.InitTopicAsync(GetQueueName(tableName));
+                await _pubSubService.InitTopicAsync(tableName);
             }
 
             foreach (var prop in properties)
@@ -438,11 +436,6 @@ public class TableSchemaService: ITableSchemaManager
         var addColumnCommand = sb.ToString();
         _logger.LogDebug("Generated ADD COLUMN command: {Command}", addColumnCommand);
         return addColumnCommand;
-    }
-
-    private string GetQueueName(string tableName)
-    {
-        return Utility.QueueName(_config.Host, _config.Database, tableName);
     }
 
     private class ColumnInfo

@@ -23,14 +23,14 @@ public class DbContext: IDbContext
 {
     private readonly Connection _connection;
     private readonly ConnectionConfig _config;
-    private readonly IPubSub _pubSub;
+    private readonly IPubSubService _pubSubService;
     
-    public DbContext(IPubSub pubSub, IOptions<ConnectionConfig> cfg)
+    public DbContext(IPubSubService pubSubService, IOptions<ConnectionConfig> cfg)
     {
         ArgumentNullException.ThrowIfNull(cfg.Value);
         _config = cfg.Value;
         _connection = new Connection(cfg.Value);
-        _pubSub = pubSub;
+        _pubSubService = pubSubService;
     }
     
     public async Task SaveChanges(Func<List<IOperation>> callback)
@@ -229,7 +229,6 @@ public class DbContext: IDbContext
             queueData.Add(property.Name, propertyValue.ToObjectInferred());
         }
 
-        var queueName = Utility.QueueName(_config.Host, _config.Database, tableName);
         var message = new PubSubMessage
         {
             QueuedBy = _config.User,
@@ -237,7 +236,7 @@ public class DbContext: IDbContext
             Action = operationType.ToString(),
             Data = JsonSerializer.Serialize(queueData)
         };
-        await _pubSub.PublishAsync(queueName, message);
+        await _pubSubService.PublishAsync(tableName, message);
     }
     
     public async Task<Subscriber> ListenMessage<T>() where T: class
@@ -249,7 +248,6 @@ public class DbContext: IDbContext
         {
             throw new StreamingException<string>("Streaming is not enabled for this module.");
         }
-        var queueName = Utility.QueueName(_config.Host, _config.Database, tableName);
-        return await _pubSub.InitTopicAsync(queueName);
+        return await _pubSubService.InitTopicAsync(tableName);
     }
 }

@@ -1,6 +1,7 @@
 using Auth0.ManagementApi;
 using Auth0.ManagementApi.Models;
 using Auth0.ManagementApi.Paging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Auth.Models;
@@ -9,11 +10,12 @@ using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.Auth.Services;
 
-public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken accessToken, IUser userService): IOrganization
+public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken accessToken, IUser userService, ILogger<OrganizationService> _logger): IOrganization
 {
     public async Task<string> Create(CreateOrganization organization, string userId)
     {
         var mgmt = GetManagementClient();
+        _logger.LogInformation("Creating organization with name: {OrganizationName}", organization.Name);
         var org = await mgmt.Organizations.CreateAsync(new OrganizationCreateRequest
         {
             Name = organization.Name.ToSlugUnique(),
@@ -26,29 +28,38 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         });
         if (org == null)
         {
+            _logger.LogError("Failed to create organization with name: {OrganizationName}", organization.Name);
             throw new Exception("Error creating organization");
         }
+        _logger.LogInformation("Organization created successfully with ID: {OrganizationId}", org.Id);
+        _logger.LogInformation("Assigning 'Admin' role to user with ID: {UserId}", userId);
         await mgmt.Organizations.AddMemberRolesAsync(org.Id, userId, new OrganizationAddMemberRolesRequest
         {
             Roles = new List<string> { "Admin" }
         });
+        _logger.LogInformation("'Admin' role assigned successfully to user with ID: {UserId}", userId);
         return org.Id;
     }
 
     public async Task Delete(string id)
     {
         var mgmt = GetManagementClient();
+        _logger.LogInformation("Deleting organization with ID: {OrganizationId}", id);
         await mgmt.Organizations.DeleteAsync(id);
+        _logger.LogInformation("Organization with ID: {OrganizationId} deleted successfully", id);
     }
 
     public async Task<InvitationInfo> CreateInvitation(string orgId, string inviterId, string invitee, string role)
     {
         var mgmt = GetManagementClient();
+        _logger.LogInformation("Fetching inviter information for user ID: {InviterId}", inviterId);
         var user = await mgmt.Users.GetAsync(inviterId);
         if (user == null)
         {
+            _logger.LogError("Failed to fetch inviter information for user ID: {InviterId}", inviterId);
             throw new Exception("You are not authorized to create invitations. Try logging in again.");
         }
+        _logger.LogInformation("Creating invitation for organization ID: {OrganizationId}, invitee: {InviteeEmail}, role: {Role}", orgId, invitee, role);
         var invitation = await mgmt.Organizations.CreateInvitationAsync(orgId, new OrganizationCreateInvitationRequest
         {
             ClientId = secrets.Value.ClientId,
@@ -63,6 +74,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
             },
             Roles = new List<string> { role }
         });
+        _logger.LogInformation("Invitation created successfully with ID: {InvitationId} for organization ID: {OrganizationId}", invitation.Id, orgId);
         return new InvitationInfo
         {
             InvitationUrl = invitation.InvitationUrl,
@@ -138,28 +150,36 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
     public async Task RemoveMember(string orgId, string userId)
     {
         var mgmt = GetManagementClient();
+        _logger.LogInformation("Removing member with ID: {UserId} from organization ID: {OrganizationId}", userId, orgId);
         await mgmt.Organizations.DeleteMemberAsync(orgId, new OrganizationDeleteMembersRequest
         {
             Members = new List<string> { userId }
         });
+        _logger.LogInformation("Successfully removed member with ID: {UserId} from organization ID: {OrganizationId}", userId, orgId);
     }
 
     public async Task UpdateRoles(string orgId, string userId, IList<string> roles)
     {
         var mgmt = GetManagementClient();
+        _logger.LogInformation("Updating roles for member with ID: {UserId} in organization ID: {OrganizationId} with roles: {Roles}", 
+            userId, orgId, string.Join(", ", roles));
         await mgmt.Organizations.AddMemberRolesAsync(orgId, userId, new OrganizationAddMemberRolesRequest
         {
             Roles = roles
         });
+        _logger.LogInformation("Successfully updated roles for member with ID: {UserId} in organization ID: {OrganizationId}", userId, orgId);
     }
 
     public async Task DeleteRoles(string orgId, string userId, IList<string> roles)
     {
         var mgmt = GetManagementClient();
+        _logger.LogInformation("Deleting roles for member with ID: {UserId} in organization ID: {OrganizationId} with roles: {Roles}", 
+            userId, orgId, string.Join(", ", roles));
         await mgmt.Organizations.DeleteMemberRolesAsync(orgId, userId, new OrganizationDeleteMemberRolesRequest
         {
             Roles = roles
         });
+        _logger.LogInformation("Successfully deleted roles for member with ID: {UserId} in organization ID: {OrganizationId}", userId, orgId);
     }
 
     public async Task<OrganizationInfo?> GetOrganization(string orgId)
