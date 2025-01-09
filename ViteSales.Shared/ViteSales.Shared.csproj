@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="NRedisStack" Version="0.13.1" />
       <PackageReference Include="System.Text.Json" Version="9.0.0" />
     </ItemGroup>
 

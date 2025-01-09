@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace ViteSales.ERP.SDK.Models;
+namespace ViteSales.Shared.Models;
 
 [Serializable]
 public class LoggingConfig
@@ -15,12 +15,24 @@ public class LogLevelsConfig
     public string Microsoft { get; set; } = null!;
 }
 [Serializable]
-public class AuthCredentialConfig
+public class DefaultDbCredentials
 {
-    public string ClientId { get; set; } = null!;
-    public string ApiKey { get; set; } = null!;
+    public required string Host { get; set; }
+    public required int Port { get; set; }
+    public required string User { get; set; }
+    public required string Password { get; set; }
+    public required string Database { get; set; }
 }
-
+[Serializable]
+public class AuthSecrets
+{
+    public required string AuthorityUrl { get; set; }
+    public required string AuthDomain { get; set; }
+    public required string ClientId { get; set; }
+    public required string ClientSecret { get; set; }
+    public required string Audience { get; set; }
+    public required string GrantType { get; set; }
+}
 [Serializable]
 public class GcpCredentials
 {
@@ -38,7 +50,7 @@ public class GcpCredentials
 
     public static GcpCredentials LoadFromJson(string json)
     {
-        if (string.IsNullOrWhiteSpace(json))
+        if (string.IsNullOrEmpty(json))
         {
             throw new ArgumentException("The provided GCP Auth JSON string cannot be null or empty.", nameof(json));
         }

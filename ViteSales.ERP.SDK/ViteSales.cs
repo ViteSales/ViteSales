@@ -5,17 +5,17 @@ using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Services;
 using ViteSales.ERP.SDK.Services.MessageQueue;
-using ViteSales.ERP.SDK.Utils;
+using ViteSales.Shared.Cache;
+using ViteSales.Shared.Interfaces;
+using ViteSales.Shared.Utils;
 
 namespace ViteSales.ERP.SDK;
 
 public class ViteSales
 {
     private readonly ServiceCollection _services = new();
-    public ViteSales(ConnectionConfig conn)
+    public ViteSales(AppSettings appSettings, ConnectionConfig conn)
     {
-        var appSettings = AppSettings.Read();
-        
         _services.Configure<ConnectionConfig>(options =>
         {
             options.Host = conn.Host;
@@ -27,14 +27,16 @@ public class ViteSales
         _services.Configure<AppSettings>(options =>
         {
             options.Logging = appSettings.Logging;
-            options.AuthCredential = appSettings.AuthCredential;
+            options.AuthSecrets = appSettings.AuthSecrets;
             options.GcpCredentials = appSettings.GetGcpCredential();
             options.GoogleCredential = appSettings.GetGoogleCredential();
+            options.CacheDb = appSettings.CacheDb;
         });
         _services.AddLogging(configure =>
         {
             configure.AddConsole();
         });
+        _services.AddSingleton<ICacheClient, CacheClient>();
         _services.AddTransient<IPubSub, PubSub>();
         _services.AddTransient<IDbContext, DbContext>();
         _services.AddTransient<IPackageService, PackageService>();

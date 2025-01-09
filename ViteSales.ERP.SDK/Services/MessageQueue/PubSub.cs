@@ -3,7 +3,7 @@ using Google.Cloud.PubSub.V1;
 using Grpc.Auth;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.SDK.Interfaces;
-using ViteSales.ERP.SDK.Utils;
+using ViteSales.Shared.Utils;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
 

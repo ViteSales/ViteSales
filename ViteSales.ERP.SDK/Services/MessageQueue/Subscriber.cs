@@ -1,9 +1,7 @@
-using Google.Cloud.Iam.V1;
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Auth;
-using Grpc.Core;
-using ViteSales.ERP.SDK.Utils;
+using ViteSales.Shared.Utils;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
 

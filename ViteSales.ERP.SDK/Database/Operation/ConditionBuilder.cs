@@ -22,7 +22,7 @@ public class ConditionBuilder
     /// </summary>
     public ConditionBuilder And(string column, string operation, object value)
     {
-        if (!string.IsNullOrWhiteSpace(column) && !string.IsNullOrWhiteSpace(operation))
+        if (!string.IsNullOrEmpty(column) && !string.IsNullOrEmpty(operation))
         {
             var param = $"{column}_{Utility.GetUniqueId()}";
             var condition = $"{EscapeIdentifier(column)} {operation} @{param}";
@@ -49,7 +49,7 @@ public class ConditionBuilder
     /// </summary>
     public ConditionBuilder Or(string column, string operation, object value)
     {
-        if (!string.IsNullOrWhiteSpace(column) && !string.IsNullOrWhiteSpace(operation))
+        if (!string.IsNullOrEmpty(column) && !string.IsNullOrEmpty(operation))
         {
             var param = $"{column}_{Utility.GetUniqueId()}";
             var condition = $"{EscapeIdentifier(column)} {operation} @{param}";
@@ -80,7 +80,7 @@ public class ConditionBuilder
         nestedGroup.Invoke(groupBuilder);
 
         var (groupConditions,_) = groupBuilder.Build();
-        if (!string.IsNullOrWhiteSpace(groupConditions))
+        if (!string.IsNullOrEmpty(groupConditions))
         {
             if (_conditions.Count > 0)
             {
@@ -98,7 +98,7 @@ public class ConditionBuilder
     /// </summary>
     public ConditionBuilder JsonClause(string jsonColumn, string jsonKey, string operation, object value)
     {
-        if (!string.IsNullOrWhiteSpace(jsonColumn) && !string.IsNullOrWhiteSpace(jsonKey) && !string.IsNullOrWhiteSpace(operation))
+        if (!string.IsNullOrEmpty(jsonColumn) && !string.IsNullOrEmpty(jsonKey) && !string.IsNullOrEmpty(operation))
         {
             var param = $"{jsonColumn}_{jsonKey}_{Utility.GetUniqueId()}";
             _parameters.Add(param, new WhereClause()
@@ -123,7 +123,7 @@ public class ConditionBuilder
     /// </summary>
     public ConditionBuilder JsonValueClause(string jsonColumn, string jsonKey, string operation, object value)
     {
-        if (!string.IsNullOrWhiteSpace(jsonColumn) && !string.IsNullOrWhiteSpace(jsonKey) && !string.IsNullOrWhiteSpace(operation))
+        if (!string.IsNullOrEmpty(jsonColumn) && !string.IsNullOrEmpty(jsonKey) && !string.IsNullOrEmpty(operation))
         {
             var param = $"{jsonColumn}_{jsonKey}_{Utility.GetUniqueId()}";
             _parameters.Add(param, new WhereClause()
