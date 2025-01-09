@@ -3,6 +3,7 @@ using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
 using ViteSales.Shared.Extensions;
+using ViteSales.Shared.Models;
 using ViteSales.Shared.Utils;
 
 var conn = new ConnectionConfig

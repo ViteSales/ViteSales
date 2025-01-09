@@ -15,6 +15,7 @@ using ViteSales.ERP.SDK.Utils;
 using ViteSales.ERP.SDK.Validator;
 using ViteSales.Shared.Exceptions;
 using ViteSales.Shared.Extensions;
+using ViteSales.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Database;
 

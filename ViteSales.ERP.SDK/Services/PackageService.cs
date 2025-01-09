@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal;
 using ViteSales.ERP.SDK.Models;
+using ViteSales.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Services;
 

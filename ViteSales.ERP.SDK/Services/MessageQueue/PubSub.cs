@@ -3,7 +3,10 @@ using Google.Cloud.PubSub.V1;
 using Grpc.Auth;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.SDK.Interfaces;
-using ViteSales.Shared.Utils;
+using ViteSales.ERP.SDK.Models;
+using ViteSales.ERP.SDK.Utils;
+using ViteSales.Shared.Models;
+using AppSettings = ViteSales.Shared.Utils.AppSettings;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
@@ -12,13 +15,16 @@ public class PubSub: IPubSub
     private readonly PublisherServiceApiClient _publisher;
     private readonly GoogleCredential _credential;
     private readonly AppSettings _secret;
+    private readonly ConnectionConfig _config;
     private TopicName _topicName;
     private Subscriber _subscriber;
     
-    public PubSub(IOptions<AppSettings> settings)
+    public PubSub(IOptions<AppSettings> settings, IOptions<ConnectionConfig> config)
     {
         ArgumentNullException.ThrowIfNull(settings.Value);
+        ArgumentNullException.ThrowIfNull(config.Value);
         _secret = settings.Value;
+        _config = config.Value;
         _credential = _secret.GoogleCredential;
         _publisher = new PublisherServiceApiClientBuilder
         {
@@ -26,45 +32,17 @@ public class PubSub: IPubSub
         }.Build();
     }
 
-    public async Task<Subscriber> InitTopicAsync(string topicName)
+    public async Task<Subscriber> InitTopicAsync(string tableName)
     {
-        var subscriptionName = $"{topicName}._subscription_";
-        _topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: topicName);
+        _topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: Utility.GetTopicName(_config.Host, _config.Database));
         _subscriber = new Subscriber(_secret);
-        try
-        {
-            await _publisher.CreateTopicAsync(new Topic
-            {
-                Name = _topicName.ToString(),
-                TopicName = _topicName
-            });
-            await _subscriber.CreateSubscription(_topicName, subscriptionName);
-        }
-        catch (Grpc.Core.RpcException ex) when (ex.StatusCode == Grpc.Core.StatusCode.AlreadyExists)
-        {
-            var topic = await _publisher.GetTopicAsync(_topicName);
-            _topicName = topic.TopicName;
-            await _subscriber.CreateSubscription(_topicName, subscriptionName);
-        }
-        catch (Grpc.Core.RpcException ex) when (ex.StatusCode != Grpc.Core.StatusCode.AlreadyExists)
-        {
-            throw;
-        }
+        await _subscriber.CreateSubscription(_topicName, Utility.QueueName(_config.Host, _config.Database, tableName),tableName);
         return _subscriber;
     }
 
-    public async Task PublishAsync(string topicName, PubSubMessage message)
+    public async Task PublishAsync(string tableName, PubSubMessage message)
     {
-        _topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: topicName);
-        await _publisher.PublishAsync(_topicName, [new PubsubMessage { Data = message.ToByteString() }]);
-    }
-
-    public async Task Drop(string topicName)
-    {
-        var topic = TopicName.FromProjectTopic(projectId: _credential.QuotaProject, topicId: topicName);
-        await InitTopicAsync(topicName);
-        await _publisher.DeleteTopicAsync(topic);
-        await _subscriber.Stop();
-        await _subscriber.Drop();
+        _topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: Utility.GetTopicName(_config.Host, _config.Database));
+        await _publisher.PublishAsync(_topicName, [new PubsubMessage { Data = message.ToByteString(), Attributes = { { "route", tableName} }}]);
     }
 }

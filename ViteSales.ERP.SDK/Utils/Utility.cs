@@ -18,4 +18,9 @@ public static class Utility
     {
         return new string($"{host}{db}{table}".Where(char.IsLetterOrDigit).ToArray()).ToLower();
     }
+
+    public static string GetTopicName(string host, string db)
+    {
+        return new string($"{host}{db}".Where(char.IsLetterOrDigit).ToArray()).ToLower();
+    }
 }

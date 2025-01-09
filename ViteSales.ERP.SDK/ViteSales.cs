@@ -2,11 +2,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
-using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Services;
 using ViteSales.ERP.SDK.Services.MessageQueue;
 using ViteSales.Shared.Cache;
 using ViteSales.Shared.Interfaces;
+using ViteSales.Shared.Models;
 using ViteSales.Shared.Utils;
 
 namespace ViteSales.ERP.SDK;

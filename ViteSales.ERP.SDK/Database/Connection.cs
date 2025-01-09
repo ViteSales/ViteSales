@@ -1,6 +1,5 @@
 using System.Data;
 using System.Reflection;
-using System.Text.Json;
 using Npgsql;
 using NpgsqlTypes;
 using SqlKata.Compilers;
@@ -9,9 +8,8 @@ using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
-using ViteSales.ERP.SDK.Utils;
-using ViteSales.Shared.Exceptions;
 using ViteSales.Shared.Extensions;
+using ViteSales.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Database;
 
