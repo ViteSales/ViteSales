@@ -4,7 +4,7 @@ using ViteSales.ERP.SDK.Const;
 using ViteSales.ERP.SDK.Database;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Services;
 

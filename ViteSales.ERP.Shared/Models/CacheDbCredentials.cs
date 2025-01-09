@@ -1,4 +1,4 @@
-namespace ViteSales.Shared.Models;
+namespace ViteSales.ERP.Shared.Models;
 
 [Serializable]
 public class CacheDbCredentials

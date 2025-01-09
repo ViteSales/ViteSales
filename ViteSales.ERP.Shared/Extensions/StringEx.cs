@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ViteSales.Shared.Extensions;
+namespace ViteSales.ERP.Shared.Extensions;
 
 public static class StringEx
 {

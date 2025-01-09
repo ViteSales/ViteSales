@@ -13,9 +13,9 @@ using ViteSales.ERP.SDK.Models;
 using ViteSales.ERP.SDK.Services.MessageQueue;
 using ViteSales.ERP.SDK.Utils;
 using ViteSales.ERP.SDK.Validator;
-using ViteSales.Shared.Exceptions;
-using ViteSales.Shared.Extensions;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Exceptions;
+using ViteSales.ERP.Shared.Extensions;
+using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.SDK.Database;
 

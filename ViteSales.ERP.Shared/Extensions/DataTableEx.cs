@@ -1,7 +1,7 @@
 using System.Data;
 using System.Reflection;
 
-namespace ViteSales.Shared.Extensions;
+namespace ViteSales.ERP.Shared.Extensions;
 
 public static class DataTableEx
 {

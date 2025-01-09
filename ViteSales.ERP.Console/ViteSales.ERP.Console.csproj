@@ -11,7 +11,7 @@
       <ProjectReference Include="..\ViteSales.ERP.Accounting\ViteSales.ERP.Accounting.csproj" />
       <ProjectReference Include="..\ViteSales.ERP.Auth\ViteSales.ERP.Auth.csproj" />
       <ProjectReference Include="..\ViteSales.ERP.SDK\ViteSales.ERP.SDK.csproj" />
-      <ProjectReference Include="..\ViteSales.Shared\ViteSales.Shared.csproj" />
+      <ProjectReference Include="..\ViteSales.ERP.Shared\ViteSales.ERP.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,7 +1,7 @@
 using RestSharp;
 using Newtonsoft.Json;
 using ViteSales.ERP.Auth.Interfaces;
-using ViteSales.Shared.Models;
+using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.Auth.Client;
 
