@@ -19,17 +19,17 @@ public static class DbComputeExtensions
         };
     }
 
-    public static int GetSize(this DbCompute compute)
+    public static double GetSize(this DbCompute compute)
     {
         return compute switch
         {
-            DbCompute.Size1 => 1,
-            DbCompute.Size1To5 => 2,
-            DbCompute.Size5To10 => 3,
-            DbCompute.Size10To20 => 4,
-            DbCompute.Size20To50 => 5,
-            DbCompute.Size50To100 => 6,
-            DbCompute.Size100Plus => 9,
+            DbCompute.Size1 => 0.25,
+            DbCompute.Size1To5 => 2.0,
+            DbCompute.Size5To10 => 3.0,
+            DbCompute.Size10To20 => 4.0,
+            DbCompute.Size20To50 => 5.0,
+            DbCompute.Size50To100 => 6.0,
+            DbCompute.Size100Plus => 9.0,
             _ => throw new ArgumentOutOfRangeException(nameof(compute), compute, null)
         };
     }

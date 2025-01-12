@@ -28,10 +28,10 @@ public class DatabaseCloudService: IDatabaseCloudService
         var request = new RestRequest("projects");
         request.AddHeader("accept", "application/json");
         request.AddHeader("authorization", $"Bearer {_appSettings.ServerCredential.NeonTech}");
-        request.AddJsonBody(projectRequest);
+        request.AddJsonBody(JsonConvert.SerializeObject(projectRequest));
 
         var response = await _client.PostAsync(request);
-
+        
         if (response is { StatusCode: HttpStatusCode.OK or HttpStatusCode.Created, Content: not null })
         {
             _logger.LogInformation("CreateProject request succeeded.");

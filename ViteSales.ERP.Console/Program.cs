@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Cloud.Const;
 using ViteSales.ERP.Cloud.Extensions;
@@ -19,21 +20,31 @@ var dbRequest = new CreateProjectRequest
 {
     Project = new CreateProject
     {
+        Settings = new Settings
+        {
+            MaintenanceWindow = new MaintenanceWindow
+            {
+                Weekdays = [7],
+                StartTime = "22:00",
+                EndTime = "01:00"
+            },
+            EnableLogicalReplication = true
+        },
+        Branch = new Branch
+        {
+            Name = "main",
+            RoleName = "vitesales",
+            DatabaseName = "some-org-name"
+        },
         DefaultEndpointSettings = new DefaultEndpointSettings
         {
-            AutoscalingLimitMaxCu = DbCompute.Size1.GetSize(),
             AutoscalingLimitMinCu = DbCompute.Size1.GetSize(),
+            AutoscalingLimitMaxCu = DbCompute.Size1To5.GetSize(),
             SuspendTimeoutSeconds = 600
         },
         PgVersion = 17,
         Name = "some-org-name",
-        RegionId = Regions.EuropeLondon.GetDbSlug(),
-        Branch = new Branch
-        {
-            Name = "main",
-            DatabaseName = "some-org-name",
-            RoleName = "vitesales",
-        },
+        RegionId = "aws-eu-central-1",
         StorePasswords = true
     }
 };
@@ -74,3 +85,6 @@ await pkg.Install(new ViteSales.ERP.Accounting.Manifest());
 var authPkg = provider.GetRequiredService<IAuthentication>();
 var uri = await authPkg.GetAuthorizationUri();
 Console.WriteLine(uri != null ? uri.AbsoluteUri : "Failed to get authorization uri");
+
+// await dbServer.DeleteProject(dbInfo.Project.Id);
+await gcpPubSub.DropTopic(cloudIdentifierPair);
