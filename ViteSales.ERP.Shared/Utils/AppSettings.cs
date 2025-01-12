@@ -12,7 +12,8 @@ public class AppSettings
     public AuthSecrets AuthSecrets { get; set; } = null!;
     public GcpCredentials GcpCredentials { get; set; } = null!;
     public GoogleCredential GoogleCredential { get; set; } = null!;
-    public object ServerCredential { get; set; } = null!;
+    public ServerCredential ServerCredential { get; set; } = null!;
+    public object GcpServerCredential { get; set; } = null!;
 
     public override string ToString()
     {
@@ -21,14 +22,14 @@ public class AppSettings
 
     public GcpCredentials GetGcpCredential()
     {
-        ArgumentNullException.ThrowIfNull(ServerCredential);
-        return GcpCredentials.LoadFromJson(JsonSerializer.Serialize(ServerCredential));
+        ArgumentNullException.ThrowIfNull(GcpServerCredential);
+        return GcpCredentials.LoadFromJson(JsonSerializer.Serialize(GcpServerCredential));
     }
 
     public GoogleCredential GetGoogleCredential()
     {
-        ArgumentNullException.ThrowIfNull(ServerCredential);
-        return GoogleCredential.FromJson(JsonSerializer.Serialize(ServerCredential));
+        ArgumentNullException.ThrowIfNull(GcpServerCredential);
+        return GoogleCredential.FromJson(JsonSerializer.Serialize(GcpServerCredential));
     }
     
     public static AppSettings Read()

@@ -8,9 +8,12 @@
 
     <ItemGroup>
       <PackageReference Include="Google.Cloud.PubSub.V1" Version="3.19.0" />
+      <PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="RestSharp" Version="112.1.0" />
     </ItemGroup>
 
     <ItemGroup>
