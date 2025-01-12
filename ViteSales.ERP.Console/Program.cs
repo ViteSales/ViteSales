@@ -1,5 +1,6 @@
+using Google.Cloud.Diagnostics.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Cloud.Const;
 using ViteSales.ERP.Cloud.Extensions;
@@ -10,7 +11,9 @@ using ViteSales.ERP.Shared.Extensions;
 using ViteSales.ERP.Shared.Models;
 using ViteSales.ERP.Shared.Utils;
 
-
+const string orgName = "some-org-name";
+const string serviceName = "vitesales-console";
+const string version = "1.0.0";
 var appSettings = AppSettings.Read();
 
 var cloud = new ViteSales.ERP.Cloud.ViteSalesCloud(appSettings);
@@ -34,7 +37,7 @@ var dbRequest = new CreateProjectRequest
         {
             Name = "main",
             RoleName = "vitesales",
-            DatabaseName = "some-org-name"
+            DatabaseName = orgName
         },
         DefaultEndpointSettings = new DefaultEndpointSettings
         {
@@ -43,8 +46,8 @@ var dbRequest = new CreateProjectRequest
             SuspendTimeoutSeconds = 600
         },
         PgVersion = 17,
-        Name = "some-org-name",
-        RegionId = "aws-eu-central-1",
+        Name = orgName,
+        RegionId = Regions.EuropeLondon.GetDbSlug(),
         StorePasswords = true
     }
 };
@@ -70,21 +73,52 @@ var cloudIdentifierPair = new CloudIdentifierPair
     
 var auth = new ViteSales.ERP.Auth.ViteSalesAuth(appSettings);
 var sdk = new ViteSales.ERP.SDK.ViteSales(appSettings, conn);
-sdk.GetServiceCollection().Merge(auth.GetServiceCollection());
-sdk.GetServiceCollection().Merge(cloud.GetServiceCollection());
-    
+var sdkCollection = sdk.GetServiceCollection();
+sdkCollection.Merge(auth.GetServiceCollection());
+sdkCollection.Merge(cloud.GetServiceCollection());
+sdkCollection.AddLogging(configure =>
+{
+    configure.ClearProviders();
+    configure.AddConsole();
+    configure.AddGoogle(new LoggingServiceOptions
+    {
+        ProjectId = appSettings.GetGcpCredential().ProjectId,
+        ServiceName = serviceName,
+        Version = version,
+    });
+    configure.SetMinimumLevel(LogLevel.Information);
+});
 provider = sdk.Build();
+
+var bucket = provider.GetRequiredService<IBucketCloudService>();
+var bucketInfo = await bucket.CreateBucket(orgName, Regions.EuropeLondon);
     
 var gcpPubSub = provider.GetRequiredService<IPubSubCloudService>();
 await gcpPubSub.CreateTopic(cloudIdentifierPair);
     
 var pkg = provider.GetRequiredService<IPackageInstallerService>();
-await pkg.Install(new ViteSales.ERP.SDK.Internal.Manifest());
-await pkg.Install(new ViteSales.ERP.Accounting.Manifest());
+
+var internalPkg = new ViteSales.ERP.SDK.Internal.Manifest();
+var accountingPkg = new ViteSales.ERP.Accounting.Manifest();
+
+await pkg.Install(internalPkg);
+await pkg.Install(accountingPkg);
 
 var authPkg = provider.GetRequiredService<IAuthentication>();
 var uri = await authPkg.GetAuthorizationUri();
 Console.WriteLine(uri != null ? uri.AbsoluteUri : "Failed to get authorization uri");
 
-// await dbServer.DeleteProject(dbInfo.Project.Id);
+foreach (var accountingPkgModule in accountingPkg.Modules)
+{
+    var interfaceType = accountingPkgModule.GetType().GetInterfaces().FirstOrDefault();
+    var classType = accountingPkgModule.GetType();
+    if (interfaceType != null)
+    {
+        sdkCollection.AddTransient(interfaceType, classType);
+    }
+}
+sdk.Build();
+
+await dbServer.DeleteProject(dbInfo.Project.Id);
 await gcpPubSub.DropTopic(cloudIdentifierPair);
+await bucket.DropBucket(bucketInfo);

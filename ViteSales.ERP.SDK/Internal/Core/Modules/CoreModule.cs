@@ -1,4 +1,5 @@
 using System.Data;
+using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Entities;
 using ViteSales.ERP.SDK.Models;
@@ -17,7 +18,7 @@ public class CoreModule: IModule
         typeof(AuditTrailInternal)
     };
 
-    public void OnLoad()
+    public void OnLoad(ServiceProvider provider)
     {
         
     }

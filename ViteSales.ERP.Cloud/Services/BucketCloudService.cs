@@ -29,6 +29,21 @@ public class BucketCloudService: IBucketCloudService
         _logger.LogInformation("Creating bucket with name: {BucketName} in region: {Region}", bucketName, regions);
         try
         {
+            var existingBucket = await _storageClient.GetBucketAsync(bucketName);
+            _logger.LogInformation("Bucket already exists with ID: {BucketId}, Name: {BucketName}, Location: {BucketLocation}", 
+                existingBucket.Id, existingBucket.Name, existingBucket.Location);
+
+            return new BucketInfo
+            {
+                Id = existingBucket.Id,
+                Name = existingBucket.Name,
+                Location = existingBucket.Location,
+            };
+        }
+        catch (Google.GoogleApiException ex) when (ex.Error.Code == 404)
+        {
+            _logger.LogInformation("Bucket does not exist. Creating a new bucket with name: {BucketName} in region: {Region}", bucketName, regions);
+
             var bucket = await _storageClient.CreateBucketAsync(_appSettings.GcpCredentials.ProjectId, new Bucket
             {
                 Name = bucketName,
@@ -38,9 +53,9 @@ public class BucketCloudService: IBucketCloudService
                 PredefinedAcl = PredefinedBucketAcl.PublicRead,
                 PredefinedDefaultObjectAcl = PredefinedObjectAcl.PublicRead,
             });
-            
+
             _logger.LogInformation("Bucket created successfully with ID: {BucketId}, Name: {BucketName}, Location: {BucketLocation}", bucket.Id, bucket.Name, bucket.Location);
-            
+
             return new BucketInfo
             {
                 Id = bucket.Id,
