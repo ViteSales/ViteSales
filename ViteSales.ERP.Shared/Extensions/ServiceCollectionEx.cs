@@ -23,4 +23,13 @@ public static class ServiceCollectionEx
             }
         }
     }
+    
+    public static void RemoveService<TService>(this IServiceCollection services)
+    {
+        var descriptorToRemove = services.FirstOrDefault(sd => sd.ServiceType == typeof(TService));
+        if (descriptorToRemove != null)
+        {
+            services.Remove(descriptorToRemove);
+        }
+    }
 }

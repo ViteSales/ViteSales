@@ -1,4 +1,5 @@
 using System.Data;
+using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.Accounting.GL.Entities;
 using ViteSales.ERP.Accounting.GL.Interfaces;
 using ViteSales.ERP.SDK.Models;
@@ -14,7 +15,7 @@ public class FiscalYearsModule: IFiscalYears
         typeof(FiscalYears)
     };
     
-    public void OnLoad()
+    public void OnLoad(ServiceProvider provider)
     {
     }
 

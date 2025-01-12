@@ -1,4 +1,5 @@
 using System.Data;
+using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.Accounting.GL.Entities;
 using ViteSales.ERP.Accounting.GL.Interfaces;
 using ViteSales.ERP.SDK.Models;
@@ -15,7 +16,7 @@ public class AccountTypesModule: IAccountTypes
         typeof(AccountTypes)
     };
 
-    public void OnLoad()
+    public void OnLoad(ServiceProvider provider)
     {
      
     }

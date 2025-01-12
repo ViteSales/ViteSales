@@ -5,6 +5,7 @@ using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Services;
 using ViteSales.ERP.SDK.Services.MessageQueue;
 using ViteSales.ERP.Shared.Cache;
+using ViteSales.ERP.Shared.Extensions;
 using ViteSales.ERP.Shared.Interfaces;
 using ViteSales.ERP.Shared.Models;
 using ViteSales.ERP.Shared.Utils;
@@ -43,6 +44,15 @@ public class ViteSales
         _services.AddTransient<IRoleAccessManager, RoleAccessService>();
         _services.AddTransient<ITableSchemaManager, TableSchemaService>();
         _services.AddTransient<IPackageInstallerService, PackageInstallerService>();
+    }
+
+    public ServiceCollection GetPublicServiceCollection()
+    {
+        _services.RemoveService<IRoleAccessManager>();
+        _services.RemoveService<IPackageInstallerService>();
+        _services.RemoveService<ITableSchemaManager>();
+        _services.RemoveService<IPackageService>();
+        return _services;
     }
 
     public ServiceCollection GetServiceCollection()
