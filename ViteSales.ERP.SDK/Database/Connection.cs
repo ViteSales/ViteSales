@@ -415,6 +415,10 @@ internal sealed class Connection(ConnectionConfig config): IDisposable
     
     private static string CreateConnectionString(ConnectionConfig config)
     {
-        return $"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;Include Error Detail=true;";
+        if (config.Port.HasValue)
+        {
+            return $"UserID={config.User};Password={config.Password};Host={config.Host};Port={config.Port.Value};Database={config.Database};Pooling=true;Minimum Pool Size=1;Maximum Pool Size=20;Include Error Detail=true;";
+        }
+        return $"UserID={config.User};Password={config.Password};Host={config.Host};Database={config.Database};";
     }
 }

@@ -36,8 +36,8 @@ public class FiscalYearsModule: IFiscalYears
             {
                 Id = Guid.NewGuid(),
                 Name = "Fiscal Year " + DateTime.Now.Year,
-                StartDate = DateTime.Now.AddYears(-1).Date,
-                EndDate = DateTime.Now.Date,
+                StartDate = DateTime.Now.Date,
+                EndDate = DateTime.Now.AddYears(1).Date,
                 IsActive = true,
             }
         ];

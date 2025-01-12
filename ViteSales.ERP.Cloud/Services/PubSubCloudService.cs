@@ -16,15 +16,12 @@ public class PubSubCloudService: IPubSubCloudService
     private readonly  SubscriberServiceApiClient _subscriber;
     private readonly GoogleCredential _credential;
     private readonly AppSettings _secret;
-    private readonly CloudIdentifierPair _identifierPair;
     private readonly ILogger<PubSubCloudService> _logger;
     
-    public PubSubCloudService(IOptions<AppSettings> settings, IOptions<CloudIdentifierPair> identifierPair, ILogger<PubSubCloudService> logger)
+    public PubSubCloudService(IOptions<AppSettings> settings, ILogger<PubSubCloudService> logger)
     {
         ArgumentNullException.ThrowIfNull(settings.Value);
-        ArgumentNullException.ThrowIfNull(identifierPair.Value);
         _secret = settings.Value;
-        _identifierPair = identifierPair.Value;
         _logger = logger;
         _credential = _secret.GoogleCredential;
         _publisher = new PublisherServiceApiClientBuilder
@@ -38,9 +35,9 @@ public class PubSubCloudService: IPubSubCloudService
     }
 
 
-    public async Task CreateTopic()
+    public async Task CreateTopic(CloudIdentifierPair identifierPair)
     {
-        var identifier = Utility.GetTopicName(_identifierPair.Cloud, _identifierPair.Identifier);
+        var identifier = Utility.GetTopicName(identifierPair.Cloud, identifierPair.Identifier);
         var topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: identifier);
         var subscriptionName = SubscriptionName.FromProjectSubscription(projectId: _secret.GcpCredentials.ProjectId, subscriptionId: identifier);
         try
@@ -52,7 +49,6 @@ public class PubSubCloudService: IPubSubCloudService
             {
                 Name = topicName.ToString(),
                 TopicName = topicName,
-                Labels = { { "cloud", _identifierPair.Cloud }, { "identifier", _identifierPair.Identifier } },
                 MessageRetentionDuration = Duration.FromTimeSpan(TimeSpan.FromDays(15))
             });
             _logger.LogInformation("Topic created successfully: {TopicName}", topicName);
@@ -86,11 +82,18 @@ public class PubSubCloudService: IPubSubCloudService
         }
     }
 
-    public async Task DropTopic()
+    public async Task DropTopic(CloudIdentifierPair identifierPair)
     {
-        var topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: Utility.GetTopicName(_identifierPair.Cloud, _identifierPair.Identifier));
+        var topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: Utility.GetTopicName(identifierPair.Cloud, identifierPair.Identifier));
         try
         {
+            var subscriptions = _publisher.ListTopicSubscriptions(topicName);
+            foreach (var subscription in subscriptions)
+            {
+                if (subscription is null) continue;
+                _logger.LogInformation("Attempting to delete subscription: {Subscription}", subscription);
+                await _subscriber.DeleteSubscriptionAsync(subscription);
+            }
             _logger.LogInformation("Attempting to delete topic: {TopicName}", topicName);
             await _publisher.DeleteTopicAsync(topicName);
             _logger.LogInformation("Successfully deleted topic: {TopicName}", topicName);

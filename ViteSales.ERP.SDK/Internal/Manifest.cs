@@ -2,7 +2,7 @@ using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Modules;
 using ViteSales.ERP.SDK.Models;
 
-namespace ViteSales.ERP.SDK.Internal.Core;
+namespace ViteSales.ERP.SDK.Internal;
 
 public class Manifest: IPackage
 {
