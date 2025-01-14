@@ -1,4 +1,6 @@
 using Google.Cloud.Diagnostics.Common;
+using Hangfire;
+using Hangfire.InMemory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ViteSales.ERP.Auth.Interfaces;
@@ -76,6 +78,14 @@ var sdk = new ViteSales.ERP.SDK.ViteSales(appSettings, conn);
 var sdkCollection = sdk.GetServiceCollection();
 sdkCollection.Merge(auth.GetServiceCollection());
 sdkCollection.Merge(cloud.GetServiceCollection());
+sdkCollection.AddHangfire(configure =>
+{
+    configure.UseInMemoryStorage(new InMemoryStorageOptions
+    {
+        IdType = InMemoryStorageIdType.Guid
+    });
+});
+sdkCollection.AddHangfireServer();
 sdkCollection.AddLogging(configure =>
 {
     configure.ClearProviders();
@@ -89,13 +99,13 @@ sdkCollection.AddLogging(configure =>
     configure.SetMinimumLevel(LogLevel.Information);
 });
 provider = sdk.Build();
-
+var backgroundJobClient = provider.GetRequiredService<IBackgroundJobClient>();
 var bucket = provider.GetRequiredService<IBucketCloudService>();
 var bucketInfo = await bucket.CreateBucket(orgName, Regions.EuropeLondon);
-    
+
 var gcpPubSub = provider.GetRequiredService<IPubSubCloudService>();
 await gcpPubSub.CreateTopic(cloudIdentifierPair);
-    
+
 var pkg = provider.GetRequiredService<IPackageInstallerService>();
 
 var internalPkg = new ViteSales.ERP.SDK.Internal.Manifest();
@@ -122,3 +132,4 @@ sdk.Build();
 await dbServer.DeleteProject(dbInfo.Project.Id);
 await gcpPubSub.DropTopic(cloudIdentifierPair);
 await bucket.DropBucket(bucketInfo);
+using var server = new BackgroundJobServer();

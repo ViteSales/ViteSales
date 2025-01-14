@@ -33,6 +33,9 @@ public class ViteSales
             options.GoogleCredential = appSettings.GetGoogleCredential();
             options.CacheDb = appSettings.CacheDb;
         });
+        _services.AddFluentEmail("<NO_EMAIL_ADDRESS>")
+            .AddLiquidRenderer()
+            .AddSendGridSender(appSettings.ServerCredential.SendGrid);
         _services.AddLogging(configure =>
         {
             configure.AddConsole();
@@ -44,6 +47,7 @@ public class ViteSales
         _services.AddTransient<IRoleAccessManager, RoleAccessService>();
         _services.AddTransient<ITableSchemaManager, TableSchemaService>();
         _services.AddTransient<IPackageInstallerService, PackageInstallerService>();
+        _services.AddTransient<ISendEmailService, SendEmailService>();
     }
 
     public ServiceCollection GetPublicServiceCollection()

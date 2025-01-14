@@ -23,7 +23,7 @@ public class AccessToken(AuthSecrets authSecrets): IAccessToken
             {"grant_type",authSecrets.GrantType}
         }), ParameterType.RequestBody);
         var resp = client.Execute(req);
-        if (resp.StatusCode != System.Net.HttpStatusCode.OK)
+        if ((int)resp.StatusCode < 200 || (int)resp.StatusCode >= 300)
         {
             throw new InvalidOperationException($"Authentication startup failed with status code: {resp.StatusCode}, response: {resp.Content}");
         }
