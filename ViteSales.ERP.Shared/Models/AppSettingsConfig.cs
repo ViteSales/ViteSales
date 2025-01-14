@@ -34,6 +34,12 @@ public class AuthSecrets
     public required string GrantType { get; set; }
 }
 [Serializable]
+public class ServerCredential
+{
+    public string NeonTech { get; set; } = null!;
+    public string SendGrid { get; set; } = null!;
+}
+[Serializable]
 public class GcpCredentials
 {
     public string Type { get; set; } = null!;

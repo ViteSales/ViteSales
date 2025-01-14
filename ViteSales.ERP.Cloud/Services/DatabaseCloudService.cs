@@ -32,7 +32,7 @@ public class DatabaseCloudService: IDatabaseCloudService
 
         var response = await _client.PostAsync(request);
         
-        if (response is { StatusCode: HttpStatusCode.OK or HttpStatusCode.Created, Content: not null })
+        if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
             _logger.LogInformation("CreateProject request succeeded.");
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
@@ -52,7 +52,7 @@ public class DatabaseCloudService: IDatabaseCloudService
 
         var response = await _client.GetAsync(request);
 
-        if (response is { StatusCode: HttpStatusCode.OK, Content: not null })
+        if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
             _logger.LogInformation("GetProject request succeeded for project ID: {ProjectId}.", projectId);
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
@@ -73,7 +73,7 @@ public class DatabaseCloudService: IDatabaseCloudService
 
         var response = await _client.PatchAsync(request);
 
-        if (response is { StatusCode: HttpStatusCode.OK, Content: not null })
+        if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
             _logger.LogInformation("UpdateProject request succeeded for project ID: {ProjectId}.", projectId);
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
@@ -93,7 +93,7 @@ public class DatabaseCloudService: IDatabaseCloudService
 
         var response = await _client.DeleteAsync(request);
 
-        if (response is { StatusCode: HttpStatusCode.OK, Content: not null })
+        if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
             _logger.LogInformation("DeleteProject request succeeded for project ID: {ProjectId}.", projectId);
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
