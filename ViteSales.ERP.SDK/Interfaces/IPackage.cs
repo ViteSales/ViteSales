@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.SDK.Interfaces;
@@ -9,5 +10,5 @@ public interface IPackage
     public AuthorInfo Author { get; }
     
     public string PackageName { get; }
-    public IEnumerable<IModule> Modules { get; }
+    public ServiceCollection GetServices();
 }

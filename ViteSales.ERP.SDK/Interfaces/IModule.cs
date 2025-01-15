@@ -8,11 +8,7 @@ namespace ViteSales.ERP.SDK.Interfaces;
 
 public interface IModule
 {
-    public string Name { get; }
-    public IEnumerable<Type> Entities { get; }
-    
     public void OnLoad(ServiceProvider provider);
     public void OnChangeEvent(EventChange data);
     public Task OnSave(DataTable dataTable);
-    public List<object> DefaultValues();
 }

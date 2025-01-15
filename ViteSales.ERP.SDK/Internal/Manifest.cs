@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Modules;
 using ViteSales.ERP.SDK.Models;
@@ -14,5 +15,11 @@ public class Manifest: IPackage
         Company = "ViteSales Pvt. Ltd."
     };
     public string PackageName { get; } = "Core";
-    public IEnumerable<IModule> Modules { get; } = [new CoreModule()];
+    
+    public ServiceCollection GetServices()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IModule, CoreModule>();
+        return services;
+    }
 }
