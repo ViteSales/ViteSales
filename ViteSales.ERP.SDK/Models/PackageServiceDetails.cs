@@ -7,5 +7,5 @@ public class PackageServiceDetails
     public string ServiceName { get; set; } = null!;
     public string ServiceId { get; set; } = null!;
     public string ServiceModuleName { get; set; } = null!;
-    public IEnumerable<Type> ServiceModules { get; set; } = null!;
+    public IEnumerable<Type> ServiceEntities { get; set; } = null!;
 }
