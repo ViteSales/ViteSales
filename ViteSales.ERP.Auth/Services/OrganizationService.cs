@@ -200,6 +200,15 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         return null;
     }
 
+    public async Task UpdateOrganization(string orgId, KeyValuePair<string, object> keyValuePair)
+    {
+        var mgmt = GetManagementClient();
+        await mgmt.Organizations.UpdateAsync(orgId, new OrganizationUpdateRequest
+        {
+            Metadata = keyValuePair
+        });
+    }
+
     private ManagementApiClient GetManagementClient()
     {
         ArgumentNullException.ThrowIfNull(secrets.Value);

@@ -48,6 +48,7 @@ public class ViteSales
         _services.AddTransient<ITableSchemaManager, TableSchemaService>();
         _services.AddTransient<IPackageInstallerService, PackageInstallerService>();
         _services.AddTransient<ISendEmailService, SendEmailService>();
+        _services.AddTransient<IAttachmentIOService, AttachmentIOService>();
     }
 
     public ServiceCollection GetPublicServiceCollection()

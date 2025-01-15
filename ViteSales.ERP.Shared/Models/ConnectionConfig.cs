@@ -7,4 +7,5 @@ public class ConnectionConfig
     public int? Port { get; set; }
     public string Password { get; set; } = null!;
     public string Database { get; set; } = null!;
+    public string Bucket { get; set; } = null!;
 }

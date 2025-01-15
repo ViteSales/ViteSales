@@ -11,6 +11,7 @@ public interface IOrganization
     Task<IList<MemberInfo>?> GetMembers(string orgId);
     Task RemoveMember(string orgId, string userId);
     Task UpdateRoles(string orgId, string userId, IList<string> roles);
+    Task UpdateOrganization(string orgId, KeyValuePair<string, object> keyValuePair);
     Task DeleteRoles(string orgId, string userId, IList<string> roles);
     Task<OrganizationInfo?> GetOrganization(string orgId);
 }
