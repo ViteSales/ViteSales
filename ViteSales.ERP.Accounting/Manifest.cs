@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using ViteSales.ERP.Accounting.GL.Interfaces;
 using ViteSales.ERP.Accounting.GL.Modules;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Models;
@@ -14,8 +16,11 @@ public class Manifest: IPackage
         Company = "ViteSales Pvt. Ltd."
     };
     public string PackageName { get; } = "Accounting";
-    public IEnumerable<IModule> Modules { get; } = [
-        new AccountTypesModule(),
-        new FiscalYearsModule()
-    ];
+    public ServiceCollection GetServices()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IAccountTypes, AccountTypesModule>();
+        services.AddTransient<IFiscalYears, FiscalYearsModule>();
+        return services;
+    }
 }

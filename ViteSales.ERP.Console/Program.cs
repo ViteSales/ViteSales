@@ -118,18 +118,10 @@ var authPkg = provider.GetRequiredService<IAuthentication>();
 var uri = await authPkg.GetAuthorizationUri();
 Console.WriteLine(uri != null ? uri.AbsoluteUri : "Failed to get authorization uri");
 
-foreach (var accountingPkgModule in accountingPkg.Modules)
-{
-    var interfaceType = accountingPkgModule.GetType().GetInterfaces().FirstOrDefault();
-    var classType = accountingPkgModule.GetType();
-    if (interfaceType != null)
-    {
-        sdkCollection.AddTransient(interfaceType, classType);
-    }
-}
+sdkCollection.Merge(accountingPkg.GetServices());
 sdk.Build();
 
 await dbServer.DeleteProject(dbInfo.Project.Id);
-await gcpPubSub.DropTopic(cloudIdentifierPair);
+// await gcpPubSub.DropTopic(cloudIdentifierPair);
 await bucket.DropBucket(bucketInfo);
 using var server = new BackgroundJobServer();

@@ -2,20 +2,18 @@ using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.Accounting.GL.Entities;
 using ViteSales.ERP.Accounting.GL.Interfaces;
+using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.Accounting.GL.Modules;
 
+[ModuleName("Account Maintenance")]
+[ModuleEntities(
+    typeof(AccountLedgerEntry),
+    typeof(AccountTypes))
+]
 public class AccountTypesModule: IAccountTypes
 {
-    public string Name { get; } = "Account Maintenance";
-
-    public IEnumerable<Type> Entities { get; } = new List<Type>
-    {
-        typeof(AccountLedgerEntry),
-        typeof(AccountTypes)
-    };
-
     public void OnLoad(ServiceProvider provider)
     {
      
@@ -31,7 +29,7 @@ public class AccountTypesModule: IAccountTypes
         throw new NotImplementedException();
     }
 
-    public List<object> DefaultValues()
+    public static List<object> DefaultValues()
     {
         return
         [

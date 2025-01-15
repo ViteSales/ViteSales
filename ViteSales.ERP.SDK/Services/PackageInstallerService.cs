@@ -1,7 +1,9 @@
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Semver;
 using SqlKata.Execution;
+using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Database.Operation;
 using ViteSales.ERP.SDK.Interfaces;
 using ViteSales.ERP.SDK.Internal.Core.Entities;
@@ -70,28 +72,55 @@ public class PackageInstallerService: IPackageInstallerService
                     .Get<PackageDetailsInternal>()
                     .ToList();
             }
-
-            var details = package.Modules.Select(module =>
+            var packageEntities = new List<Type>();
+            var details = package.GetServices()
+            .Where(descriptor =>
             {
-                var moduleType = module.GetType();
+                var serviceType = descriptor.ImplementationType;
+                return serviceType is not null;
+            })
+            .Where(descriptor =>
+            {
+                var serviceType = descriptor.ImplementationType;
+                var entities = serviceType!.GetCustomAttribute<ModuleEntitiesAttribute>();
+                if (entities is not null)
+                {
+                    packageEntities.AddRange(entities.Entities);
+                }
+                return serviceType!.GetCustomAttribute<ModuleNameAttribute>() is not null && serviceType.GetCustomAttribute<ModuleNameAttribute>() is not null;
+            })
+            .Select(descriptor =>
+            {
+                var serviceType = descriptor.ImplementationType;
+                var serviceNamespace = serviceType!.Namespace ?? string.Empty;
+                var serviceName = serviceType.Name;
+                var serviceId = $"{serviceNamespace}.{serviceName}";
+                var moduleEntities = new List<string>();
+                var entities = serviceType.GetCustomAttribute<ModuleEntitiesAttribute>();
+                if (entities is not null)
+                {
+                    moduleEntities = entities.Entities.Select(x => x.Name).ToList();
+                }
+                var moduleName = serviceType.GetCustomAttribute<ModuleNameAttribute>();
                 return new Insert<PackageDetailsInternal>(new PackageDetailsInternal
                 {
                     Id = Guid.NewGuid(),
                     PackageId = packageId,
-                    ModuleId = $"{moduleType.Namespace ?? string.Empty}.{moduleType.Name}",
-                    Name = module.Name,
-                    Entities = module.Entities.Select(x => x.Name),
+                    ModuleId = serviceId,
+                    Name = moduleName!.ModuleName,
+                    Entities = moduleEntities,
                     Others = new Dictionary<string, object>
                     {
                         ["IsDefaultInserted"] = false
                     }
                 });
-            }).ToList();
+            })
+            .ToList();
 
             details.RemoveAll(detail => installedModules
                 .Any(module => module?.ModuleId == detail?.Data.ModuleId));
-
-            await _tableSchemaManager.CreateOrUpdateTablesAsync(package.Modules.SelectMany(m => m.Entities));
+            
+            await _tableSchemaManager.CreateOrUpdateTablesAsync(packageEntities);
             await _dbContext.SaveChanges(() =>
             {
                 _logger.LogInformation("Saving package information to the database for package: {PackageName}, Version: {PackageVersion}", package.PackageName, package.Version);
@@ -117,39 +146,44 @@ public class PackageInstallerService: IPackageInstallerService
                     .And("Name", "=", package.PackageName));
                 var actions = new List<IOperation> { author, info };
                 var updates = new List<IOperation>();
-                foreach (var module in package.Modules.ToList())
+                foreach (var descriptor in package.GetServices())
                 {
-                    var moduleType = module.GetType();
-                    var moduleNamespace = moduleType.Namespace ?? string.Empty;
-                    var moduleClassName = moduleType.Name;
-                    var moduleId = $"{moduleNamespace}.{moduleClassName}";
-
+                    var serviceType = descriptor.ImplementationType;
+                    var serviceNamespace = serviceType.Namespace ?? string.Empty;
+                    var serviceName = serviceType.Name;
+                    var serviceId = $"{serviceNamespace}.{serviceName}";
                     var defaultInserted = installedModules
-                        .Where(installed => installed?.ModuleId == moduleId)
+                        .Where(installed => installed?.ModuleId == serviceId)
                         .Any(@internal => @internal?.Others.GetJsonPropertyValue<bool>("IsDefaultInserted") ?? false);
 
-                    var defaultValues = module.DefaultValues();
-                    if (!defaultInserted && defaultValues.Count > 0)
+                    if (defaultInserted ||
+                        serviceType.GetMethod("DefaultValues", BindingFlags.Static | BindingFlags.Public) is not
+                            { } defaultValuesMethod) continue;
+                    
+                    var moduleEntities = new List<string>();
+                    var entities = serviceType.GetCustomAttribute<ModuleEntitiesAttribute>();
+                    if (entities is not null)
                     {
-                        _logger.LogDebug("Inserting default values for module: {ModuleName} in package: {PackageName}", moduleClassName, package.PackageName);
-                        actions.AddRange(defaultValues.Select(defaultValue =>
-                        {
-                            var type = defaultValue.GetType();
-                            var insertOperationType = typeof(Insert<>).MakeGenericType(type);
-                            return (IOperation)Activator.CreateInstance(insertOperationType, defaultValue)!;
-                        }));
-                        updates.Add(new Update<PackageDetailsInternal>(
-                            new PackageDetailsInternal
-                            {
-                                Name = moduleClassName,
-                                Entities = module.Entities.Select(x => x.Name),
-                                Others = new Dictionary<string, object> { ["IsDefaultInserted"] = true },
-                                PackageId = packageId,
-                                ModuleId = moduleId,
-                            }, 
-                            new ConditionBuilder().And("ModuleId", "=", moduleId)
-                        ));
+                        moduleEntities = entities.Entities.Select(x => x.Name).ToList();
                     }
+                    var defaultValues = (IEnumerable<object>)defaultValuesMethod.Invoke(null, null)!;
+                    actions.AddRange(defaultValues.Select(defaultValue =>
+                    {
+                        var type = defaultValue.GetType();
+                        var insertOperationType = typeof(Insert<>).MakeGenericType(type);
+                        return (IOperation)Activator.CreateInstance(insertOperationType, defaultValue)!;
+                    }));
+                    updates.Add(new Update<PackageDetailsInternal>(
+                        new PackageDetailsInternal
+                        {
+                            Name = serviceName,
+                            Entities = moduleEntities,
+                            Others = new Dictionary<string, object> { ["IsDefaultInserted"] = true },
+                            PackageId = packageId,
+                            ModuleId = serviceId,
+                        },
+                        new ConditionBuilder().And("ModuleId", "=", serviceId)
+                    ));
                 }
                 actions.AddRange(details);
                 actions.AddRange(updates);
@@ -206,9 +240,18 @@ public class PackageInstallerService: IPackageInstallerService
                 };
                 return actions;
             });
-
+            var entities = new List<Type>();
+            foreach (var descriptor in package.GetServices())
+            {
+                var serviceType = descriptor.ImplementationType;
+                var moduleEntities = serviceType.GetCustomAttribute<ModuleEntitiesAttribute>();
+                if (moduleEntities is not null)
+                {
+                    entities = moduleEntities.Entities.ToList();
+                }
+            }
             _logger.LogDebug("Dropping tables for package modules: {PackageName}", package.PackageName);
-            await _tableSchemaManager.DropTablesAsync(package.Modules.SelectMany(m => m.Entities));
+            await _tableSchemaManager.DropTablesAsync(entities);
 
             _logger.LogInformation("Package uninstalled successfully: {PackageName}", package.PackageName);
         }
