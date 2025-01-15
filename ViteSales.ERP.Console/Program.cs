@@ -121,7 +121,7 @@ Console.WriteLine(uri != null ? uri.AbsoluteUri : "Failed to get authorization u
 sdkCollection.Merge(accountingPkg.GetServices());
 sdk.Build();
 
-await dbServer.DeleteProject(dbInfo.Project.Id);
-// await gcpPubSub.DropTopic(cloudIdentifierPair);
+// await dbServer.DeleteProject(dbInfo.Project.Id);
+await gcpPubSub.DropTopic(cloudIdentifierPair);
 await bucket.DropBucket(bucketInfo);
 using var server = new BackgroundJobServer();

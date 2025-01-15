@@ -21,7 +21,7 @@ public class PackageDetailsInternal
     
     [Required]
     [FieldDataType(FieldTypes.Text)]
-    public required string ModuleId { get; set; }
+    public required string ServiceId { get; set; }
     
     [Required]
     [FieldDataType(FieldTypes.Json)]

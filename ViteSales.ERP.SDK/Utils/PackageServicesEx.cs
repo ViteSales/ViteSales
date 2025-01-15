@@ -19,7 +19,8 @@ public static class PackageServicesEx
             .Where(descriptor =>
             {
                 var serviceType = descriptor.ImplementationType;
-                return serviceType!.GetCustomAttribute<ModuleNameAttribute>() is not null && serviceType!.GetCustomAttribute<ModuleNameAttribute>() is not null;
+                return serviceType!.GetCustomAttribute<ModuleNameAttribute>() is not null &&
+                       serviceType!.GetCustomAttribute<ModuleNameAttribute>() is not null;
             })
             .Select(descriptor =>
             {
@@ -33,17 +34,17 @@ public static class PackageServicesEx
                 {
                     moduleEntities = entities.Entities.ToList();
                 }
+
                 var moduleName = serviceType.GetCustomAttribute<ModuleNameAttribute>();
                 return new PackageServiceDetails
                 {
                     ServiceId = serviceId,
                     ServiceModuleName = moduleName!.ModuleName,
-                    ServiceModules = moduleEntities,
+                    ServiceEntities = moduleEntities,
                     ServiceName = serviceName,
                     ServiceNamespace = serviceNamespace,
                     ServiceType = serviceType
                 };
-            })
-            .ToList();
+            });
     }
 }
