@@ -2,19 +2,15 @@ using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using ViteSales.ERP.Accounting.GL.Entities;
 using ViteSales.ERP.Accounting.GL.Interfaces;
+using ViteSales.ERP.SDK.Attributes;
 using ViteSales.ERP.SDK.Models;
 
 namespace ViteSales.ERP.Accounting.GL.Modules;
 
+[ModuleName("Fiscal Years")]
+[ModuleEntities(typeof(FiscalYears))]
 public class FiscalYearsModule: IFiscalYears
 {
-    public string Name { get; } = "Fiscal Years";
-
-    public IEnumerable<Type> Entities { get; } = new List<Type>
-    {
-        typeof(FiscalYears)
-    };
-    
     public void OnLoad(ServiceProvider provider)
     {
     }
@@ -29,7 +25,7 @@ public class FiscalYearsModule: IFiscalYears
         throw new NotImplementedException();
     }
 
-    public List<object> DefaultValues()
+    public static List<object> DefaultValues()
     {
         return
         [
