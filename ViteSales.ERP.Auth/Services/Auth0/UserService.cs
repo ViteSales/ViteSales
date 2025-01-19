@@ -6,7 +6,7 @@ using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Auth.Models;
 using ViteSales.ERP.Shared.Models;
 
-namespace ViteSales.ERP.Auth.Services;
+namespace ViteSales.ERP.Auth.Services.Auth0;
 
 public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken): IUser
 {

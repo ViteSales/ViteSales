@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <base href="/"/>
+    <link href="syncfusion-blazor-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@Assets["app.css"]"/>
+    <ImportMap/>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <script type="text/javascript">
+        function saveAsFile(filename, bytesBase64) {
+            if (navigator?.msSaveBlob) {
+                let data = window.atob(bytesBase64);
+                let bytes = new Uint8Array(data.length);
+                for (let i = 0; i < data.length; i++) {
+                    bytes[i] = data.charCodeAt(i);
+                }
+                let blob = new Blob([bytes.buffer], { type: "application/octet-stream" });
+                navigator.msSaveBlob(blob, filename);
+            }
+            else {
+                let link = document.createElement('a');
+                link.download = filename;
+                link.href = "data:application/octet-stream;base64," + bytesBase64;
+                document.body.appendChild(link); 
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    </script>
+    <HeadOutlet/>
+    <link href="_content/Syncfusion.Blazor.Themes/fluent.css" rel="stylesheet" />
+    <script src="_content/Syncfusion.Blazor.Core/scripts/syncfusion-blazor.min.js" type="text/javascript"></script>
+    <script src="_content/Syncfusion.Blazor.SfPDFViewer/scripts/syncfusion-blazor-sfpdfviewer.min.js" type="text/javascript"></script>
+    <script src="/scripts/lodash.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="_content/Syncfusion.Blazor.WordProcessor/scripts/syncfusion-blazor-documenteditor.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<Routes/>
+<script src="_framework/blazor.web.js"></script>
+</body>
+
+</html>

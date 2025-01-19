@@ -1,11 +1,12 @@
 using Auth0.AuthenticationApi.Builders;
 using Auth0.AuthenticationApi.Models;
+using Auth0.ManagementApi.Clients;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.Auth.Interfaces;
 using ViteSales.ERP.Shared.Interfaces;
 using ViteSales.ERP.Shared.Models;
 
-namespace ViteSales.ERP.Auth.Services;
+namespace ViteSales.ERP.Auth.Services.Auth0;
 
 public class AuthenticationService(IOptions<AuthSecrets> secrets, ICacheClient cache): IAuthentication
 {
@@ -23,9 +24,17 @@ public class AuthenticationService(IOptions<AuthSecrets> secrets, ICacheClient c
                 .WithClient(secrets.Value.ClientId)
                 .WithResponseType(AuthorizationResponseType.Token)
                 .WithAudience(secrets.Value.Audience)
+                .WithRedirectUrl(secrets.Value.RedirectUri)
                 .Build();
         }
         return null;
+    }
+
+    public Uri GetLogoutUri()
+    {
+        return new LogoutUrlBuilder(new Uri(secrets.Value.AuthDomain))
+            .WithClientId(secrets.Value.ClientId)
+            .Build();
     }
 
     public async Task<bool> IsStateValid(string state)

@@ -1,0 +1,6 @@
+﻿services:
+  vitesales.erp:
+    image: vitesales.erp
+    build:
+      context: .
+      dockerfile: ViteSales.ERP/Dockerfile

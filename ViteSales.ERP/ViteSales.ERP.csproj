@@ -1,0 +1,133 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
+      <PackageReference Include="Google.Cloud.Diagnostics.AspNetCore" Version="4.4.0" />
+      <PackageReference Include="Google.Cloud.Logging.V2" Version="4.4.0" />
+      <PackageReference Include="Hangfire" Version="1.8.17" />
+      <PackageReference Include="Hangfire.InMemory" Version="1.0.0" />
+      <PackageReference Include="Syncfusion.Blazor.BarcodeGenerator" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Buttons" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Calendars" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Cards" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Chart3D" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Charts" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Data" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.DataForm" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.DataVizCommon" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Diagram" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Diagrams" Version="25.1.35" />
+      <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.FileManager" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.FileManager.PhysicalFileProvider" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Gantt" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Grid" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.HeatMap" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.ImageEditor" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.InPlaceEditor" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Inputs" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.InteractiveChat" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Kanban" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Layouts" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.LinearGauge" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Lists" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Maps" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.MultiColumnComboBox" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Navigations" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Notifications" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.PdfViewer" Version="27.1.58" />
+      <PackageReference Include="Syncfusion.Blazor.PivotTable" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Popups" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.QueryBuilder" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.RangeNavigator" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Ribbon" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Sankey" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Schedule" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.SfPdfViewer" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.SmartComponents" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.SmithChart" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Sparkline" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Spinner" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.StockChart" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.Themes" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.TreeMap" Version="28.1.39" />
+      <PackageReference Include="Syncfusion.Blazor.WordProcessor" Version="28.1.39" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ViteSales.ERP.Accounting\ViteSales.ERP.Accounting.csproj" />
+      <ProjectReference Include="..\ViteSales.ERP.Auth\ViteSales.ERP.Auth.csproj" />
+      <ProjectReference Include="..\ViteSales.ERP.Cloud\ViteSales.ERP.Cloud.csproj" />
+      <ProjectReference Include="..\ViteSales.ERP.SDK\ViteSales.ERP.SDK.csproj" />
+      <ProjectReference Include="..\ViteSales.ERP.Shared\ViteSales.ERP.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
+      <_ContentIncludedByDefault Remove="Components\Layout\NavMenu.razor" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    </ItemGroup>
+
+</Project>

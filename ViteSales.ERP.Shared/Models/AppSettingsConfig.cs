@@ -32,6 +32,7 @@ public class AuthSecrets
     public required string ClientSecret { get; set; }
     public required string Audience { get; set; }
     public required string GrantType { get; set; }
+    public required string RedirectUri { get; set; }
 }
 [Serializable]
 public class ServerCredential

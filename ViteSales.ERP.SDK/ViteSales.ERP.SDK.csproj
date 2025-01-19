@@ -12,12 +12,12 @@
       <PackageReference Include="FluentEmail.RazorTemplates" Version="2.7.2" />
       <PackageReference Include="FluentEmail.SendGrid" Version="3.0.2" />
       <PackageReference Include="FluentValidation" Version="11.11.0" />
-      <PackageReference Include="Google.Cloud.PubSub.V1" Version="3.19.0" />
+      <PackageReference Include="Google.Cloud.PubSub.V1" Version="3.20.0" />
       <PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
       <PackageReference Include="Npgsql" Version="9.0.2" />
       <PackageReference Include="NRedisStack" Version="0.13.1" />
       <PackageReference Include="RestSharp" Version="112.1.0" />

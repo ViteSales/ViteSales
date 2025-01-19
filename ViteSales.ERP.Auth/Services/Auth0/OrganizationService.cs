@@ -8,7 +8,7 @@ using ViteSales.ERP.Auth.Models;
 using ViteSales.ERP.Shared.Extensions;
 using ViteSales.ERP.Shared.Models;
 
-namespace ViteSales.ERP.Auth.Services;
+namespace ViteSales.ERP.Auth.Services.Auth0;
 
 public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken accessToken, IUser userService, ILogger<OrganizationService> _logger): IOrganization
 {
