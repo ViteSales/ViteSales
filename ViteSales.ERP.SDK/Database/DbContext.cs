@@ -33,7 +33,7 @@ public class DbContext: IDbContext
         _pubSubService = pubSubService;
     }
     
-    public async Task SaveChanges(Func<List<IOperation>> callback)
+    public async Task SaveChangesAsync(Func<List<IOperation>> callback)
     {
         await _connection.OpenConnectionAsync();
         await _connection.BeginTransactionAsync();
@@ -85,13 +85,13 @@ public class DbContext: IDbContext
         }
     }
 
-    public async Task<bool> IsTableExist(string tableName)
+    public async Task<bool> IsTableExistAsync(string tableName)
     {
         await _connection.OpenConnectionAsync();
         return await _connection.TableExistsAsync(tableName);
     }
 
-    public async Task<bool> IsColumnExist(string tableName, string columnName)
+    public async Task<bool> IsColumnExistAsync(string tableName, string columnName)
     {
         await _connection.OpenConnectionAsync();
         return await _connection.ColumnExistsAsync(tableName, columnName);
@@ -196,14 +196,14 @@ public class DbContext: IDbContext
         return null;
     }
 
-    public async Task<Query> Get<T>() where T : class
+    public async Task<Query> GetAsync<T>() where T : class
     {
         await _connection.OpenConnectionAsync();
         var db = _connection.SqlCompiler();
         return db.Query(typeof(T).Name);
     }
     
-    public async Task<DataTable> GetRecords(IOperation operation) => await _connection.GetRecordsAsync(operation);
+    public async Task<DataTable> GetRecordsAsync(IOperation operation) => await _connection.GetRecordsAsync(operation);
     
     public async Task QueueMessageAsync(IOperation operation)
     {

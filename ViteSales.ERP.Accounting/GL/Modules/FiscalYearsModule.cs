@@ -20,7 +20,7 @@ public class FiscalYearsModule: IFiscalYears
         throw new NotImplementedException();
     }
 
-    public Task OnSave(DataTable dataTable)
+    public Task OnSaveAsync(DataTable dataTable)
     {
         throw new NotImplementedException();
     }

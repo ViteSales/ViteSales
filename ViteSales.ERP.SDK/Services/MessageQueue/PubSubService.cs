@@ -11,7 +11,7 @@ using AppSettings = ViteSales.ERP.Shared.Utils.AppSettings;
 
 namespace ViteSales.ERP.SDK.Services.MessageQueue;
 
-public class PubSubServiceService: IPubSubService
+public class PubSubService: IPubSubService
 {
     private readonly PublisherServiceApiClient _publisher;
     private readonly GoogleCredential _credential;
@@ -20,7 +20,7 @@ public class PubSubServiceService: IPubSubService
     private TopicName _topicName;
     private Subscriber _subscriber;
     
-    public PubSubServiceService(IOptions<AppSettings> settings, IOptions<ConnectionConfig> config)
+    public PubSubService(IOptions<AppSettings> settings, IOptions<ConnectionConfig> config)
     {
         ArgumentNullException.ThrowIfNull(settings.Value);
         ArgumentNullException.ThrowIfNull(config.Value);

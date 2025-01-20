@@ -2,6 +2,6 @@ namespace ViteSales.ERP.SDK.Interfaces;
 
 public interface IPackageInstallerService
 {
-    Task Install(IPackage package);
-    Task Uninstall(IPackage package);
+    Task InstallAsync(IPackage package);
+    Task UninstallAsync(IPackage package);
 }

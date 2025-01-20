@@ -19,7 +19,7 @@ public class AccountTypesModule: IAccountTypes
      
     }
 
-    public async Task OnSave(DataTable dataTable)
+    public async Task OnSaveAsync(DataTable dataTable)
     {
         
     }

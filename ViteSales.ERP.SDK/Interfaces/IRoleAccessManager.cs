@@ -6,10 +6,10 @@ namespace ViteSales.ERP.SDK.Interfaces;
 
 public interface IRoleAccessManager
 {
-    Task<ConnectionConfig> GetAccessConfig(string username);
-    Task<bool> IsUserExists(string username);
-    Task CreateUser(string username);
-    Task DropUser(string username);
-    Task GrantAccess(string username, List<AccessTypes> roles, List<string> tables);
-    Task RemoveAccess(string username, List<AccessTypes> roles, List<string> tables);
+    Task<ConnectionConfig> GetAccessConfigAsync(string username);
+    Task<bool> IsUserExistsAsync(string username);
+    Task CreateUserAsync(string username);
+    Task DropUserAsync(string username);
+    Task GrantAccessAsync(string username, List<AccessTypes> roles, List<string> tables);
+    Task RemoveAccessAsync(string username, List<AccessTypes> roles, List<string> tables);
 }

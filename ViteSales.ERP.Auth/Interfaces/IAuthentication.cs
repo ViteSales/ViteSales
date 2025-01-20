@@ -2,7 +2,7 @@ namespace ViteSales.ERP.Auth.Interfaces;
 
 public interface IAuthentication
 {
-    public Task<Uri?> GetAuthorizationUri();
+    public Task<Uri?> GetAuthorizationUriAsync();
     public Uri GetLogoutUri();
-    public Task<bool> IsStateValid(string state);
+    public Task<bool> IsStateValidAsync(string state);
 }

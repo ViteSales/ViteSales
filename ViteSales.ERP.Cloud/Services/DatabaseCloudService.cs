@@ -21,9 +21,9 @@ public class DatabaseCloudService: IDatabaseCloudService
         _appSettings = appSettings.Value;
         _logger = logger;
     }
-    public async Task<ProjectResponse?> CreateProject(CreateProjectRequest projectRequest)
+    public async Task<ProjectResponse?> CreateProjectAsync(CreateProjectRequest projectRequest)
     {
-        _logger.LogInformation("Starting CreateProject request.");
+        _logger.LogInformation("Starting CreateProjectAsync request.");
 
         var request = new RestRequest("projects");
         request.AddHeader("accept", "application/json");
@@ -34,17 +34,17 @@ public class DatabaseCloudService: IDatabaseCloudService
         
         if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
-            _logger.LogInformation("CreateProject request succeeded.");
+            _logger.LogInformation("CreateProjectAsync request succeeded.");
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
         }
 
-        _logger.LogError("CreateProject request failed with status code: {StatusCode}, Content: {Content}", response?.StatusCode, response?.Content);
+        _logger.LogError("CreateProjectAsync request failed with status code: {StatusCode}, Content: {Content}", response?.StatusCode, response?.Content);
         throw new HttpRequestException("NeonTech request failed while creating project.");
     }
 
-    public async Task<ProjectResponse?> GetProject(string projectId)
+    public async Task<ProjectResponse?> GetProjectAsync(string projectId)
     {
-        _logger.LogInformation("Starting GetProject request for project ID: {ProjectId}.", projectId);
+        _logger.LogInformation("Starting GetProjectAsync request for project ID: {ProjectId}.", projectId);
 
         var request = new RestRequest($"projects/{projectId}");
         request.AddHeader("accept", "application/json");
@@ -54,17 +54,17 @@ public class DatabaseCloudService: IDatabaseCloudService
 
         if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
-            _logger.LogInformation("GetProject request succeeded for project ID: {ProjectId}.", projectId);
+            _logger.LogInformation("GetProjectAsync request succeeded for project ID: {ProjectId}.", projectId);
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
         }
 
-        _logger.LogError("GetProject request failed for project ID: {ProjectId} with status code: {StatusCode}, Content: {Content}", projectId, response?.StatusCode, response?.Content);
+        _logger.LogError("GetProjectAsync request failed for project ID: {ProjectId} with status code: {StatusCode}, Content: {Content}", projectId, response?.StatusCode, response?.Content);
         throw new HttpRequestException("NeonTech request failed while getting project.");
     }
 
-    public async Task<ProjectResponse?> UpdateProject(string projectId, UpdateProjectRequest projectRequest)
+    public async Task<ProjectResponse?> UpdateProjectAsync(string projectId, UpdateProjectRequest projectRequest)
     {
-        _logger.LogInformation("Starting UpdateProject request for project ID: {ProjectId}.", projectId);
+        _logger.LogInformation("Starting UpdateProjectAsync request for project ID: {ProjectId}.", projectId);
 
         var request = new RestRequest($"projects/{projectId}");
         request.AddHeader("accept", "application/json");
@@ -75,17 +75,17 @@ public class DatabaseCloudService: IDatabaseCloudService
 
         if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
-            _logger.LogInformation("UpdateProject request succeeded for project ID: {ProjectId}.", projectId);
+            _logger.LogInformation("UpdateProjectAsync request succeeded for project ID: {ProjectId}.", projectId);
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
         }
 
-        _logger.LogError("UpdateProject request failed for project ID: {ProjectId} with status code: {StatusCode}, Content: {Content}", projectId, response?.StatusCode, response?.Content);
+        _logger.LogError("UpdateProjectAsync request failed for project ID: {ProjectId} with status code: {StatusCode}, Content: {Content}", projectId, response?.StatusCode, response?.Content);
         throw new HttpRequestException("NeonTech request failed while updating project.");
     }
 
-    public async Task<ProjectResponse?> DeleteProject(string projectId)
+    public async Task<ProjectResponse?> DeleteProjectAsync(string projectId)
     {
-        _logger.LogInformation("Starting DeleteProject request for project ID: {ProjectId}.", projectId);
+        _logger.LogInformation("Starting DeleteProjectAsync request for project ID: {ProjectId}.", projectId);
 
         var request = new RestRequest($"projects/{projectId}");
         request.AddHeader("accept", "application/json");
@@ -95,11 +95,11 @@ public class DatabaseCloudService: IDatabaseCloudService
 
         if (response is { StatusCode: >= HttpStatusCode.OK and < (HttpStatusCode)300, Content: not null })
         {
-            _logger.LogInformation("DeleteProject request succeeded for project ID: {ProjectId}.", projectId);
+            _logger.LogInformation("DeleteProjectAsync request succeeded for project ID: {ProjectId}.", projectId);
             return JsonConvert.DeserializeObject<ProjectResponse>(response.Content);
         }
 
-        _logger.LogError("DeleteProject request failed for project ID: {ProjectId} with status code: {StatusCode}, Content: {Content}", projectId, response?.StatusCode, response?.Content);
+        _logger.LogError("DeleteProjectAsync request failed for project ID: {ProjectId} with status code: {StatusCode}, Content: {Content}", projectId, response?.StatusCode, response?.Content);
         throw new HttpRequestException("NeonTech request failed while deleting project.");
     }
 }

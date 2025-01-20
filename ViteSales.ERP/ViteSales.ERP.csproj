@@ -14,11 +14,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
       <PackageReference Include="Google.Cloud.Diagnostics.AspNetCore" Version="4.4.0" />
       <PackageReference Include="Google.Cloud.Logging.V2" Version="4.4.0" />
       <PackageReference Include="Hangfire" Version="1.8.17" />
       <PackageReference Include="Hangfire.InMemory" Version="1.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.1" />
       <PackageReference Include="Syncfusion.Blazor.BarcodeGenerator" Version="28.1.39" />
       <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="28.1.39" />
       <PackageReference Include="Syncfusion.Blazor.Buttons" Version="28.1.39" />
@@ -75,7 +75,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ViteSales.ERP.Accounting\ViteSales.ERP.Accounting.csproj" />
-      <ProjectReference Include="..\ViteSales.ERP.Auth\ViteSales.ERP.Auth.csproj" />
       <ProjectReference Include="..\ViteSales.ERP.Cloud\ViteSales.ERP.Cloud.csproj" />
       <ProjectReference Include="..\ViteSales.ERP.SDK\ViteSales.ERP.SDK.csproj" />
       <ProjectReference Include="..\ViteSales.ERP.Shared\ViteSales.ERP.Shared.csproj" />

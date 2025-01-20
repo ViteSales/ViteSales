@@ -9,7 +9,7 @@ public class CacheClient(CacheDbCredentials auth, string prefix): ICacheClient, 
     private IDatabase? _db;
     private ConnectionMultiplexer? _redis;
     
-    public async Task Connect()
+    public async Task ConnectAsync()
     {
         var conf = new ConfigurationOptions {
             EndPoints = { $"{auth.Host}:{auth.Port}" },
@@ -21,7 +21,7 @@ public class CacheClient(CacheDbCredentials auth, string prefix): ICacheClient, 
         _db = _redis.GetDatabase();
     }
 
-    public async Task<bool> Set<T>(string key, T value, TimeSpan? expiry) where T : notnull
+    public async Task<bool> SetAsync<T>(string key, T value, TimeSpan? expiry) where T : notnull
     {
         if (value.ToString() == null)
         {
@@ -36,7 +36,7 @@ public class CacheClient(CacheDbCredentials auth, string prefix): ICacheClient, 
         return done;
     }
     
-    public async Task<bool> Remove(string key)
+    public async Task<bool> RemoveAsync(string key)
     {
         ArgumentNullException.ThrowIfNull(_db);
         if (!await _db.KeyExistsAsync(GetKey(key)))
@@ -46,7 +46,7 @@ public class CacheClient(CacheDbCredentials auth, string prefix): ICacheClient, 
         return await _db.KeyDeleteAsync(GetKey(key));
     }
 
-    public async Task<T?> Get<T>(string key)
+    public async Task<T?> GetAsync<T>(string key)
     {
         ArgumentNullException.ThrowIfNull(_db);
         if (!await _db.KeyExistsAsync(GetKey(key)))

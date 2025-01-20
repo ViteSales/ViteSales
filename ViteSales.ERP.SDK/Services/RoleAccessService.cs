@@ -23,10 +23,10 @@ public class RoleAccessService : IRoleAccessManager
         _config = cfg.Value;
     }
 
-    public async Task<ConnectionConfig> GetAccessConfig(string username)
+    public async Task<ConnectionConfig> GetAccessConfigAsync(string username)
     {
         _logger.LogDebug("Getting access configuration for user {Username}", username);
-        var userExists = await IsUserExists(username);
+        var userExists = await IsUserExistsAsync(username);
         if (!userExists)
         {
             _logger.LogWarning("User {Username} does not exist.", username);
@@ -39,7 +39,7 @@ public class RoleAccessService : IRoleAccessManager
         return _config;
     }
 
-    public async Task<bool> IsUserExists(string username)
+    public async Task<bool> IsUserExistsAsync(string username)
     {
         _logger.LogDebug("Checking if user {Username} exists.", username);
         const string query = "SELECT 1 FROM pg_roles WHERE rolname = @rolename";
@@ -67,7 +67,7 @@ public class RoleAccessService : IRoleAccessManager
         }
     }
 
-    public async Task CreateUser(string username)
+    public async Task CreateUserAsync(string username)
     {
         _logger.LogDebug("Creating user {Username}.", username);
         var query = $"CREATE ROLE {username} LOGIN PASSWORD '{DefaultPassword}'";
@@ -93,7 +93,7 @@ public class RoleAccessService : IRoleAccessManager
         }
     }
 
-    public async Task DropUser(string username)
+    public async Task DropUserAsync(string username)
     {
         _logger.LogDebug("Dropping user {Username}.", username);
         var query = new List<string>
@@ -129,7 +129,7 @@ public class RoleAccessService : IRoleAccessManager
         }
     }
 
-    public async Task GrantAccess(string username, List<AccessTypes> roles, List<string> tables)
+    public async Task GrantAccessAsync(string username, List<AccessTypes> roles, List<string> tables)
     {
         _logger.LogDebug("Granting access to user {Username}. Roles: {Roles}, Tables: {Tables}", username, roles, tables);
         await _connectionHandler.OpenConnectionAsync();
@@ -165,7 +165,7 @@ public class RoleAccessService : IRoleAccessManager
         }
     }
 
-    public async Task RemoveAccess(string username, List<AccessTypes> roles, List<string> tables)
+    public async Task RemoveAccessAsync(string username, List<AccessTypes> roles, List<string> tables)
     {
         _logger.LogDebug("Removing access from user {Username}. Roles: {Roles}, Tables: {Tables}", username, roles, tables);
         await _connectionHandler.OpenConnectionAsync();

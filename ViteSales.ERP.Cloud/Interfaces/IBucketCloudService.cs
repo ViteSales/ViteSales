@@ -5,6 +5,6 @@ namespace ViteSales.ERP.Cloud.Interfaces;
 
 public interface IBucketCloudService
 {
-    public Task<BucketInfo> CreateBucket(string bucketName, Regions regions);
-    public Task DropBucket(BucketInfo bucket);
+    public Task<BucketInfo> CreateBucketAsync(string bucketName, Regions regions);
+    public Task DropBucketAsync(BucketInfo bucket);
 }

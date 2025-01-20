@@ -1,0 +1,16 @@
+@page "/secure"
+@using System.Security.Claims
+@attribute [Authorize]
+
+<h3>Authenticating! Please wait a moment...</h3>
+
+@code {
+    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+        Console.WriteLine(user.FindFirstValue("sub"));
+    }
+}

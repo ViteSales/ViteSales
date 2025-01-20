@@ -10,7 +10,7 @@ namespace ViteSales.ERP.Auth.Services.Auth0;
 
 public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken): IUser
 {
-    public async Task<IList<OrganizationInfo>?> GetAllOrganizations(string userId)
+    public async Task<IList<OrganizationInfo>?> GetAllOrganizationsAsync(string userId)
     {
         var mgmt = GetManagementClient();
         var organizations = await mgmt.Users.GetAllOrganizationsAsync(userId, new PaginationInfo(0, 100, true));
@@ -29,7 +29,7 @@ public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken
         .ToList();
     }
 
-    public async Task<UserInfo?> GetUserInfo(string userId)
+    public async Task<UserInfo?> GetUserInfoAsync(string userId)
     {
         var mgmt = GetManagementClient();
         var user = await mgmt.Users.GetAsync(userId);

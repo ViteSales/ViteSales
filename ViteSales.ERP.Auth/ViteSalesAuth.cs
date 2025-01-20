@@ -26,7 +26,7 @@ public class ViteSalesAuth
             Port = cacheCredentials.Port,
             Database = cacheCredentials.Database
         },"ViteSalesAuth");
-        cache.Connect().Wait();
+        cache.ConnectAsync().Wait();
         
         _services.Configure<AuthSecrets>(options =>
         {

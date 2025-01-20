@@ -5,9 +5,9 @@ namespace ViteSales.ERP.SDK.Interfaces;
 
 public interface IDbContext
 {
-    Task SaveChanges(Func<List<IOperation>> callback);
-    Task<bool> IsTableExist(string tableName);
-    Task<bool> IsColumnExist(string tableName, string columnName);
-    Task<Query> Get<T>() where T : class;
-    Task<DataTable> GetRecords(IOperation operation);
+    Task SaveChangesAsync(Func<List<IOperation>> callback);
+    Task<bool> IsTableExistAsync(string tableName);
+    Task<bool> IsColumnExistAsync(string tableName, string columnName);
+    Task<Query> GetAsync<T>() where T : class;
+    Task<DataTable> GetRecordsAsync(IOperation operation);
 }

@@ -5,8 +5,8 @@ namespace ViteSales.ERP.Cloud.Interfaces;
 
 public interface IDatabaseCloudService
 {
-    Task<ProjectResponse?> CreateProject(CreateProjectRequest projectRequest);
-    Task<ProjectResponse?> GetProject(string projectId);
-    Task<ProjectResponse?> UpdateProject(string projectId, UpdateProjectRequest projectRequest);
-    Task<ProjectResponse?> DeleteProject(string projectId);
+    Task<ProjectResponse?> CreateProjectAsync(CreateProjectRequest projectRequest);
+    Task<ProjectResponse?> GetProjectAsync(string projectId);
+    Task<ProjectResponse?> UpdateProjectAsync(string projectId, UpdateProjectRequest projectRequest);
+    Task<ProjectResponse?> DeleteProjectAsync(string projectId);
 }

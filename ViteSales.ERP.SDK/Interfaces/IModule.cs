@@ -10,5 +10,5 @@ public interface IModule
 {
     public void OnLoad(ServiceProvider provider);
     public void OnChangeEvent(EventChange data);
-    public Task OnSave(DataTable dataTable);
+    public Task OnSaveAsync(DataTable dataTable);
 }

@@ -1,14 +1,10 @@
-using Auth0.AspNetCore.Authentication;
-using Auth0.AuthenticationApi.Models;
 using Google.Cloud.Diagnostics.Common;
 using Hangfire;
 using Hangfire.InMemory;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Syncfusion.Blazor;
 using ViteSales.ERP;
-using ViteSales.ERP.Auth;
 using ViteSales.ERP.Cloud;
 using ViteSales.ERP.Components;
 using ViteSales.ERP.Shared.Extensions;
@@ -19,7 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizePage("/secure");
+});
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSignalR(options =>
 {
@@ -29,7 +28,6 @@ builder.Services.AddMemoryCache();
 
 #region ViteSalesConfiguration
 
-var vsAuth = new ViteSalesAuth(appSettings);
 var vsCloud = new ViteSalesCloud(appSettings);
 builder.Services.Configure<AppSettings>(option =>
 {
@@ -42,7 +40,6 @@ builder.Services.Configure<AppSettings>(option =>
     option.DefaultDb = appSettings.DefaultDb;
 });
 builder.Services.Merge(vsCloud.GetServiceCollection());
-builder.Services.Merge(vsAuth.GetServiceCollection());
 
 #endregion
 
@@ -68,18 +65,18 @@ builder.Services.AddLogging(configure =>
     });
     configure.SetMinimumLevel(LogLevel.Information);
 });
-builder.Services.AddAuth0WebAppAuthentication(options =>
+builder.Services.AddAuthentication(options =>
 {
-    options.Domain = appSettings.AuthSecrets.AuthDomain;
-    options.ClientId = appSettings.AuthSecrets.ClientId;
-    options.Scope = "openid profile email";
-});
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddOpenIdConnect();
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
-builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddSyncfusionBlazor();
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration.GetSection("SyncfusionLicense").Value);
 

@@ -35,7 +35,7 @@ public class PubSubCloudService: IPubSubCloudService
     }
 
 
-    public async Task CreateTopic(CloudIdentifierPair identifierPair)
+    public async Task CreateTopicAsync(CloudIdentifierPair identifierPair)
     {
         var identifier = Utility.GetTopicName(identifierPair.Cloud, identifierPair.Identifier);
         var topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: identifier);
@@ -82,7 +82,7 @@ public class PubSubCloudService: IPubSubCloudService
         }
     }
 
-    public async Task DropTopic(CloudIdentifierPair identifierPair)
+    public async Task DropTopicAsync(CloudIdentifierPair identifierPair)
     {
         var topicName = TopicName.FromProjectTopic(projectId: _secret.GcpCredentials.ProjectId, topicId: Utility.GetTopicName(identifierPair.Cloud, identifierPair.Identifier));
         try

@@ -27,7 +27,7 @@ public class PackageInstallerService: IPackageInstallerService
         _tableSchemaManager = tableSchemaManager;
     }
     
-    public async Task Install(IPackage package)
+    public async Task InstallAsync(IPackage package)
     {
         _logger.LogDebug("Starting installation of package: {PackageName}, Version: {PackageVersion}", package.PackageName, package.Version);
         var authorId = Guid.NewGuid();
@@ -35,10 +35,10 @@ public class PackageInstallerService: IPackageInstallerService
 
         try
         {
-            var initialTableExists = await _dbContext.IsTableExist(nameof(PackageInfoInternal));
+            var initialTableExists = await _dbContext.IsTableExistAsync(nameof(PackageInfoInternal));
             if (initialTableExists)
             {
-                var factory = await _dbContext.Get<PackageInfoInternal>();
+                var factory = await _dbContext.GetAsync<PackageInfoInternal>();
                 var packageCheck = factory.Select("*")
                     .Where("Name", package.PackageName)
                     .Get<PackageInfoInternal>()
@@ -66,9 +66,9 @@ public class PackageInstallerService: IPackageInstallerService
             }
 
             List<PackageDetailsInternal> installedModules = new();
-            if (await _dbContext.IsTableExist(nameof(PackageDetailsInternal)))
+            if (await _dbContext.IsTableExistAsync(nameof(PackageDetailsInternal)))
             {
-                var queryCompiler = await _dbContext.Get<PackageDetailsInternal>();
+                var queryCompiler = await _dbContext.GetAsync<PackageDetailsInternal>();
                 installedModules = queryCompiler
                     .Get<PackageDetailsInternal>()
                     .ToList();
@@ -98,7 +98,7 @@ public class PackageInstallerService: IPackageInstallerService
                 .Any(module => module?.ServiceId == detail?.ServiceId));
             
             await _tableSchemaManager.CreateOrUpdateTablesAsync(packageEntities);
-            await _dbContext.SaveChanges(() =>
+            await _dbContext.SaveChangesAsync(() =>
             {
                 _logger.LogInformation("Saving package information to the database for package: {PackageName}, Version: {PackageVersion}", package.PackageName, package.Version);
                 var author = new Upsert<PackageAuthorsInternal>(new PackageAuthorsInternal
@@ -163,13 +163,13 @@ public class PackageInstallerService: IPackageInstallerService
         }
     }
 
-    public async Task Uninstall(IPackage package)
+    public async Task UninstallAsync(IPackage package)
     {
         try
         {
             _logger.LogDebug("Starting uninstallation of package: {PackageName}", package.PackageName);
 
-            var factory = await _dbContext.Get<PackageInfoInternal>();
+            var factory = await _dbContext.GetAsync<PackageInfoInternal>();
             var packageCheck = factory.Select("*")
                 .Where("Name", package.PackageName)
                 .Get<PackageInfoInternal>();
@@ -192,7 +192,7 @@ public class PackageInstallerService: IPackageInstallerService
             }
 
             _logger.LogDebug("Deleting package metadata for package: {PackageName}", package.PackageName);
-            await _dbContext.SaveChanges(() =>
+            await _dbContext.SaveChangesAsync(() =>
             {
                 var actions = new List<IOperation>
                 {

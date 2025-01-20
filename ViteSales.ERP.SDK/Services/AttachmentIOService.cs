@@ -24,7 +24,7 @@ public class AttachmentIOService: IAttachmentIOService
         _logger.LogInformation("AttachmentIOService initialized with bucket: {Bucket}", _connConfig.Bucket);
     }
     
-    public async Task UploadObject(MemoryStream stream, string fileName)
+    public async Task UploadObjectAsync(MemoryStream stream, string fileName)
     {
         try
         {
@@ -43,7 +43,7 @@ public class AttachmentIOService: IAttachmentIOService
         }
     }
 
-    public async Task<Stream> DownloadObject(string fileName)
+    public async Task<Stream> DownloadObjectAsync(string fileName)
     {
         _logger.LogInformation("Starting download of file: {FileName} from bucket: {Bucket}", fileName, _connConfig.Bucket);
         var stream = new MemoryStream();

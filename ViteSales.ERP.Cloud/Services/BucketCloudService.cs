@@ -24,7 +24,7 @@ public class BucketCloudService: IBucketCloudService
         _storageClient = StorageClient.Create(_appSettings.GoogleCredential);
     }
     
-    public async Task<BucketInfo> CreateBucket(string bucketName, Regions region)
+    public async Task<BucketInfo> CreateBucketAsync(string bucketName, Regions region)
     {
         _logger.LogInformation("Creating bucket with name: {BucketName} in region: {Region}", bucketName, region);
         try
@@ -70,7 +70,7 @@ public class BucketCloudService: IBucketCloudService
         }
     }
 
-    public async Task DropBucket(BucketInfo bucket)
+    public async Task DropBucketAsync(BucketInfo bucket)
     {
         _logger.LogInformation("Dropping bucket with Name: {BucketName}, ID: {BucketId}", bucket.Name, bucket.Id);
         try

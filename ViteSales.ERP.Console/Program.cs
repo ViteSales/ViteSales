@@ -53,7 +53,7 @@ var dbRequest = new CreateProjectRequest
         StorePasswords = true
     }
 };
-var dbInfo = await dbServer.CreateProject(dbRequest);
+var dbInfo = await dbServer.CreateProjectAsync(dbRequest);
 if (dbInfo == null)
 {
     Console.WriteLine("failed to create project");
@@ -101,27 +101,27 @@ sdkCollection.AddLogging(configure =>
 provider = sdk.Build();
 var backgroundJobClient = provider.GetRequiredService<IBackgroundJobClient>();
 var bucket = provider.GetRequiredService<IBucketCloudService>();
-var bucketInfo = await bucket.CreateBucket(orgName, Regions.EuropeLondon);
+var bucketInfo = await bucket.CreateBucketAsync(orgName, Regions.EuropeLondon);
 
 var gcpPubSub = provider.GetRequiredService<IPubSubCloudService>();
-await gcpPubSub.CreateTopic(cloudIdentifierPair);
+await gcpPubSub.CreateTopicAsync(cloudIdentifierPair);
 
 var pkg = provider.GetRequiredService<IPackageInstallerService>();
 
 var internalPkg = new ViteSales.ERP.SDK.Internal.Manifest();
 var accountingPkg = new ViteSales.ERP.Accounting.Manifest();
 
-await pkg.Install(internalPkg);
-await pkg.Install(accountingPkg);
+await pkg.InstallAsync(internalPkg);
+await pkg.InstallAsync(accountingPkg);
 
 var authPkg = provider.GetRequiredService<IAuthentication>();
-var uri = await authPkg.GetAuthorizationUri();
+var uri = await authPkg.GetAuthorizationUriAsync();
 Console.WriteLine(uri != null ? uri.AbsoluteUri : "Failed to get authorization uri");
 
 sdkCollection.Merge(accountingPkg.GetServices());
 sdk.Build();
 
-// await dbServer.DeleteProject(dbInfo.Project.Id);
-await gcpPubSub.DropTopic(cloudIdentifierPair);
-await bucket.DropBucket(bucketInfo);
+// await dbServer.DeleteProjectAsync(dbInfo.Project.Id);
+await gcpPubSub.DropTopicAsync(cloudIdentifierPair);
+await bucket.DropBucketAsync(bucketInfo);
 using var server = new BackgroundJobServer();

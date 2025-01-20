@@ -10,13 +10,13 @@ namespace ViteSales.ERP.Auth.Services.Auth0;
 
 public class AuthenticationService(IOptions<AuthSecrets> secrets, ICacheClient cache): IAuthentication
 {
-    public async Task<Uri?> GetAuthorizationUri()
+    public async Task<Uri?> GetAuthorizationUriAsync()
     {
         ArgumentNullException.ThrowIfNull(secrets.Value);
         ArgumentNullException.ThrowIfNull(cache);
         
         var key = Guid.NewGuid().ToString();
-        if (await cache.Set(key, "whatever", TimeSpan.FromMinutes(5)))
+        if (await cache.SetAsync(key, "whatever", TimeSpan.FromMinutes(5)))
         {
             return new AuthorizationUrlBuilder(new Uri(secrets.Value.AuthDomain))
                 .WithAudience(secrets.Value.Audience)
@@ -37,9 +37,9 @@ public class AuthenticationService(IOptions<AuthSecrets> secrets, ICacheClient c
             .Build();
     }
 
-    public async Task<bool> IsStateValid(string state)
+    public async Task<bool> IsStateValidAsync(string state)
     {
-        var value = await cache.Get<string>(state);
+        var value = await cache.GetAsync<string>(state);
         return !string.IsNullOrEmpty(value);
     }
 }

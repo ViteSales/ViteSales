@@ -1,0 +1,13 @@
+@page "/signin-oidc"
+@using System.Security.Claims
+
+@code {
+    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+        Console.WriteLine(user.FindFirstValue("sub"));
+    }
+}

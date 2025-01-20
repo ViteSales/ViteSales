@@ -12,7 +12,7 @@ namespace ViteSales.ERP.Auth.Services.Auth0;
 
 public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken accessToken, IUser userService, ILogger<OrganizationService> _logger): IOrganization
 {
-    public async Task<string> Create(CreateOrganization organization, string userId)
+    public async Task<string> CreateAsync(CreateOrganization organization, string userId)
     {
         var mgmt = GetManagementClient();
         _logger.LogInformation("Creating organization with name: {OrganizationName}", organization.Name);
@@ -41,7 +41,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         return org.Id;
     }
 
-    public async Task Delete(string id)
+    public async Task DeleteAsync(string id)
     {
         var mgmt = GetManagementClient();
         _logger.LogInformation("Deleting organization with ID: {OrganizationId}", id);
@@ -49,7 +49,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         _logger.LogInformation("Organization with ID: {OrganizationId} deleted successfully", id);
     }
 
-    public async Task<InvitationInfo> CreateInvitation(string orgId, string inviterId, string invitee, string role)
+    public async Task<InvitationInfo> CreateInvitationAsync(string orgId, string inviterId, string invitee, string role)
     {
         var mgmt = GetManagementClient();
         _logger.LogInformation("Fetching inviter information for user ID: {InviterId}", inviterId);
@@ -88,7 +88,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         };
     }
 
-    public async Task<IList<InvitationInfo>?> GetInvitations(string orgId)
+    public async Task<IList<InvitationInfo>?> GetInvitationsAsync(string orgId)
     {
         var mgmt = GetManagementClient();
         var invitations = await mgmt.Organizations.GetAllInvitationsAsync(orgId, new OrganizationGetAllInvitationsRequest
@@ -115,7 +115,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
             .ToList();
     }
 
-    public async Task<IList<MemberInfo>?> GetMembers(string orgId)
+    public async Task<IList<MemberInfo>?> GetMembersAsync(string orgId)
     {
         var mgmt = GetManagementClient();
         var members = await mgmt.Organizations.GetAllMembersAsync(orgId, new PaginationInfo(0, 500, true));
@@ -125,7 +125,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         }
         return members.Select(async member =>
             {
-                var user = await userService.GetUserInfo(member.UserId);
+                var user = await userService.GetUserInfoAsync(member.UserId);
                 return new MemberInfo
                 {
                     UserId = member.UserId,
@@ -147,7 +147,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
             .ToList();
     }
 
-    public async Task RemoveMember(string orgId, string userId)
+    public async Task RemoveMemberAsync(string orgId, string userId)
     {
         var mgmt = GetManagementClient();
         _logger.LogInformation("Removing member with ID: {UserId} from organization ID: {OrganizationId}", userId, orgId);
@@ -158,7 +158,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         _logger.LogInformation("Successfully removed member with ID: {UserId} from organization ID: {OrganizationId}", userId, orgId);
     }
 
-    public async Task UpdateRoles(string orgId, string userId, IList<string> roles)
+    public async Task UpdateRolesAsync(string orgId, string userId, IList<string> roles)
     {
         var mgmt = GetManagementClient();
         _logger.LogInformation("Updating roles for member with ID: {UserId} in organization ID: {OrganizationId} with roles: {Roles}", 
@@ -170,7 +170,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         _logger.LogInformation("Successfully updated roles for member with ID: {UserId} in organization ID: {OrganizationId}", userId, orgId);
     }
 
-    public async Task DeleteRoles(string orgId, string userId, IList<string> roles)
+    public async Task DeleteRolesAsync(string orgId, string userId, IList<string> roles)
     {
         var mgmt = GetManagementClient();
         _logger.LogInformation("Deleting roles for member with ID: {UserId} in organization ID: {OrganizationId} with roles: {Roles}", 
@@ -182,7 +182,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         _logger.LogInformation("Successfully deleted roles for member with ID: {UserId} in organization ID: {OrganizationId}", userId, orgId);
     }
 
-    public async Task<OrganizationInfo?> GetOrganization(string orgId)
+    public async Task<OrganizationInfo?> GetOrganizationAsync(string orgId)
     {
         var mgmt = GetManagementClient();
         var org = await mgmt.Organizations.GetAsync(orgId);
@@ -200,7 +200,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         return null;
     }
 
-    public async Task UpdateOrganization(string orgId, KeyValuePair<string, object> keyValuePair)
+    public async Task UpdateOrganizationAsync(string orgId, KeyValuePair<string, object> keyValuePair)
     {
         var mgmt = GetManagementClient();
         await mgmt.Organizations.UpdateAsync(orgId, new OrganizationUpdateRequest

@@ -32,7 +32,7 @@ public class PackageService: IPackageService
             .ToList();
     }
 
-    public async Task<List<Exception>?> InstallPackage(string namespaceName)
+    public async Task<List<Exception>?> InstallPackageAsync(string namespaceName)
     {
         _logger.LogDebug("Starting installation of package: {NamespaceName}", namespaceName);
         var exceptions = new List<Exception>();
@@ -48,7 +48,7 @@ public class PackageService: IPackageService
             try
             {
                 _logger.LogDebug("Installing package manifest: {PackageName}", manifest.PackageName);
-                await _packageInstallerService.Install(manifest);
+                await _packageInstallerService.InstallAsync(manifest);
                 _logger.LogInformation("Successfully installed package manifest: {PackageName}", manifest.PackageName);
             }
             catch (Exception e)
@@ -61,7 +61,7 @@ public class PackageService: IPackageService
         return exceptions;
     }
 
-    public async Task<List<Exception>?> UninstallPackage(string namespaceName)
+    public async Task<List<Exception>?> UninstallPackageAsync(string namespaceName)
     {
         _logger.LogDebug("Starting uninstallation of package: {NamespaceName}", namespaceName);
         var exceptions = new List<Exception>();
@@ -77,7 +77,7 @@ public class PackageService: IPackageService
             try
             {
                 _logger.LogDebug("Uninstalling package manifest: {PackageName}", manifest.PackageName);
-                await _packageInstallerService.Uninstall(manifest);
+                await _packageInstallerService.UninstallAsync(manifest);
                 _logger.LogInformation("Successfully uninstalled package manifest: {PackageName}", manifest.PackageName);
             }
             catch (Exception e)
