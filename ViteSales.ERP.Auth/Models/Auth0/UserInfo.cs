@@ -1,4 +1,4 @@
-namespace ViteSales.ERP.Auth.Models;
+namespace ViteSales.ERP.Auth.Models.Auth0;
 
 public class UserInfo
 {

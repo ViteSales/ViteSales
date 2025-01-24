@@ -27,7 +27,7 @@ public class AuthenticationService(IOptions<AuthSecrets> secrets, ICacheClient c
                 .WithRedirectUrl(secrets.Value.RedirectUri)
                 .Build();
         }
-        return null;
+        throw new InvalidOperationException("Could not set cache value");
     }
 
     public Uri GetLogoutUri()

@@ -9,8 +9,8 @@
     <ItemGroup>
       <PackageReference Include="Auth0.AuthenticationApi" Version="7.31.0" />
       <PackageReference Include="Auth0.ManagementApi" Version="7.31.0" />
-      <PackageReference Include="Kinde.SDK" Version="1.2.9" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.1" />
       <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
       <PackageReference Include="RestSharp" Version="112.1.0" />

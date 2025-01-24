@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using ViteSales.ERP.Auth.Client;
 using ViteSales.ERP.Auth.Interfaces;
-using ViteSales.ERP.Auth.Services.Auth0;
 using ViteSales.ERP.Shared.Cache;
 using ViteSales.ERP.Shared.Interfaces;
 using ViteSales.ERP.Shared.Models;
@@ -38,11 +37,12 @@ public class ViteSalesAuth
             options.AuthDomain = authSecrets.AuthDomain;
             options.RedirectUri = authSecrets.RedirectUri;
         });
+        _services.AddHttpClient();
         _services.AddSingleton<ICacheClient>(cache);
         _services.AddSingleton<IAccessToken>(client);
-        _services.AddTransient<IAuthentication, AuthenticationService>();
-        _services.AddTransient<IOrganization, OrganizationService>();
-        _services.AddTransient<IUser, UserService>();
+        _services.AddScoped<IAuthentication, ViteSales.ERP.Auth.Services.Auth0.AuthenticationService>();
+        _services.AddScoped<IOrganization, ViteSales.ERP.Auth.Services.Auth0.OrganizationService>();
+        _services.AddScoped<IUser, ViteSales.ERP.Auth.Services.Auth0.UserService>();
         _services.AddLogging(configure =>
         {
             configure.AddConsole();
