@@ -22,8 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.Auth", "ViteS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP.Cloud", "ViteSales.ERP.Cloud\ViteSales.ERP.Cloud.csproj", "{7C551C3B-1ACF-4A35-9474-40C4DF19D1AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViteSales.ERP", "ViteSales.ERP\ViteSales.ERP\ViteSales.ERP.csproj", "{A7FB70E0-ADC0-429C-A85F-C59A34B4D21C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,10 +56,6 @@ Global
 		{7C551C3B-1ACF-4A35-9474-40C4DF19D1AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C551C3B-1ACF-4A35-9474-40C4DF19D1AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C551C3B-1ACF-4A35-9474-40C4DF19D1AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7FB70E0-ADC0-429C-A85F-C59A34B4D21C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7FB70E0-ADC0-429C-A85F-C59A34B4D21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7FB70E0-ADC0-429C-A85F-C59A34B4D21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7FB70E0-ADC0-429C-A85F-C59A34B4D21C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
