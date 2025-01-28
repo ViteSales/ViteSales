@@ -1,27 +1,27 @@
+using Auth0.Core.Exceptions;
 using Auth0.ManagementApi;
 using Auth0.ManagementApi.Models;
 using Auth0.ManagementApi.Paging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.Auth.Interfaces;
-using ViteSales.ERP.Auth.Models.Auth0;
+using ViteSales.ERP.Auth.Models;
 using ViteSales.ERP.Shared.Extensions;
 using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.Auth.Services.Auth0;
 
-public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken accessToken, IUser userService, ILogger<OrganizationService> _logger): IOrganization
+public class OrganizationAuthService(IOptions<AuthSecrets> secrets, IAccessToken accessToken, IUserAuthService userAuthServiceService, ILogger<OrganizationAuthService> _logger): IOrganizationAuthService
 {
-    public async Task<string> CreateAsync(object organizationObj, string userId)
+    public async Task<string> CreateAsync(CreateOrganization organization, string userId)
     {
-        var organization = organizationObj as CreateOrganization;
         ArgumentNullException.ThrowIfNull(organization);
         
         using var mgmt = GetManagementClient();
         _logger.LogInformation("Creating organization with name: {OrganizationName}", organization.Name);
         var org = await mgmt.Organizations.CreateAsync(new OrganizationCreateRequest
         {
-            Name = organization.Name.ToSlugUnique(),
+            Name = organization.Name.ToSlug(),
             DisplayName = organization.Name,
             Branding = new OrganizationBranding
             {
@@ -52,7 +52,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         _logger.LogInformation("Organization with ID: {OrganizationId} deleted successfully", id);
     }
 
-    public async Task<T> CreateInvitationAsync<T>(string orgId, string inviterId, string invitee, string role) where T : class
+    public async Task<InvitationInfo> CreateInvitationAsync(string orgId, string inviterId, string invitee, string role)
     {
         using var mgmt = GetManagementClient();
         _logger.LogInformation("Fetching inviter information for user ID: {InviterId}", inviterId);
@@ -88,10 +88,10 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
             Invitee = invitation.Invitee.Email,
             OrganizationId = orgId,
             Roles = invitation.Roles
-        } as T ?? throw new InvalidOperationException();
+        };
     }
 
-    public async Task<IList<T>> GetInvitationsAsync<T>(string orgId) where T : class
+    public async Task<IList<InvitationInfo>> GetInvitationsAsync(string orgId)
     {
         using var mgmt = GetManagementClient();
         var invitations = await mgmt.Organizations.GetAllInvitationsAsync(orgId, new OrganizationGetAllInvitationsRequest
@@ -104,6 +104,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         {
             return null;
         }
+
         return invitations.Select(invitation => new InvitationInfo
             {
                 InvitationUrl = invitation.InvitationUrl,
@@ -115,20 +116,21 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
                 OrganizationId = orgId,
                 Roles = invitation.Roles
             })
-            .ToList() as IList<T> ?? throw new InvalidOperationException();
+            .ToList();
     }
 
-    public async Task<IList<T>> GetMembersAsync<T>(string orgId) where T : class
+    public async Task<IList<MemberInfo>> GetMembersAsync(string orgId)
     {
         using var mgmt = GetManagementClient();
         var members = await mgmt.Organizations.GetAllMembersAsync(orgId, new PaginationInfo(0, 500, true));
         if (members == null || members.Count == 0)
         {
-            return null;
+            return new List<MemberInfo>();
         }
+
         return members.Select(async member =>
             {
-                var user = await userService.GetUserInfoAsync<UserInfo>(member.UserId);
+                var user = await userAuthServiceService.GetUserInfoAsync(member.UserId);
                 return new MemberInfo
                 {
                     UserId = member.UserId,
@@ -147,14 +149,22 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
                 };
             })
             .Select(x => x.Result)
-            .ToList() as IList<T> ?? throw new InvalidOperationException();
+            .ToList();
     }
 
     public async Task<bool> IsOrganizationExistAsync(string orgName)
     {
         using var mgmt = GetManagementClient();
-        var org = await mgmt.Organizations.GetAsync(orgName.ToSlugUnique());
-        return org != null;
+        try
+        {
+            var org = await mgmt.Organizations.GetAsync(orgName.ToSlug());
+            return org != null;
+        }
+        catch (ErrorApiException e)
+        {
+            _logger.LogError(e, "Error checking if organization exists");
+            throw;
+        }
     }
 
     public async Task AddMemberAsync(string orgId, string userId, IList<string> roles)
@@ -214,7 +224,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
         _logger.LogInformation("Successfully deleted roles for member with ID: {UserId} in organization ID: {OrganizationId}", userId, orgId);
     }
 
-    public async Task<T> GetOrganizationAsync<T>(string orgId) where T : class
+    public async Task<OrganizationInfo?> GetOrganizationAsync(string orgId)
     {
         using var mgmt = GetManagementClient();
         var org = await mgmt.Organizations.GetAsync(orgId);
@@ -227,7 +237,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
                 DisplayName = org.DisplayName,
                 LogoUrl = org.Branding.LogoUrl,
                 Metadata = org.Metadata
-            } as T ?? throw new InvalidOperationException();
+            };
         }
         return null;
     }
@@ -249,7 +259,7 @@ public class OrganizationService(IOptions<AuthSecrets> secrets, IAccessToken acc
     private ManagementApiClient GetManagementClient()
     {
         ArgumentNullException.ThrowIfNull(secrets.Value);
-        var token = accessToken.Get();
-        return new ManagementApiClient(token, new Uri(secrets.Value.AuthorityUrl));
+        var token = accessToken.Get().Replace("Bearer ", "");;
+        return new ManagementApiClient(token, new Uri(secrets.Value.Audience));
     }
 }

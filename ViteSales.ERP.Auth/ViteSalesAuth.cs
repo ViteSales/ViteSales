@@ -37,12 +37,22 @@ public class ViteSalesAuth
             options.AuthDomain = authSecrets.AuthDomain;
             options.RedirectUri = authSecrets.RedirectUri;
         });
+        _services.Configure<AppSettings>(options =>
+        {
+            options.Logging = appSettings.Logging;
+            options.AuthSecrets = appSettings.AuthSecrets;
+            options.CacheDb = appSettings.CacheDb;
+            options.ServerCredential = appSettings.ServerCredential;
+            options.GcpCredentials = appSettings.GetGcpCredential();
+            options.GoogleCredential = appSettings.GetGoogleCredential();
+            options.DefaultDb = appSettings.DefaultDb;
+        });
         _services.AddHttpClient();
         _services.AddSingleton<ICacheClient>(cache);
         _services.AddSingleton<IAccessToken>(client);
-        _services.AddScoped<IAuthentication, ViteSales.ERP.Auth.Services.Auth0.AuthenticationService>();
-        _services.AddScoped<IOrganization, ViteSales.ERP.Auth.Services.Auth0.OrganizationService>();
-        _services.AddScoped<IUser, ViteSales.ERP.Auth.Services.Auth0.UserService>();
+        _services.AddScoped<IAuthentication, ViteSales.ERP.Auth.Services.Clerk.AuthenticationService>();
+        _services.AddScoped<IOrganizationAuthService, ViteSales.ERP.Auth.Services.Clerk.OrganizationAuthService>();
+        _services.AddScoped<IUserAuthService, ViteSales.ERP.Auth.Services.Clerk.UserAuthService>();
         _services.AddLogging(configure =>
         {
             configure.AddConsole();

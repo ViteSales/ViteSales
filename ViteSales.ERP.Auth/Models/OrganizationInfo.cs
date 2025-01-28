@@ -1,4 +1,4 @@
-namespace ViteSales.ERP.Auth.Models.Auth0;
+namespace ViteSales.ERP.Auth.Models;
 
 public class OrganizationInfo
 {

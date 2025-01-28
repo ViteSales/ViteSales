@@ -1,16 +1,23 @@
+using Auth0.Core.Exceptions;
 using Auth0.ManagementApi;
 using Auth0.ManagementApi.Models;
 using Auth0.ManagementApi.Models.Users;
 using Auth0.ManagementApi.Paging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ViteSales.ERP.Auth.Interfaces;
-using ViteSales.ERP.Auth.Models.Auth0;
+using ViteSales.ERP.Auth.Models;
 using ViteSales.ERP.Shared.Models;
 
 namespace ViteSales.ERP.Auth.Services.Auth0;
 
-public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken): IUser
+public class UserAuthService(IOptions<AuthSecrets> secrets, IAccessToken accessToken, ILogger<UserAuthService> _logger): IUserAuthService
 {
+    public Task<bool> DeleteUserAsync(string email)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<string?> GetUserIdAsync(string email)
     {
         using var mgmt = GetManagementClient();
@@ -18,7 +25,7 @@ public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken
         return user.Count == 0 ? null : user[0].UserId;
     }
 
-    public async Task<IList<T>> GetAllOrganizationsAsync<T>(string email) where T : class
+    public async Task<IList<OrganizationInfo>> GetAllOrganizationsAsync(string email)
     {
         using var mgmt = GetManagementClient();
         var userId = await GetUserIdAsync(email);
@@ -29,23 +36,24 @@ public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken
         {
             return null;
         }
+
         return organizations.Select(org => new OrganizationInfo
-        {
-            Id = org.Id,
-            Name = org.Name,
-            DisplayName = org.DisplayName,
-            LogoUrl = org.Branding.LogoUrl,
-            Metadata = org.Metadata
-        })
-        .ToList() as IList<T> ?? throw new InvalidOperationException();
+            {
+                Id = org.Id,
+                Name = org.Name,
+                DisplayName = org.DisplayName,
+                LogoUrl = org.Branding.LogoUrl,
+                Metadata = org.Metadata
+            })
+            .ToList();
     }
 
-    public async Task<T> GetUserInfoAsync<T>(string email) where T : class
+    public async Task<UserInfo?> GetUserInfoAsync(string email)
     {
         using var mgmt = GetManagementClient();
         var users = await mgmt.Users.GetUsersByEmailAsync(email);
         if (users.Count == 0)
-            throw new Exception("User not found");
+            return null;
         var user = users[0];
         return new UserInfo
         {
@@ -54,7 +62,7 @@ public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken
             LastLoggedIn = user.LastLogin,
             LastPasswordChanged = user.LastPasswordReset,
             LastUpdated = user.UpdatedAt,
-        } as T ?? throw new InvalidOperationException();
+        };
     }
 
     public async Task<bool> IsEmailVerifiedAsync(string email)
@@ -80,10 +88,26 @@ public class UserService(IOptions<AuthSecrets> secrets, IAccessToken accessToken
         return createdUser.UserId;
     }
 
+    public async Task<bool> IsUserExistAsync(string email)
+    {
+        using var mgmt = GetManagementClient();
+        try
+        {
+            var user = await mgmt.Users.GetUsersByEmailAsync(email);
+            if (user == null) return false;
+            return user.Count > 0;
+        }
+        catch (ErrorApiException e)
+        {
+            _logger.LogError(e, "Error checking if user exists");
+            throw;
+        }
+    }
+
     private ManagementApiClient GetManagementClient()
     {
         ArgumentNullException.ThrowIfNull(secrets.Value);
-        var token = accessToken.Get();
-        return new ManagementApiClient(token, new Uri(secrets.Value.AuthorityUrl));
+        var token = accessToken.Get().Replace("Bearer ", "");
+        return new ManagementApiClient(token, new Uri(secrets.Value.Audience));
     }
 }

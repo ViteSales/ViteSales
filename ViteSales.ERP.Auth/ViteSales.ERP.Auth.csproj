@@ -9,6 +9,9 @@
     <ItemGroup>
       <PackageReference Include="Auth0.AuthenticationApi" Version="7.32.0" />
       <PackageReference Include="Auth0.ManagementApi" Version="7.32.0" />
+      <PackageReference Include="Clerk.BackendAPI" Version="0.3.0" />
+      <PackageReference Include="Clerk.Net" Version="1.10.0" />
+      <PackageReference Include="Clerk.Net.DependencyInjection" Version="1.10.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.1" />
       <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
